@@ -13,6 +13,7 @@ Gestor del juego:
         se acaba cuando nadie hace nada o cuando se alcancen los objetivos
 
 Personajes:
+    Personaje realiza todas las acciones
     Clase Abstracta:
         2 hijas: NPCs y Jugador
     nombre
