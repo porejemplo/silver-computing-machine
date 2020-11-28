@@ -5,6 +5,7 @@ Gestor del juego:
         personajes
     funciones:
         leer contenidos
+        cuenta turnos
     bucle:
         informar jugadores
         pedir acciones
