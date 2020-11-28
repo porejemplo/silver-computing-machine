@@ -5,6 +5,10 @@ Gestor del juego:
         personajes
     funciones:
         leer contenidos
+    bucle:
+        informar jugadores
+        pedir acciones
+        ejecutar acciones
 
 Personajes:
     Clase Abstracta:
