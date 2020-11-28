@@ -9,5 +9,9 @@ Gestor del juego:
 Personajes:
 
 Localizaciones:
+    tienen la lista de personajes.
+    Los objetos que hay.
 
 Creencias:
+    Dos listas pa personajes y 2 pa objetos(struct?)
+    puntero a algo
