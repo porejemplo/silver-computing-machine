@@ -7,10 +7,18 @@ Gestor del juego:
         leer contenidos
 
 Personajes:
+    Clase Abstracta:
+        2 hijas: NPCs y Jugador
+    nombre
+    objeto creencias
+    objeto Objeto(cosa que lleva personaje)
+    metodo Objetivo cumplido booleano.
+    puntero a la habitacion en la que esta.
 
 Localizaciones:
     tienen la lista de personajes.
     Los objetos que hay.
+    Funcion informar a la sala.
 
 Creencias:
     Dos listas pa personajes y 2 pa objetos(struct?)
