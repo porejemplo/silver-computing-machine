@@ -6,8 +6,8 @@ Gestor del juego:
     funciones:
         leer contenidos
 
-Personajes
+Personajes:
 
-Localizaciones
+Localizaciones:
 
-Creencias
+Creencias:
