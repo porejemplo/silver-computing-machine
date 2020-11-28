@@ -9,6 +9,7 @@ Gestor del juego:
         informar jugadores
         pedir acciones
         ejecutar acciones
+        se acaba cuando nadie hace nada.
 
 Personajes:
     Clase Abstracta:
