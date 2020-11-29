@@ -3,7 +3,7 @@ public class Creencia {
     private String creencia;
 
     //constructor con parametros
-    Creencia(String n. String e){
+    Creencia(String n, String e){
         nombre = n;
         creencia = e;
     }
