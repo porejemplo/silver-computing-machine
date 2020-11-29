@@ -16,4 +16,5 @@ public class Personaje {
     public Boolean equals(Personaje personaje){
         return this.getNombre() == personaje.getNombre();
     }
+    
 }
