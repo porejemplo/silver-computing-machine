@@ -49,5 +49,4 @@ public class Objeto {
     //dar objeto
     //coger objeto
     //soltar objeto
->>>>>>> da41500364cee6328579c5a32348af5d3b545f04
 }
