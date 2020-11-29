@@ -17,6 +17,7 @@ public abstract class Personaje{
         setObjeto(objeto);
         setCreencia(creencia);
         setLocalizacion(localizacion);
+        localizacion.addPersonaje(this);
     }
 
     public Boolean equals(Personaje personaje){
