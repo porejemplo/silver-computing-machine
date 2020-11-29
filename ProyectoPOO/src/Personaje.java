@@ -1,12 +1,12 @@
 public class Personaje {
-    private String Nombre;
+    private String nombre;
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.Nombre = nombre;
+        this.nombre = nombre;
     }
 
     public Personaje (String nombre){
