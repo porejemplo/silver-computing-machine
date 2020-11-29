@@ -33,13 +33,13 @@ public class Localizacion {
 
     public static void main(String[] args) {
         Localizacion l = new Localizacion("cocina");
-        Personaje p1 = new Personaje("Fernando");
-        l.addPersonaje(new Personaje("Jorge"));
-        l.addPersonaje(p1);
-        l.addPersonaje(new Personaje("Natalia"));
+        //Personaje p1 = new Personaje("Fernando");
+        //l.addPersonaje(new Personaje("Jorge"));
+       // l.addPersonaje(p1);
+       // l.addPersonaje(new Personaje("Natalia"));
 
         System.out.println(l.toString());
-        l.removePersonaje(p1);
+        //l.removePersonaje(p1);
         System.out.println(l.toString());
     }
 
