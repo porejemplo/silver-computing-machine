@@ -1,21 +1,21 @@
 import java.util.ArrayList;
 
 public class Localizacion {
-    private String Nombre;
+    private String nombre;
     private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
 
     // Constructor
-    public Localizacion(String Nombre) {
-        setNombre(Nombre);
+    public Localizacion(String nombre) {
+        setNombre(nombre);
     }
 
     // Get Set
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
     public void setNombre(String nombre) {
-        this.Nombre = nombre;
+        this.nombre = nombre;
     }
 
     public void addPersonaje(Personaje personaje) {
