@@ -23,10 +23,15 @@ Personajes:
     puntero a la habitacion en la que esta.
 
 Localizaciones:
-    tienen la lista de personajes.
-    Los objetos que hay.
-    Funcion informar a la sala.
-    Array de otras localizaciones (adyacencias)
+    Nombre - Nombre de la sala
+    personajes - Lista de personajes de la sala.
+    Objeto - Objeto que se encuentra en la sala.
+    Localizaciones - Localizaciones a las que te puedes ir.
+    Funciones
+        InformarSala - Llama a la funcion de personaje que le informa de los que se ha pasado.
+        AddPerosonaje - Añade un personaje a la lista de personajes de la sala.
+        RemovePersonaje - Quita el personaje de la lista
+        toString - Devuele el nomrbe de la sala y la lsita de personajes que hay.
 
 Creencias:
     Dos listas pa personajes y 2 pa objetos(struct?)
