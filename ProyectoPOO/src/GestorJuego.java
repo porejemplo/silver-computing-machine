@@ -5,7 +5,6 @@ public class GestorJuego {
 	private Objeto listaObjetos[];
 	private Creencias certezas;
 	private int ronda = 0;
-	private int siguienteAccion = 0;
 	
 	public GestorJuego(Localizacion salas[],PersonajeI personajes[],Objeto objetos[], Creencias estadoInicial) {
 		listaSalas= salas;
@@ -29,8 +28,7 @@ public class GestorJuego {
 		ronda++;
 		System.out.print("\nComienza la ronda "+ronda);
 		for(int i = 0; i < listaPersonajes.length; i++) {
-			siguienteAccion = pedirAccion(listaPersonajes[i],accionesPermitidas(listaPersonajes[i]));
-			ejecutarAccion(listaPersonajes[i], siguienteAccion);
+			ejecutarAccion(listaPersonajes[i], pedirAccion(listaPersonajes[i],accionesPermitidas(listaPersonajes[i])));
 		}
 	}
 	

@@ -7,7 +7,7 @@ public class Ubicacion {
 	public Ubicacion(String nombre, String lugar /*, String tipo*/) {
 		this.nombre = nombre;
 		/*this.tipo = tipo*/
-		lugar = lugar;
+		this.lugar = lugar;
 	}
 	
 	public String getNombre() {
