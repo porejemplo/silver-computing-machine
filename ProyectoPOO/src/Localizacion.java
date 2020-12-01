@@ -3,19 +3,34 @@ import java.util.ArrayList;
 public class Localizacion {
     private String nombre;
     private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
+    private Localizacion[] localizacionesAdyacentes;
+    private ArrayList<Objeto> objetos = new ArrayList<Objeto>();
 
     // Constructor
-    public Localizacion(String nombre) {
+    public Localizacion(String nombre, Localizacion[] localizacionesAdyacentes) {
         setNombre(nombre);
+        setLocalizacionesAdyacentes(localizacionesAdyacentes);
     }
 
     // Get Set
+    public Localizacion[] getLocalizacionesAdyacentes() {
+        return localizacionesAdyacentes;
+    }
+
+    public void setLocalizacionesAdyacentes(Localizacion[] localizacionesAdyacentes) {
+        this.localizacionesAdyacentes = localizacionesAdyacentes;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public ArrayList<Personaje> GetPerosnajes(){
+        return personajes;
     }
 
     public void addPersonaje(Personaje personaje) {
@@ -31,6 +46,7 @@ public class Localizacion {
         personajes.remove(indice);
     }
 
+<<<<<<< Updated upstream
     public static void main(String[] args) {
         Localizacion l = new Localizacion("cocina");
         Personaje p1 = new Personaje("Fernando");
@@ -41,6 +57,23 @@ public class Localizacion {
         System.out.println(l.toString());
         l.removePersonaje(p1);
         System.out.println(l.toString());
+=======
+    public ArrayList<Objeto> GetObjetos(){
+        return objetos;
+    }
+
+    public void addObjeto(Objeto objeto) {
+        objetos.add(objeto);
+    }
+
+    public void removeObjeto(Objeto objeto){
+        int indice;
+        for (indice = 0; indice < objetos.size(); indice++) {
+            if (objetos.get(indice).equals(objeto))
+                break;
+        }
+        objetos.remove(indice);
+>>>>>>> Stashed changes
     }
 
     // Funciones
@@ -56,5 +89,9 @@ public class Localizacion {
         for (int i = 0; i < personajes.size(); i++) {
             System.out.println("Se ha informado a " + personajes.get(i).getNombre());
         }
+    }
+
+    public Boolean equals(Localizacion localizacion){
+        return this.nombre == localizacion.nombre;
     }
 }
