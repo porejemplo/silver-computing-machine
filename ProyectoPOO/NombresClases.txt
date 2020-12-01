@@ -21,6 +21,8 @@ Personajes:
     objeto Objeto(cosa que lleva personaje)
     metodo Objetivo cumplido booleano.
     puntero a la habitacion en la que esta.
+    Hacer cosas aleatorias.
+    Coger Todo.
 
 Localizaciones:
     Nombre - Nombre de la sala
