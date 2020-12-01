@@ -6,7 +6,7 @@ public class GestorJuego {
 	private Creencia certezas;
 	private int ronda = 0;
 	
-	public GestorJuego(Localizacion salas[],PersonajeI personajes[],Objeto objetos[], Creencias estadoInicial) {
+	public GestorJuego(Localizacion salas[],PersonajeI personajes[],Objeto objetos[], Creencia estadoInicial) {
 		listaSalas= salas;
 		listaPersonajes = personajes;
 		listaObjetos = objetos;
