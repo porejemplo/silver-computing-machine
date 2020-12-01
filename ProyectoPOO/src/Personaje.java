@@ -1,4 +1,4 @@
-public abstract class Personaje{
+public abstract class Personaje implements PersonajeI{
     private String nombre;
     private Objeto objeto;
     private Creencia creencia;
@@ -47,4 +47,16 @@ public abstract class Personaje{
 	public void setLocalizacion(Localizacion localizacion) {
 		this.localizacion = localizacion;
 	}
+
+	//Para los hijos, tiene que devolver que accion va a hacer en formato numerico
+	public abstract int elegirAccion(boolean[] acciones);
+
+	//Para los hijos, Cuando le pregunten a que personaje quiere dar o recibir objeto que lo especifique
+	public abstract Personaje especificarPersonaje();
+
+	//Para los hijos, Cuando le pregunten a que sala se quiere mover que lo especifique
+	public abstract Localizacion especificarSala();
+
+	//Para los hijos, Cuando le pregunten que objeto quiere coger que lo especifique
+	public abstract Objeto especificarObjeto();
 }

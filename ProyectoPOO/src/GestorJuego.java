@@ -32,7 +32,7 @@ public class GestorJuego {
 		}
 	}
 	
-	public boolean[] accionesPermitidas(PersonajeI personaje) {
+	public boolean[] accionesPermitidas(PersonajeI personaje) { //NOMBRE.Filtrar que acciones puede y no puede hacer un personaje
 		boolean acciones[] = new boolean[6];
 		return acciones;
 	}
@@ -41,20 +41,20 @@ public class GestorJuego {
 		return personaje.elegirAccion(acciones);
 	}
 	
-	public void ejecutarAccion(PersonajeI personaje, int accion) {
+	public void ejecutarAccion(PersonajeI personaje, int accion) {//NOMBRE.Hacer las acciones de cada personaje, falta completar
 		switch(accion) {
 		case 1: //Ir a localizacion
-			cambiarSala(personaje, personaje.getSala(), personaje.especificarSala());
+			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala());
 			break;
 		case 2: //Pedir objeto
 			break;
 		case 3: //Dar objeto
 			break;
 		case 4: //Coger objeto
-			cambiarObjeto(personaje.especificarObjeto(), personaje.getSala(), personaje);
+			cambiarObjeto(personaje.especificarObjeto(), personaje.getLocalizacion(), personaje);
 			break;
 		case 5: //Dejar objeto
-			cambiarObjeto(personaje.especificarObjeto(), personaje, personaje.getSala());
+			cambiarObjeto(personaje.especificarObjeto(), personaje, personaje.getLocalizacion());
 			break;
 		default:
 			break;
@@ -63,7 +63,7 @@ public class GestorJuego {
 	}
 	
 	public void cambiarSala(PersonajeI personaje, Localizacion origen, Localizacion destino) {
-		personaje.setSala(destino);
+		personaje.setLocalizacion(destino);
 		/*for(int i = 0; i < origen.getPersonajes().length; i++){
 		 * 		origen.getPersonajes()[i].getCreencias().cambiarCreencia(personaje,destino);
 		 * }
@@ -99,3 +99,6 @@ public class GestorJuego {
 		certezas.cambiarCreencia(objeto, receptor);
 	}
 }
+
+//NOMBRE.Decidir cuando el juego se ha acabado
+

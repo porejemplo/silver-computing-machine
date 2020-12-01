@@ -1,11 +1,11 @@
 
 public interface PersonajeI {
 	
-	public Localizacion getSala();
+	public Localizacion getLocalizacion();
 	public Objeto getObjeto();
 	public String getNombre();
 	
-	public void setSala(Localizacion sala);
+	public void setLocalizacion(Localizacion sala);
 	public void setObjeto(Objeto objeto);
 	public void setNombre(String nombre);
 	
