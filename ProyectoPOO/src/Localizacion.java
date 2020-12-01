@@ -17,7 +17,8 @@ public class Localizacion {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+    
+    //Añade un personaje al array de personajes
     public void addPersonaje(Personaje personaje) {
         personajes.add(personaje);
     }
@@ -36,6 +37,7 @@ public class Localizacion {
     }
 
     // Funciones
+    //Imprime el numero del personaje junto a su nombre (1 - Eustaquio) en la localizacion
     public String toString(){
         String s = "Localizacion: " + getNombre();
         for (int i = 0; i < personajes.size(); i++) {
