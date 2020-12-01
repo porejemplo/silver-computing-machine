@@ -3,10 +3,10 @@ public class GestorJuego {
 	private Localizacion listaSalas[];
 	private PersonajeI listaPersonajes[];
 	private Objeto listaObjetos[];
-	private Creencia certezas;
+	private Creencias certezas;
 	private int ronda = 0;
 	
-	public GestorJuego(Localizacion salas[],PersonajeI personajes[],Objeto objetos[], Creencia estadoInicial) {
+	public GestorJuego(Localizacion salas[],PersonajeI personajes[],Objeto objetos[], Creencias estadoInicial) {
 		listaSalas= salas;
 		listaPersonajes = personajes;
 		listaObjetos = objetos;
