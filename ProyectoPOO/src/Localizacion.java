@@ -22,7 +22,8 @@ public class Localizacion {
     public void addPersonaje(Personaje personaje) {
         personajes.add(personaje);
     }
-
+    
+    //Borra los personajes que salgan de la sala
     public void removePersonaje(Personaje personaje){
         int indice;
         for (indice = 0; indice < personajes.size(); indice++) {
