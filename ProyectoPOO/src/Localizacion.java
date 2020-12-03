@@ -46,7 +46,6 @@ public class Localizacion {
         personajes.remove(indice);
     }
 
-<<<<<<< Updated upstream
     public static void main(String[] args) {
         Localizacion l = new Localizacion("cocina");
         Personaje p1 = new Personaje("Fernando");
@@ -57,7 +56,6 @@ public class Localizacion {
         System.out.println(l.toString());
         l.removePersonaje(p1);
         System.out.println(l.toString());
-=======
     public ArrayList<Objeto> GetObjetos(){
         return objetos;
     }
@@ -73,7 +71,6 @@ public class Localizacion {
                 break;
         }
         objetos.remove(indice);
->>>>>>> Stashed changes
     }
 
     // Funciones
