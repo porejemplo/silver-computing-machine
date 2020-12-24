@@ -5,15 +5,18 @@ import java.awt.*;
 
 public class ProyectoInterfaz implements ActionListener{
 
-	private JLabel label, infoJugador;
+	private JLabel label;
 	private JPanel panel;
 	private JFrame frame;
+	private JTextArea informacion;
 	private Boolean numero = true;
 	private String info = "Alvaro la txupa"; // esto tiene que ser la informacion de lo que ha pasado en el turno
 	
 	//Constructor de la Interfaz
 	public ProyectoInterfaz() {
 		frame = new JFrame();
+		informacion = new JTextArea(info);
+		informacion.setEditable(false);
 		//Los botones para cada accion posible
 		JButton act1 = new JButton("accion1");
 		JButton act2 = new JButton("accion2");
@@ -44,13 +47,12 @@ public class ProyectoInterfaz implements ActionListener{
 		}
 		
 		label = new JLabel("Accion elegida: ");
-		infoJugador = new JLabel("Info: "+ info);
 		//Editamos el panel a nuestro gusto
 		panel = new JPanel();
 		panel.setBackground(Color.gray);
 		panel.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
 		panel.setLayout(new GridLayout(0,1));
-		panel.add(infoJugador);
+		panel.add(informacion);
 		panel.add(act1);
 		panel.add(act2);
 		panel.add(act3);
