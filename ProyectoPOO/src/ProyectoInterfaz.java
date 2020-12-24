@@ -17,6 +17,7 @@ public class ProyectoInterfaz implements ActionListener{
 		frame = new JFrame();
 		informacion = new JTextArea(info);
 		informacion.setEditable(false);
+		informacion.setBackground(Color.LIGHT_GRAY);
 		//Los botones para cada accion posible
 		JButton act1 = new JButton("accion1");
 		JButton act2 = new JButton("accion2");
