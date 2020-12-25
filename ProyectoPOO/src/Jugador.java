@@ -1,7 +1,8 @@
 
+
 public class Jugador extends Personaje{
-	   public Jugador(String nombre, Objeto objeto, Creencia creencia,Localizacion localizacion){
-	        super(nombre, objeto, creencia,localizacion);
+	   public Jugador(String nombre, Objeto objeto, Creencias creencia,Localizacion localizacion, Ubicacion objetivo){
+	        super(nombre, objeto, creencia,localizacion,objetivo);
 	    }
 
 	@Override

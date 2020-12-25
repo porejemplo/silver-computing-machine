@@ -29,7 +29,7 @@ public class Localizacion {
         this.nombre = nombre;
     }
 
-    public ArrayList<Personaje> GetPerosnajes(){
+    public ArrayList<Personaje> getPersonajes(){
         return personajes;
     }
 
@@ -46,7 +46,7 @@ public class Localizacion {
         personajes.remove(indice);
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Localizacion l = new Localizacion("cocina");
         Personaje p1 = new Personaje("Fernando");
         l.addPersonaje(new Personaje("Jorge"));
@@ -56,7 +56,7 @@ public class Localizacion {
         System.out.println(l.toString());
         l.removePersonaje(p1);
         System.out.println(l.toString());
-    }
+    }*/
     public ArrayList<Objeto> GetObjetos(){
         return objetos;
     }

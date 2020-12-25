@@ -1,12 +1,15 @@
 
+
 public class NPCs extends Personaje{
-	   public NPCs(String nombre, Objeto objeto, Creencia creencia,Localizacion localizacion){
-	        super(nombre, objeto, creencia,localizacion);
+	   public NPCs(String nombre, Objeto objeto, Creencias creencia,Localizacion localizacion, Ubicacion objetivo){
+	        super(nombre, objeto, creencia,localizacion,objetivo);
 	    }
 
 	@Override
 	public int elegirAccion(boolean[] acciones) {
-		// TODO Auto-generated method stub
+		for( int i = 0; i < 6; i++) {
+			if(acciones[i] == true) return i+1;
+		}
 		return 0;
 	}
 

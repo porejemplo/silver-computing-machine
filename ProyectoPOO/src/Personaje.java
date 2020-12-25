@@ -1,8 +1,10 @@
+
 public abstract class Personaje implements PersonajeI{
     private String nombre;
     private Objeto objeto;
-    private Creencia creencia;
+    private Creencias creencias;
     private Localizacion localizacion;
+    private Ubicacion objetivo;
     
     public String getNombre() {
         return nombre;
@@ -12,11 +14,12 @@ public abstract class Personaje implements PersonajeI{
         this.nombre = nombre;
     }
 
-    public Personaje (String nombre, Objeto objeto, Creencia creencia, Localizacion localizacion){
+    public Personaje (String nombre, Objeto objeto, Creencias creencias, Localizacion localizacion, Ubicacion objetivo){
         setNombre(nombre);
         setObjeto(objeto);
-        setCreencia(creencia);
+        setCreencia(creencias);
         setLocalizacion(localizacion);
+        setObjetivo(objetivo);
         localizacion.addPersonaje(this);
     }
 
@@ -32,12 +35,12 @@ public abstract class Personaje implements PersonajeI{
 		this.objeto = objeto;
 	}
 
-	public Creencia getCreencia() {
-		return creencia;
+	public Creencias getCreencias() {
+		return creencias;
 	}
 
-	public void setCreencia(Creencia creencia) {
-		this.creencia = creencia;
+	public void setCreencia(Creencias creencia) {
+		this.creencias = creencia;
 	}
 
 	public Localizacion getLocalizacion() {
@@ -46,6 +49,12 @@ public abstract class Personaje implements PersonajeI{
 
 	public void setLocalizacion(Localizacion localizacion) {
 		this.localizacion = localizacion;
+	}
+	public Ubicacion getObjetivo() {
+		return objetivo;
+	}
+	public void setObjetivo(Ubicacion objetivo) {
+		this.objetivo = objetivo;
 	}
 
 	//Para los hijos, tiene que devolver que accion va a hacer en formato numerico
