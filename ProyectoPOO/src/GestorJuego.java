@@ -46,16 +46,16 @@ public class GestorJuego {
 		acciones[0]=true;
 		
 		//2. Pedir objeto. Si hay más personajes en la sala aparte del que realiza la accion, entoces puede pedir un objeto
-		if(personaje.getLocalizacion().GetPerosnajes().size()>1) acciones[1] = true;
+		if(personaje.getLocalizacion().getPersonajes().size()>1) acciones[1] = true;
 		
 		//3. Dar objeto. Comprobar en la matriz de solicitudes si alguien le ha pedido un objeto a jugador
 		
 		//Coseguir el índice del personaje en la lista
 		for(i=0; i < listaPersonajes.length || personaje.getNombre()==listaPersonajes[i].getNombre() ; i++);
 		
-		//Comprobar si en su fila correspondiente de la matriz hay algun "true" (le han pedido un objeto)
+		//Comprobar si en su columna correspondiente de la matriz hay algun "true" (le han pedido un objeto)
 		for(int j=0; j < listaPersonajes.length;j++) {
-			if(solicitudes[i][j]) {
+			if(solicitudes[j][i]) {
 				acciones[2]=true;
 				break;
 			}
@@ -93,9 +93,21 @@ public class GestorJuego {
 			break;
 		case 2: //Pedir objeto
 			System.out.println("Pedir Objeto");
+			int i,j;
+			
+			//Obtener el indice del personaje que pide, en a lista de personajes
+			for(i=0; i < listaPersonajes.length || personaje.getNombre()==listaPersonajes[i].getNombre() ; i++);
+			
+			//Obtener el indice del personaje al que le piden, en la lista de personajes
+			for(j=0; j < listaPersonajes.length || personaje.especificarPersonaje().getNombre()==listaPersonajes[j].getNombre() ; j++);
+			
+			//Almacenar la solicitud en la matriz
+			solicitudes[i][j]=true;
+			
 			break;
 		case 3: //Dar objeto
 			System.out.println("Dar Objeto");
+			cambiarObjeto(personaje, personaje.especificarPersonaje());
 			break;
 		case 4: //Coger objeto
 			System.out.println("Coger Objeto");
@@ -103,7 +115,7 @@ public class GestorJuego {
 			break;
 		case 5: //Dejar objeto
 			System.out.println("Dejar Objeto");
-			cambiarObjeto(personaje.especificarObjeto(), personaje, personaje.getLocalizacion());
+			cambiarObjeto(personaje, personaje.getLocalizacion());
 			break;
 		default:
 			System.out.println("Nada");
@@ -125,25 +137,25 @@ public class GestorJuego {
 		
 		
 	}
-	public void cambiarObjeto(Objeto objeto, Personaje emisor, Personaje receptor) {
+	public void cambiarObjeto(Personaje emisor, Personaje receptor) {
+		receptor.setObjeto(emisor.getObjeto());
 		emisor.setObjeto(null);
-		receptor.setObjeto(objeto);
-		certezas.cambiarCreencia(objeto, receptor);
+		certezas.cambiarCreencia(receptor.getObjeto(), receptor);
 		
 		//Informar a la sala del cambio
 		for(int i = 0; i < emisor.getLocalizacion().getPersonajes().size(); i++){
-		  	emisor.getLocalizacion().getPersonajes().get(i).getCreencias().cambiarCreencia(objeto, receptor);
+		  	emisor.getLocalizacion().getPersonajes().get(i).getCreencias().cambiarCreencia(receptor.getObjeto(), receptor);
 		}
 	}
-	public void cambiarObjeto(Objeto objeto, Personaje emisor, Localizacion destino) {
-		emisor.setObjeto(null);
-		certezas.cambiarCreencia(objeto, destino);
-		destino.addObjeto(objeto);
-		
+	public void cambiarObjeto(Personaje emisor, Localizacion destino) {
+		certezas.cambiarCreencia(emisor.getObjeto(), destino);
+		destino.addObjeto(emisor.getObjeto());
+
 		//Informar a la sala del cambio
 		for(int i = 0; i < destino.getPersonajes().size(); i++){
-		  	destino.getPersonajes().get(i).getCreencias().cambiarCreencia(objeto, destino);
+		  	destino.getPersonajes().get(i).getCreencias().cambiarCreencia(emisor.getObjeto(), destino);
 		}
+		emisor.setObjeto(null);
 		 
 	}
 	public void cambiarObjeto(Objeto objeto, Localizacion origen, Personaje receptor) {
