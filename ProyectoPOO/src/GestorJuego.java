@@ -5,11 +5,15 @@ public class GestorJuego {
 	private Localizacion listaSalas[];
 	private Personaje listaPersonajes[];
 	private Objeto listaObjetos[];
+	//La creencias del gestor del juego representan el estado actual del juego
 	private Creencias certezas;
 	private int ronda = 0;
 	//Solicitudes es una matriz de adyacencia del grafo dirigido asociado a los personajes
 	//Dos nodos conectados representan una solicitud de objeto de un personaje a otro
-	private boolean solicitudes[][];
+	private Objeto solicitudes[][];
+	//La historia será un string que se irá rellenando con las acciones de cada uno de los personajes.
+	private String historia="";
+	
 	
 
 	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos, Creencias estadoInicial) {
@@ -17,7 +21,7 @@ public class GestorJuego {
 		listaPersonajes = personajes;
 		listaObjetos = objetos;
 		certezas = estadoInicial;
-		solicitudes = new boolean[personajes.length][personajes.length];
+		solicitudes = new Objeto[personajes.length][personajes.length];
 	}
 
 	public Localizacion[] getListaSalas() {
@@ -32,6 +36,7 @@ public class GestorJuego {
 	
 	public void siguienteRonda() {
 		ronda++;
+		historia.concat("Comienza la ronda: " +ronda+".\n");
 		System.out.print("\nComienza la ronda "+ronda);
 		for(int i = 0; i < listaPersonajes.length; i++) {
 			ejecutarAccion(listaPersonajes[i], pedirAccion(listaPersonajes[i],accionesPermitidas(listaPersonajes[i])));
@@ -53,9 +58,9 @@ public class GestorJuego {
 		//Coseguir el índice del personaje en la lista
 		for(i=0; i < listaPersonajes.length || personaje.getNombre()==listaPersonajes[i].getNombre() ; i++);
 		
-		//Comprobar si en su columna correspondiente de la matriz hay algun "true" (le han pedido un objeto)
+		//Comprobar si en su columna correspondiente de la matriz hay algun objeto (le han pedido un objeto)
 		for(int j=0; j < listaPersonajes.length;j++) {
-			if(solicitudes[j][i]) {
+			if(solicitudes[j][i]!=null) {
 				acciones[2]=true;
 				break;
 			}
@@ -86,38 +91,51 @@ public class GestorJuego {
 	}
 	
 	public void ejecutarAccion(Personaje personaje, int accion) {//NOMBRE.Hacer las acciones de cada personaje, falta completar
+		Objeto objeto;
+		Personaje otroPersonaje;
 		switch(accion) {
 		case 1: //Ir a localizacion
 			System.out.println("Cambiar de sala");
+			historia.concat("El personaje "+personaje+" decide cambiarse de sala.");
 			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala());
+			historia.concat("Ahora se encuentra en la sala "+personaje.getLocalizacion().getNombre()+".\n");
 			break;
 		case 2: //Pedir objeto
+			objeto = personaje.especificarObjeto();
+			otroPersonaje= personaje.especificarPersonaje();
 			System.out.println("Pedir Objeto");
+			historia.concat("El personaje "+personaje+"decide perdirle a "+otroPersonaje.getNombre()+" el objeto: "+ objeto+".\n");
 			int i,j;
 			
 			//Obtener el indice del personaje que pide, en a lista de personajes
 			for(i=0; i < listaPersonajes.length || personaje.getNombre()==listaPersonajes[i].getNombre() ; i++);
 			
 			//Obtener el indice del personaje al que le piden, en la lista de personajes
-			for(j=0; j < listaPersonajes.length || personaje.especificarPersonaje().getNombre()==listaPersonajes[j].getNombre() ; j++);
+			for(j=0; j < listaPersonajes.length || otroPersonaje.getNombre()==listaPersonajes[j].getNombre() ; j++);
 			
 			//Almacenar la solicitud en la matriz
-			solicitudes[i][j]=true;
+			solicitudes[i][j]=objeto;
 			
 			break;
 		case 3: //Dar objeto
 			System.out.println("Dar Objeto");
-			cambiarObjeto(personaje, personaje.especificarPersonaje());
+			otroPersonaje = personaje.especificarPersonaje();
+			historia.concat("El personaje "+personaje+"decide darle a "+otroPersonaje.getNombre()+" su objeto.\n");
+			cambiarObjeto(personaje, otroPersonaje);
 			break;
 		case 4: //Coger objeto
 			System.out.println("Coger Objeto");
-			cambiarObjeto(personaje.especificarObjeto(), personaje.getLocalizacion(), personaje);
+			objeto = personaje.especificarObjeto();
+			historia.concat("El personaje "+personaje+"decide coger el objeto:"+objeto+"del suelo de la sala" + personaje.getLocalizacion()+".\n");
+			cambiarObjeto(objeto, personaje.getLocalizacion(), personaje);
 			break;
 		case 5: //Dejar objeto
 			System.out.println("Dejar Objeto");
+			historia.concat("El personaje "+personaje+"decide dejar su objeto en el suelo de la sala" + personaje.getLocalizacion()+".\n");
 			cambiarObjeto(personaje, personaje.getLocalizacion());
 			break;
 		default:
+			historia.concat("El personaje "+personaje+"decide no hacer nada.\n");
 			System.out.println("Nada");
 			break;
 		}
