@@ -14,13 +14,15 @@ public class Creencias {
 	public Ubicacion[] getUbObjetos() {
 		return ubicacionesObjetos;
 	}
-	public void cambiarCreencia(PersonajeI personaje, Localizacion sala) {
+	//Un personaje se cambia de sala
+	public void cambiarCreencia(Personaje personaje, Localizacion sala) {
 		for(int i = 0; i < ubicacionesPersonajes.length; i++) {
 			if(personaje.getNombre() == ubicacionesPersonajes[i].getNombre()) {
 				ubicacionesPersonajes[i].setLugar(sala.getNombre());
 			}
 		}
 	}
+	//Un objeto pasa a estar en una sala
 	public void cambiarCreencia(Objeto objeto, Localizacion sala) {
 		for(int i = 0; i < ubicacionesPersonajes.length; i++) {
 			if(objeto.getNombre() == ubicacionesObjetos[i].getNombre()) {
@@ -28,7 +30,8 @@ public class Creencias {
 			}
 		}
 	}
-	public void cambiarCreencia(Objeto objeto, PersonajeI personaje) {
+	//Un objeto pasa a estar en un personaje
+	public void cambiarCreencia(Objeto objeto, Personaje personaje) {
 		for(int i = 0; i < ubicacionesPersonajes.length; i++) {
 			if(objeto.getNombre() == ubicacionesObjetos[i].getNombre()) {
 				ubicacionesObjetos[i].setLugar(personaje.getNombre());

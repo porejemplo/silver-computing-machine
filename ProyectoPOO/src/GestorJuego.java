@@ -13,6 +13,7 @@ public class GestorJuego {
 	private Objeto solicitudes[][];
 	//La historia será un string que se irá rellenando con las acciones de cada uno de los personajes.
 	private String historia="";
+	private short acabado = 0;
 	
 	
 
@@ -35,11 +36,15 @@ public class GestorJuego {
 	}
 	
 	public void siguienteRonda() {
-		ronda++;
-		historia.concat("Comienza la ronda: " +ronda+".\n");
-		System.out.print("\nComienza la ronda "+ronda);
-		for(int i = 0; i < listaPersonajes.length; i++) {
-			ejecutarAccion(listaPersonajes[i], pedirAccion(listaPersonajes[i],accionesPermitidas(listaPersonajes[i])));
+		if(acabado == listaPersonajes.length) {
+			finalizar();
+		}else {
+			ronda++;
+			historia.concat("Comienza la ronda: " +ronda+".\n");
+			System.out.print("\nComienza la ronda "+ronda);
+			for(int i = 0; i < listaPersonajes.length; i++) {
+				ejecutarAccion(listaPersonajes[i], pedirAccion(listaPersonajes[i],accionesPermitidas(listaPersonajes[i])));
+			}
 		}
 	}
 	
@@ -66,7 +71,7 @@ public class GestorJuego {
 			}
 		}
 		//4. Coger objeto. Si hay objetos sueltos en la sala, entonces puede coger uno de ellos
-		if(personaje.getLocalizacion().GetObjetos().size()>0) acciones[3] = true;
+		if(personaje.getLocalizacion().getObjetos().size()>0) acciones[3] = true;
 		
 		//5. Dejar objeto. Si el personaje lleva un objeto, puede decidir soltarlo
 		if(personaje.getObjeto()!=null) acciones[4] = true;
@@ -93,49 +98,67 @@ public class GestorJuego {
 	public void ejecutarAccion(Personaje personaje, int accion) {//NOMBRE.Hacer las acciones de cada personaje, falta completar
 		Objeto objeto;
 		Personaje otroPersonaje;
+		int i=0,j=0; //iteradores
 		switch(accion) {
-		case 1: //Ir a localizacion
+		case 0: //Ir a localizacion
 			System.out.println("Cambiar de sala");
 			historia.concat("El personaje "+personaje+" decide cambiarse de sala.");
-			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala());
+			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala(personaje.getLocalizacion().getLocalizacionesAdyacentes()));
 			historia.concat("Ahora se encuentra en la sala "+personaje.getLocalizacion().getNombre()+".\n");
 			break;
-		case 2: //Pedir objeto
-			objeto = personaje.especificarObjeto();
-			otroPersonaje= personaje.especificarPersonaje();
+		case 1: //Pedir objeto
+			objeto = personaje.especificarObjeto(listaObjetos);
+			otroPersonaje= personaje.especificarPersonaje(personaje.getLocalizacion().getPersonajes().toArray(listaPersonajes));
 			System.out.println("Pedir Objeto");
 			historia.concat("El personaje "+personaje+"decide perdirle a "+otroPersonaje.getNombre()+" el objeto: "+ objeto+".\n");
-			int i,j;
+			
 			
 			//Obtener el indice del personaje que pide, en a lista de personajes
-			for(i=0; i < listaPersonajes.length || personaje.getNombre()==listaPersonajes[i].getNombre() ; i++);
+			for(i=0; i < listaPersonajes.length || personaje.equals(listaPersonajes[i]) ; i++);
 			
 			//Obtener el indice del personaje al que le piden, en la lista de personajes
-			for(j=0; j < listaPersonajes.length || otroPersonaje.getNombre()==listaPersonajes[j].getNombre() ; j++);
+			for(j=0; j < listaPersonajes.length || otroPersonaje.equals(listaPersonajes[j]) ; j++);
 			
 			//Almacenar la solicitud en la matriz
 			solicitudes[i][j]=objeto;
 			
 			break;
-		case 3: //Dar objeto
+		case 2: //Dar objeto
+			//Obtener indice del solicitado
+			for(i=0; i < listaPersonajes.length || personaje.equals(listaPersonajes[i]) ; i++);
+			//Obtener solicitantes 
+			for(int k = 0; k < listaPersonajes.length; k++) {
+				if(solicitudes[k][i]!=null) {
+					j++;
+				}
+			}
+			//Crear un array con todos los personajes que le hayan pedido un objeto la ronda anterior
+			Personaje solicitantes[] = new Personaje[j];
+			for(int k = 0; k < listaPersonajes.length; k++) {
+				if(solicitudes[k][i]!=null) {
+					solicitantes[k]=listaPersonajes[k];
+				}
+			}
+			
 			System.out.println("Dar Objeto");
-			otroPersonaje = personaje.especificarPersonaje();
-			historia.concat("El personaje "+personaje+"decide darle a "+otroPersonaje.getNombre()+" su objeto.\n");
+			otroPersonaje = personaje.especificarPersonaje(solicitantes);
+			historia.concat("El personaje "+personaje+" decide darle a "+otroPersonaje.getNombre()+" su objeto.\n");
 			cambiarObjeto(personaje, otroPersonaje);
 			break;
-		case 4: //Coger objeto
+		case 3: //Coger objeto
 			System.out.println("Coger Objeto");
-			objeto = personaje.especificarObjeto();
-			historia.concat("El personaje "+personaje+"decide coger el objeto:"+objeto+"del suelo de la sala" + personaje.getLocalizacion()+".\n");
+			objeto = personaje.especificarObjeto(personaje.getLocalizacion().getObjetos().toArray(listaObjetos));
+			historia.concat("El personaje "+personaje+" decide coger el objeto: "+objeto+" del suelo de la sala " + personaje.getLocalizacion()+".\n");
 			cambiarObjeto(objeto, personaje.getLocalizacion(), personaje);
 			break;
-		case 5: //Dejar objeto
+		case 4: //Dejar objeto
 			System.out.println("Dejar Objeto");
-			historia.concat("El personaje "+personaje+"decide dejar su objeto en el suelo de la sala" + personaje.getLocalizacion()+".\n");
+			historia.concat("El personaje "+personaje+" decide dejar su objeto en el suelo de la sala " + personaje.getLocalizacion()+".\n");
 			cambiarObjeto(personaje, personaje.getLocalizacion());
 			break;
 		default:
-			historia.concat("El personaje "+personaje+"decide no hacer nada.\n");
+			historia.concat("El personaje "+personaje+" decide no hacer nada.\n");
+			acabado++;
 			System.out.println("Nada");
 			break;
 		}
@@ -187,7 +210,13 @@ public class GestorJuego {
 		}
 		
 	}
+	
+	public void finalizar() {
+		//Terminar el juego, escribir en fichero, mostrar historia
+	}
 }
 
-//NOMBRE.Decidir cuando el juego se ha acabado
+
+
+
 

@@ -57,7 +57,7 @@ public class Localizacion {
         l.removePersonaje(p1);
         System.out.println(l.toString());
     }*/
-    public ArrayList<Objeto> GetObjetos(){
+    public ArrayList<Objeto> getObjetos(){
         return objetos;
     }
 
