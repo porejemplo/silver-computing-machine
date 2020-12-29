@@ -63,6 +63,14 @@ public abstract class Personaje{
 		this.objetivo = objetivo;
 	}
 	
+	public String toString() {
+		String s = "Nombre: " + getNombre() + "\tLocalizacion: " + getLocalizacion().getNombre() + "\tObjeto: ";
+		if (getObjeto() != null && (getObjeto().getNombre() != null || getObjeto().getNombre().length() > 0))
+			s += getObjeto().getNombre();
+		s+="\n";
+		return s;
+	}
+	
 
 	//Para los hijos, tiene que devolver que accion va a hacer en formato numerico
 	public abstract int elegirAccion(boolean[] acciones);

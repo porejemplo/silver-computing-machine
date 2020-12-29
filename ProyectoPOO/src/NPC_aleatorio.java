@@ -5,6 +5,10 @@ public class NPC_aleatorio extends NPCs{
 		super(nombre, objeto, creencia, localizacion, objetivo);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public NPC_aleatorio(String nombre, Localizacion localizacion) {
+		super (nombre, localizacion);
+	}
 
 	@Override
 	public int elegirAccion(boolean[] acciones) {

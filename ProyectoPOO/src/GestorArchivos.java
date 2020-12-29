@@ -49,11 +49,16 @@ public class GestorArchivos {
         this.anexo1 = new File(anexo1);
         crearListasAnexoI();
         darValorListasAnexoI();
+        unirLocalizacionesAdyacentes();
     }
     
     
     public static void main(String[] args) {
         GestorArchivos ga = new GestorArchivos ("Anexo1.txt");
+        
+        /*for(int i = 0; i < ga.getListaPersonajes().length; i++) {
+        	System.out.println(ga.getListaPersonajes()[i].toString());
+        }*/
     }
     
     private void crearListasAnexoI() {
@@ -97,7 +102,7 @@ public class GestorArchivos {
             while (s.hasNextLine()) {
                 String linea = s.nextLine();
                 if(linea.charAt(0) == '<') {
-                	System.out.println("Tipo de Objeto: " + linea);
+                	//System.out.println("Tipo de Objeto: " + linea);
                 	if (linea.equals("<Localizaciones>"))
                 		i = 0;
                 	else if (linea.equals("<Personaje>"))
@@ -114,11 +119,8 @@ public class GestorArchivos {
                 	else if(i == 1) {
                 		guardarPersonaje(sl);
                 	}
-                	else {
-                		System.out.println("\tNombre: " + sl.next());
-                        while (sl.hasNext()){
-                            System.out.println("\t\tContenido: " + sl.next());
-                        }
+                	else if (i == 2) {
+                		guardarObjeto(sl);
                 	}
                     sl.close();
                 }
@@ -128,9 +130,7 @@ public class GestorArchivos {
             e.printStackTrace();
         }
     }
-    
-    
-    
+        
     private void guardarLocalizacion(Scanner scanner) {
     	for (int i = 0; i <= listaSalas.length; i++) {
     		if (listaSalas[i] == null) {
@@ -139,7 +139,7 @@ public class GestorArchivos {
     			int cont = 0;
     			while (scanner.hasNext()){
     				cont++;
-                    System.out.println("\t\tContenido: " + scanner.next());
+                    scanner.next();
                 }
     			listaSalas[i].setLocalizacionesAdyacentes(new Localizacion[cont]);
     			break;
@@ -151,20 +151,91 @@ public class GestorArchivos {
     	for (int i = 0; i <= listaPersonajes.length; i++) {
     		if (listaPersonajes[i] == null) {
     			String nombre = scanner.next();
-    			Localizacion localizacion = scanner.next();
-    			listaPersonajes[i] = new Personaje(nombre, localizacion);
+    			Localizacion localizacion = buscarSala(scanner.next());
+    			listaPersonajes[i] = new NPC_aleatorio(nombre, localizacion);
     			break;
     		}
     	}
     }
     
-    private Localizacion buscarSala(String nombre) {
-    	int i = 0;
-    	for(i = 0; i <= listaSalas.length; i++) {
-    		if (listaSalas[i].getNombre().equals(nombre))
+    private void guardarObjeto(Scanner scanner) {
+    	for (int i = 0; i <= listaObjetos.length; i++) {
+    		if (listaObjetos[i] == null) {
+    			// Se crea el objeto
+    			listaObjetos[i] = new Objeto(scanner.next());
+    			// Se le asigna el objeto al jugador o localizacion corespondiente.
+    			String nombre = scanner.next();
+    			Localizacion localizacion = buscarSala(nombre);
+    			if (localizacion != null) {
+    				localizacion.addObjeto(listaObjetos[i]);
+    			}
+    			else {
+    				Personaje personaje = buscarPersonaje(nombre);
+    				if (personaje != null) {
+    					personaje.setObjeto(listaObjetos[i]);
+        			}
+    			}
+    			
     			break;
+    		}
+    	}
+    }
+    
+    private void unirLocalizacionesAdyacentes() {
+    	try{
+    		int caso = 1;
+    		int contSalas = 0;
+    		int contSalasAdyacentes = 0;
+            s = new Scanner (anexo1);
+            while (s.hasNextLine()) {
+                String linea = s.nextLine();
+                if(linea.charAt(0) == '<') {
+                	//System.out.println("Tipo de Objeto: " + linea);
+                	if (linea.equals("<Localizaciones>"))
+                		caso = 0;
+                	else
+                		caso=1;
+                }
+                else if (caso == 0){
+                	Scanner sl = new Scanner (linea);
+                    sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
+                    sl.next();
+                    while (sl.hasNext()){
+                    	listaSalas[contSalas].getLocalizacionesAdyacentes()[contSalasAdyacentes] = buscarSala(sl.next());
+                    	contSalasAdyacentes++;
+                    }
+                    sl.close();
+                	contSalas++;
+                	contSalasAdyacentes = 0;
+                }
+            }
+            s.close();
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+    
+    private Localizacion buscarSala(String nombre) {
+    	Localizacion localizacion = null;
+    	for(int i = 0; i < listaSalas.length; i++) {
+    		if (listaSalas[i].getNombre().equals(nombre)) {
+    			localizacion = listaSalas[i];
+    			break;
+    		}
     	}
     	
-    	return listaSalas[i];
+    	return localizacion;
+    }
+    
+    private Personaje buscarPersonaje(String nombre) {
+    	Personaje personaje = null;
+    	for(int i = 0; i < listaPersonajes.length; i++) {
+    		if (listaPersonajes[i].getNombre().equals(nombre)) {
+    			personaje = listaPersonajes[i];
+    			break;
+    		}
+    	}
+    	
+    	return personaje;
     }
 }
