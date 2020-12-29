@@ -55,10 +55,10 @@ public class GestorArchivos {
     
     public static void main(String[] args) {
         GestorArchivos ga = new GestorArchivos ("Anexo1.txt");
-        
-        /*for(int i = 0; i < ga.getListaPersonajes().length; i++) {
+        System.out.println("Hola");
+        for(int i = 0; i < ga.getListaPersonajes().length; i++) {
         	System.out.println(ga.getListaPersonajes()[i].toString());
-        }*/
+        }
     }
     
     private void crearListasAnexoI() {
