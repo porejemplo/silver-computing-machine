@@ -7,9 +7,8 @@ public class Localizacion {
     private ArrayList<Objeto> objetos = new ArrayList<Objeto>();
 
     // Constructor
-    public Localizacion(String nombre, Localizacion[] localizacionesAdyacentes) {
+    public Localizacion(String nombre) {
         setNombre(nombre);
-        setLocalizacionesAdyacentes(localizacionesAdyacentes);
     }
 
     // Get Set
