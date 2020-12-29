@@ -22,6 +22,12 @@ public abstract class Personaje{
         setObjetivo(objetivo);
         localizacion.addPersonaje(this);
     }
+    
+    public Personaje (String nombre, Localizacion localizacion) {
+    	setNombre(nombre);
+        setLocalizacion(localizacion);
+        localizacion.addPersonaje(this);
+    }
 
     public Boolean equals(Personaje personaje){
         return this.nombre == personaje.getNombre();
