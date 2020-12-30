@@ -1,12 +1,16 @@
 
 public class Ubicacion {
 	private String nombre;
-	//private String tipo; //Esto por si más adelante añadimos los tipos de personajes
+	//private String tipo; //Esto por si mï¿½s adelante aï¿½adimos los tipos de personajes
 	private String lugar;
 	
 	public Ubicacion(String nombre, String lugar /*, String tipo*/) {
 		this.nombre = nombre;
 		/*this.tipo = tipo*/
+		this.lugar = lugar;
+	}
+	
+	public Ubicacion(String lugar) {
 		this.lugar = lugar;
 	}
 	
