@@ -1,0 +1,9 @@
+<Localización Personajes>
+Jorge(Jardín)
+Esther(Comedor)
+María(Comedor)
+<Posesión Objetos>
+Llave(Esther)
+Ordenador
+Cartera(Jorge)
+Pan(María)
