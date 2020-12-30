@@ -50,15 +50,6 @@ public class GestorArchivos {
         this.anexo1 = new File(anexo1);
     }
     
-    
-    public static void main(String[] args) {
-        GestorArchivos ga = new GestorArchivos ("Anexo1.txt", "AnexoII.txt");
-        //System.out.println("Hola");
-        for(int i = 0; i < ga.getListaPersonajes().length; i++) {
-        	System.out.println(ga.getListaPersonajes()[i].toString());
-        }
-    }
-    
     private void crearListasAnexoI() {
     	try {
     		int tipo = -1;
