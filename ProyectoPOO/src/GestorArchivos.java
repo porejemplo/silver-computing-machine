@@ -5,11 +5,19 @@ import java.util.Scanner;
 public class GestorArchivos {
 	private File anexo1;
     private File anexo2;
-    private Scanner s;
+    private String nombreArchivo;
+    
+    final String regEncabezado = "<Localizaciones>|<Personajes>|<Objetos>|<Localización Personajes>|<Posesión Objetos>";
+    final String regContenidoAnexoI = "^[\\wáéíóú+\s*]+\\(([\\wáéíóú+\s*]+,)*[\\wáéíóú+\s*]+\\)";
+    final String regContenidoAnexoII = "^[\\wáéíóú+\s*]+(\\([\\wáéíóú+\s*]+\\))?";
     
     private Localizacion[] listaSalas;
     private Personaje[] listaPersonajes;
 	private Objeto[] listaObjetos;
+	
+	// Utiles
+	private int nLinea = 0;
+	private int selector = 0;
 	
 	// Getter y seters
 	public Localizacion[] getListaSalas() {
@@ -36,94 +44,155 @@ public class GestorArchivos {
 		this.listaObjetos = listaObjetos;
 	}
 
-    // Constructor.
-    public GestorArchivos(String anexo1, String anexo2){
-        this.anexo1 = new File(anexo1);
-        crearListasAnexoI();
-        darValorListasAnexoI();
-        unirLocalizacionesAdyacentes();
-        this.anexo2 = new File(anexo2);
-        darValoresAnexoII();
+    // Constructor.    
+    public GestorArchivos(){};
+    public GestorArchivos(File fAnexoI, File fAnexoII) {
+        this.anexo1 = fAnexoI;
+        this.anexo2 = fAnexoII;
+    }
+    public GestorArchivos(String fAnexoI, String fAnexoII) {
+        this.anexo1 = new File(fAnexoI);
+        this.anexo2 = new File(fAnexoII);
     }
     
-    public GestorArchivos(String anexo1){
-        this.anexo1 = new File(anexo1);
-    }
-    
-    private void crearListasAnexoI() {
-    	try {
-    		int tipo = -1;
-        	int cont = 0;
-        	s = new Scanner (anexo1);
-            while (s.hasNextLine()) {
-                String linea = s.nextLine();
-                if(linea.charAt(0) == '<' || !s.hasNextLine()) {
-                	if (s.hasNextLine())
-                		cont--;
-                	
-                	if (tipo == 0)
-                		setListaSalas(new Localizacion[cont]);
-                	else if (tipo == 1)
-                		setListaPersonajes(new Personaje[cont]);
-                	else if (tipo == 2)
-                		setListaObjetos(new Objeto[cont]);
-                	
-                	cont = 0;
-                	
-                	if (linea.equals("<Localizaciones>"))
-                		tipo = 0;
-                	else if (linea.equals("<Personaje>"))
-                		tipo = 1;
-                	else if (linea.equals("<Objetos>"))
-                		tipo = 2;
-                }
-                cont++;
-            }
-    	} catch (FileNotFoundException e){
+    public static void main(String[] args) {
+        GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
+        try{
+            ga.leerAnexos();
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (GestorArchivosException e) {
             e.printStackTrace();
         }
     }
     
-    private void darValorListasAnexoI() {
-    	try{
-    		int i = 0;
-            s = new Scanner (anexo1);
-            while (s.hasNextLine()) {
-                String linea = s.nextLine();
-                if(linea.charAt(0) == '<') {
-                	//System.out.println("Tipo de Objeto: " + linea);
-                	if (linea.equals("<Localizaciones>"))
-                		i = 0;
-                	else if (linea.equals("<Personaje>"))
-                		i = 1;
-                	else
-                		i = 2;
-                }
-                else{
-                	Scanner sl = new Scanner (linea);
-                    sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
-                	if(i == 0) {
-                		guardarLocalizacion(sl);
-                	}
-                	else if(i == 1) {
-                		guardarPersonaje(sl);
-                	}
-                	else if (i == 2) {
-                		guardarObjeto(sl);
-                	}
-                    sl.close();
-                }
+    public void leerAnexos() throws FileNotFoundException, GestorArchivosException
+    {
+        Scanner s = new Scanner (anexo1);
+        nombreArchivo = anexo1.getName();
+        comprobarFormatoAnexoI(s);
+        s = new Scanner (anexo1);
+        crearListasAnexoI(s);
+        s = new Scanner (anexo1);
+        darValorListasAnexoI(s);
+        s = new Scanner (anexo1);
+        unirLocalizacionesAdyacentes(s);
+
+        s = new Scanner (anexo2);
+        nombreArchivo = anexo2.getName();
+        comprobarFormatoAnexoII(s);
+        s = new Scanner (anexo2);
+        darValoresAnexoII(s);
+
+        s.close();
+    }
+    
+    private void comprobarFormatoAnexoI(Scanner s) throws GestorArchivosException
+    {
+        nLinea = 0;
+        while (s.hasNextLine()) {
+            ++nLinea;
+            String linea = s.nextLine();
+            if(linea.charAt(0) == '<'){
+                if (!linea.matches(regEncabezado))
+                    throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
             }
-            s.close();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
+            else if (!linea.matches(regContenidoAnexoI)){
+            	throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
+            }
+        }
+    }
+
+    private void comprobarFormatoAnexoII(Scanner s) throws GestorArchivosException
+    {
+        nLinea = 0;
+        while (s.hasNextLine()) {
+            ++nLinea;
+            String linea = s.nextLine();
+            if(linea.charAt(0) == '<'){
+                if (!linea.matches(regEncabezado))
+                	throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
+            }
+            else if (!linea.matches(regContenidoAnexoII)){
+            	throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
+            }
+        }
+    }
+    
+    private void crearListasAnexoI(Scanner s) {
+    	selector = -1;
+    	int contadorSalas = 0;
+    	int contadorPersonajes = 0;
+    	int contadorObjetos = 0;
+        while (s.hasNextLine()) {
+            String linea = s.nextLine();
+            if(linea.charAt(0) == '<' || !s.hasNextLine()) {
+            	if (linea.equals("<Localizaciones>"))
+            		selector = 0;
+            	else if (linea.equals("<Personajes>"))
+            		selector = 1;
+            	else if (linea.equals("<Objetos>"))
+            		selector = 2;
+            }
+            else {
+            	if (selector == 0)
+            		contadorSalas++;
+            	else if (selector == 1)
+            		contadorPersonajes++;
+            	else if (selector == 2)
+            		contadorObjetos++;
+            }
+        }
+        if (selector == 0)
+    		contadorSalas++;
+    	else if (selector == 1)
+    		contadorPersonajes++;
+    	else if (selector == 2)
+    		contadorObjetos++;
+        
+        setListaSalas(new Localizacion[contadorSalas]);
+    	setListaPersonajes(new Personaje[contadorPersonajes]);
+    	setListaObjetos(new Objeto[contadorObjetos]);
+    }
+    
+    private void darValorListasAnexoI(Scanner s) throws GestorArchivosException
+    {
+    	nLinea = 0;
+    	selector = 0;
+        while (s.hasNextLine()) {
+        	nLinea++;
+            String linea = s.nextLine();
+            if(linea.charAt(0) == '<') {
+            	if (linea.equals("<Localizaciones>"))
+            		selector = 0;
+            	else if (linea.equals("<Personajes>"))
+            		selector = 1;
+            	else
+            		selector = 2;
+            }
+            else{
+            	Scanner sl = new Scanner (linea);
+                sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
+            	if(selector == 0) {
+            		guardarLocalizacion(sl);
+            	}
+            	else if(selector == 1) {
+            		guardarPersonaje(sl);
+            	}
+            	else if (selector == 2) {
+            		guardarObjeto(sl);
+            	}
+                sl.close();
+            }
         }
     }
         
-    private void guardarLocalizacion(Scanner scanner) {
+    private void guardarLocalizacion(Scanner scanner) throws GestorArchivosException
+    {
+    	String nombreDeSala = scanner.next();
     	for (int i = 0; i <= listaSalas.length; i++) {
     		if (listaSalas[i] == null) {
-    			listaSalas[i] = new Localizacion(scanner.next());
+    			listaSalas[i] = new Localizacion(nombreDeSala);
     			//Contar el numero de localizacione sdayacentes que tiene.
     			int cont = 0;
     			while (scanner.hasNext()){
@@ -133,27 +202,35 @@ public class GestorArchivos {
     			listaSalas[i].setLocalizacionesAdyacentes(new Localizacion[cont]);
     			break;
     		}
-    	}
-    }
-    
-    private void guardarPersonaje(Scanner scanner) {
-    	for (int i = 0; i <= listaPersonajes.length; i++) {
-    		if (listaPersonajes[i] == null) {
-    			String nombre = scanner.next();
-    			Localizacion localizacion = buscarSala(scanner.next());
-    			listaPersonajes[i] = new NPC_aleatorio(nombre, localizacion);
-    			break;
+    		else if (listaSalas[i].getNombre() == nombreDeSala) {
+    			throw new GestorArchivosException(nLinea,nombreArchivo,"sala repetida");
     		}
     	}
     }
     
-    private void guardarObjeto(Scanner scanner) {
+    private void guardarPersonaje(Scanner scanner) throws GestorArchivosException
+    {
+    	String nombre = scanner.next();
+    	for (int i = 0; i <= listaPersonajes.length; i++) {
+    		if (listaPersonajes[i] == null) {
+    			Localizacion localizacion = buscarSalaSeguro(scanner.next());
+    			listaPersonajes[i] = new NPC_aleatorio(nombre, localizacion);
+    			break;
+    		}
+    		else if (listaPersonajes[i].getNombre() == nombre)
+    			throw new GestorArchivosException(nLinea,nombreArchivo,"personaje repetido");
+    	}
+    }
+    
+    private void guardarObjeto(Scanner scanner) throws GestorArchivosException
+    {
+    	String nombre = scanner.next();
     	for (int i = 0; i <= listaObjetos.length; i++) {
     		if (listaObjetos[i] == null) {
     			// Se crea el objeto
-    			listaObjetos[i] = new Objeto(scanner.next());
+    			listaObjetos[i] = new Objeto(nombre);
     			// Se le asigna el objeto al jugador o localizacion corespondiente.
-    			String nombre = scanner.next();
+    			nombre = scanner.next();
     			Localizacion localizacion = buscarSala(nombre);
     			if (localizacion != null) {
     				localizacion.addObjeto(listaObjetos[i]);
@@ -163,93 +240,87 @@ public class GestorArchivos {
     				if (personaje != null) {
     					personaje.setObjeto(listaObjetos[i]);
         			}
+    				else
+    					throw new GestorArchivosException(nLinea,nombreArchivo,"referencia inexistente a " + nombre);
     			}
     			
     			break;
     		}
+    		else if (listaObjetos[i].getNombre() == nombre)
+    			throw new GestorArchivosException(nLinea,nombreArchivo,"objeto repetido");
     	}
     }
     
-    private void unirLocalizacionesAdyacentes() {
-    	try{
-    		int caso = 1;
-    		int contSalas = 0;
-    		int contSalasAdyacentes = 0;
-            s = new Scanner (anexo1);
-            while (s.hasNextLine()) {
-                String linea = s.nextLine();
-                if(linea.charAt(0) == '<') {
-                	//System.out.println("Tipo de Objeto: " + linea);
-                	if (linea.equals("<Localizaciones>"))
-                		caso = 0;
-                	else
-                		caso=1;
-                }
-                else if (caso == 0){
-                	Scanner sl = new Scanner (linea);
-                    sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
-                    sl.next();
-                    while (sl.hasNext()){
-                    	listaSalas[contSalas].getAdyacencias()[contSalasAdyacentes] = buscarSala(sl.next());
-                    	contSalasAdyacentes++;
-                    }
-                    sl.close();
-                	contSalas++;
-                	contSalasAdyacentes = 0;
-                }
+    private void unirLocalizacionesAdyacentes(Scanner s) throws GestorArchivosException
+    {
+    	nLinea = 0;
+    	selector = 1;
+		int contSalas = 0;
+		int contSalasAdyacentes = 0;
+        while (s.hasNextLine()) {
+        	nLinea++;
+            String linea = s.nextLine();
+            if(linea.charAt(0) == '<') {
+            	if (linea.equals("<Localizaciones>"))
+            		selector = 0;
+            	else
+            		selector=1;
             }
-            s.close();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
+            else if (selector == 0){
+            	Scanner sl = new Scanner (linea);
+                sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
+                sl.next();
+                while (sl.hasNext()){
+                	listaSalas[contSalas].getAdyacencias()[contSalasAdyacentes] = buscarSalaSeguro(sl.next());
+                	contSalasAdyacentes++;
+                }
+                sl.close();
+            	contSalas++;
+            	contSalasAdyacentes = 0;
+            }
         }
     }
     
-    private void darValoresAnexoII() {
-    	try{
-    		int i = 0;
-            s = new Scanner (anexo2);
-            while (s.hasNextLine()) {
-                String linea = s.nextLine();
-                if(linea.charAt(0) == '<') {
-                	//System.out.println("Tipo de Objeto: " + linea);
-                	if (linea.equals("<Localización Personajes>"))
-                		i = 0;
-                	else if (linea.equals("<Posesión Objetos>"))
-                		i = 1;
-                }
-                else{
-                	Scanner sl = new Scanner (linea);
-                    sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
-                    if (sl.hasNext()) {
-	                	if(i == 0) {
-	                		guardarLocalizacionObjetivo(sl);
-	                	}
-	                	else if(i == 1) {
-	                		guardarObjetoObjetivo(sl);
-	                	}
-                    }
-                    sl.close();
-                }
+    private void darValoresAnexoII(Scanner s) throws GestorArchivosException
+    {
+    	nLinea = 0;
+		selector = 0;
+        while (s.hasNextLine()) {
+        	nLinea++;
+            String linea = s.nextLine();
+            if(linea.charAt(0) == '<') {
+            	if (linea.equals("<Localización Personajes>"))
+            		selector = 0;
+            	else if (linea.equals("<Posesión Objetos>"))
+            		selector = 1;
             }
-            s.close();
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
+            else{
+            	Scanner sl = new Scanner (linea);
+                sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
+            	if(selector == 0) {
+            		guardarLocalizacionObjetivo(sl);
+            	}
+            	else if(selector == 1) {
+            		guardarObjetoObjetivo(sl);
+            	}
+                sl.close();
+            }
         }
     }
     
-    private void guardarLocalizacionObjetivo(Scanner scanner) {
-    	Personaje personaje = buscarPersonaje(scanner.next());
+    private void guardarLocalizacionObjetivo(Scanner scanner) throws GestorArchivosException {
+    	Personaje personaje = buscarPersonajeSeguro(scanner.next());
     	
     	if (personaje != null)
 			personaje.setObjetivo(new Ubicacion(scanner.next()));
     }
     
-    private void guardarObjetoObjetivo(Scanner scanner) {
+    private void guardarObjetoObjetivo(Scanner scanner) throws GestorArchivosException {
     	String objeto = scanner.next();
     	Personaje personaje = null;
     	
     	if (scanner.hasNext()) {
-    		personaje = buscarPersonaje(scanner.next());
+    		personaje = buscarPersonajeSeguro(scanner.next());
         	
         	if (personaje != null)
         		personaje.getObjetivo().setNombre(objeto);
@@ -264,10 +335,15 @@ public class GestorArchivos {
     			break;
     		}
     	}
-    	if (localizacion == null) {
-    		System.out.println("ERROR\nNo se encuentra Localizacion " + nombre);
-    	}
     	
+    	return localizacion;
+    }
+    
+    private Localizacion buscarSalaSeguro(String nombre) throws GestorArchivosException
+    {
+    	Localizacion localizacion = buscarSala(nombre);
+    	if (localizacion == null)
+    		throw new GestorArchivosException(nLinea,nombreArchivo,"referencia inexistente a " + nombre);
     	return localizacion;
     }
     
@@ -279,10 +355,15 @@ public class GestorArchivos {
     			break;
     		}
     	}
-    	if (personaje == null) {
-    		System.out.println("ERROR\nNo se encuentra Personaje " + nombre);
-    	}
     	
+    	return personaje;
+    }
+    
+    private Personaje buscarPersonajeSeguro(String nombre) throws GestorArchivosException
+    {
+    	Personaje personaje = buscarPersonaje(nombre);
+    	if (personaje == null)
+    		throw new GestorArchivosException(nLinea,nombreArchivo,"referencia inexistente a " + nombre);
     	return personaje;
     }
 }
