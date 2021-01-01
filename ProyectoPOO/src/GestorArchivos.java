@@ -190,7 +190,7 @@ public class GestorArchivos {
                     sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
                     sl.next();
                     while (sl.hasNext()){
-                    	listaSalas[contSalas].getLocalizacionesAdyacentes()[contSalasAdyacentes] = buscarSala(sl.next());
+                    	listaSalas[contSalas].getAdyacencias()[contSalasAdyacentes] = buscarSala(sl.next());
                     	contSalasAdyacentes++;
                     }
                     sl.close();

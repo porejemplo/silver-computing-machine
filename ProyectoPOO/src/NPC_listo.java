@@ -66,7 +66,7 @@ public class NPC_listo extends NPCs{
 				return disponibles[i];
 			}
 		}
-		return null;
+		return disponibles[(int)(Math.random()*disponibles.length)];
 	}
 
 	public Objeto especificarObjeto(Objeto[] disponibles) {

@@ -103,7 +103,7 @@ public class GestorJuego {
 		case 0: //Ir a localizacion
 			System.out.println("Cambiar de sala");
 			historia.concat("El personaje "+personaje+" decide cambiarse de sala.");
-			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala(personaje.getLocalizacion().getLocalizacionesAdyacentes()));
+			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala(personaje.getLocalizacion().getAdyacencias()));
 			historia.concat("Ahora se encuentra en la sala "+personaje.getLocalizacion().getNombre()+".\n");
 			break;
 		case 1: //Pedir objeto
@@ -213,6 +213,23 @@ public class GestorJuego {
 	
 	public void finalizar() {
 		//Terminar el juego, escribir en fichero, mostrar historia
+	}
+	
+	public String toString() {
+		String estado ="";
+		estado += "<Localizaciones>\n";
+		for(int i = 0; i < listaSalas.length; i++) {
+			estado += (listaSalas[i].getNombre()+"(");
+			for(int j = 0; j < listaSalas[i].getAdyacencias().length-1; j++) {
+				estado += (listaSalas[i].getAdyacencias()[j].getNombre() + ",");
+			}
+			estado += (listaSalas[i].getAdyacencias()[listaSalas[i].getAdyacencias().length].getNombre() + ")\n");
+		}
+		estado += "<Personajes>\n";
+		for(int i = 0; i < listaPersonajes.length; i++) {
+			
+		}
+		return estado;
 	}
 }
 

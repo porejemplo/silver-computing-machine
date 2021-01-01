@@ -12,7 +12,7 @@ public class Localizacion {
     }
 
     // Get Set
-    public Localizacion[] getLocalizacionesAdyacentes() {
+    public Localizacion[] getAdyacencias() {
         return localizacionesAdyacentes;
     }
 
