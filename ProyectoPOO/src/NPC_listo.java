@@ -48,21 +48,34 @@ public class NPC_listo extends NPCs{
 		return 5;
 	}
 
-	@Override
+	
 	public Personaje especificarPersonaje(Personaje disponibles[]) {
-		// TODO Auto-generated method stub
+		//Obtener el personaje que coincide con su proposito
+		for(int i = 0; i < disponibles.length; i++) {
+			if(proposito.equals(disponibles[i].getNombre())){
+				return disponibles[i];
+			}
+		}
 		return null;
 	}
 
-	@Override
 	public Localizacion especificarSala(Localizacion[] disponibles) {
-		// TODO Auto-generated method stub
+		//Obtener el personaje que coincide con su proposito
+		for(int i = 0; i < disponibles.length; i++) {
+			if(proposito.equals(disponibles[i].getNombre())){
+				return disponibles[i];
+			}
+		}
 		return null;
 	}
 
-	@Override
 	public Objeto especificarObjeto(Objeto[] disponibles) {
-		// TODO Auto-generated method stub
+		//Obtener el objeto que esta buscando
+		for(int i = 0; i < disponibles.length; i++) {
+			if(objetivo.getNombre().equals(disponibles[i].getNombre())){
+				return disponibles[i];
+			}
+		}
 		return null;
 	}
 
