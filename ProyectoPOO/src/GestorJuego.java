@@ -171,11 +171,12 @@ public class GestorJuego {
 		origen.removePersonaje(personaje);
 		destino.addPersonaje(personaje);
 		
+		
 		//Informar a la sala del cambio
 		for(int i = 0; i < origen.getPersonajes().size(); i++){
 		  		origen.getPersonajes().get(i).getCreencias().cambiarCreencia(personaje,destino);
-		  }
-		
+		 }
+		enseñarSala(personaje,destino);
 		
 	}
 	public void cambiarObjeto(Personaje emisor, Personaje receptor) {
@@ -211,24 +212,43 @@ public class GestorJuego {
 		
 	}
 	
+	public void enseñarSala(Personaje personaje, Localizacion destino) {
+		//Actualizar las ubicaciones de los objetos que se encuentren en esa sala
+		for(int i = 0; i < destino.getObjetos().size();i++) {
+			personaje.getCreencias().cambiarCreencia(destino.getObjetos().get(i),destino);
+		}
+		//Actualizar las ubicaciones de los personajes que se ecnuentren en esa sala
+		for(int i = 0; i < destino.getPersonajes().size();i++) {
+			personaje.getCreencias().cambiarCreencia(destino.getPersonajes().get(i),destino);
+		}
+	}
+	/*public int indexOf(Objeto objeto, Objeto Objetos[]) {
+		int i = 0;
+		for(; i < Objetos.length || objeto.equals(Objetos[i]);i++);
+		return i;
+	}
+	public int indexOf(Personaje personaje, Personaje personajes[]) {
+		int i = 0;
+		for(; i < personajes.length || personaje.equals(personajes[i]);i++);
+		return i;
+	}*/
+	
 	public void finalizar() {
 		//Terminar el juego, escribir en fichero, mostrar historia
 	}
 	
 	public String toString() {
 		String estado ="";
-		estado += "<Localizaciones>\n";
+		estado.concat("<Localizaciones>\n") ;
 		for(int i = 0; i < listaSalas.length; i++) {
-			estado += (listaSalas[i].getNombre()+"(");
+			estado.concat(listaSalas[i].getNombre()+"(");
 			for(int j = 0; j < listaSalas[i].getAdyacencias().length-1; j++) {
-				estado += (listaSalas[i].getAdyacencias()[j].getNombre() + ",");
+				estado.concat(listaSalas[i].getAdyacencias()[j].getNombre() + ",");
 			}
-			estado += (listaSalas[i].getAdyacencias()[listaSalas[i].getAdyacencias().length].getNombre() + ")\n");
+			estado.concat(listaSalas[i].getAdyacencias()[listaSalas[i].getAdyacencias().length].getNombre() + ")\n");
 		}
-		estado += "<Personajes>\n";
-		for(int i = 0; i < listaPersonajes.length; i++) {
-			
-		}
+		estado += certezas;
+		
 		return estado;
 	}
 }

@@ -38,5 +38,17 @@ public class Creencias {
 			}
 		}
 	}
+	public String toString() {
+		String s = "";
+		s.concat("<Personajes>\n");
+		for (int i = 0; i < ubicacionesPersonajes.length; i++) {
+			s += ubicacionesPersonajes[i];
+		}
+		s.concat("<Objetos>\n");
+		for (int i = 0; i < ubicacionesObjetos.length; i++) {
+			s +=  ubicacionesObjetos[i];
+		}
+		return s;
+	}
 	
 }

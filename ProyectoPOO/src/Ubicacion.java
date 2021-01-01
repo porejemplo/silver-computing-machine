@@ -31,7 +31,7 @@ public class Ubicacion {
 	
 	
 	public String toString() {
-		return (nombre + "(" + lugar + ")");
+		return (nombre + "(" + lugar + ")\n");
 	}
 
 
