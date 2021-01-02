@@ -7,6 +7,7 @@ public class GestorArchivos {
     private File anexo2;
     private String nombreArchivo;
     
+    // Formato contra el que se van a comparar las lineas de los anexos.
     final String regEncabezado = "<Localizaciones>|<Personajes>|<Objetos>|<Localización Personajes>|<Posesión Objetos>";
     final String regContenidoAnexoI = "^[\\wáéíóú+\s*]+\\(([\\wáéíóú+\s*]+,)*[\\wáéíóú+\s*]+\\)";
     final String regContenidoAnexoII = "^[\\wáéíóú+\s*]+(\\([\\wáéíóú+\s*]+\\))?";
@@ -16,8 +17,8 @@ public class GestorArchivos {
 	private Objeto[] listaObjetos;
 	
 	// Utiles
-	private int nLinea = 0;
-	private int selector = 0;
+	private int nLinea = 0; // Se va a utilizar para guardar la linea que se esta utilizando e indicarlo en caso de error.
+	private int selector = 0; 
 	
 	// Getter y seters
 	public Localizacion[] getListaSalas() {
@@ -55,6 +56,7 @@ public class GestorArchivos {
         this.anexo2 = new File(fAnexoII);
     }
     
+    //Test Main
     public static void main(String[] args) {
         GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
         try{
@@ -66,8 +68,10 @@ public class GestorArchivos {
         }
     }
     
+    // Funciones
     public void leerAnexos() throws FileNotFoundException, GestorArchivosException
     {
+    	// Comenzamos con el anexoI
         Scanner s = new Scanner (anexo1);
         nombreArchivo = anexo1.getName();
         comprobarFormatoAnexoI(s);
@@ -77,7 +81,10 @@ public class GestorArchivos {
         darValorListasAnexoI(s);
         s = new Scanner (anexo1);
         unirLocalizacionesAdyacentes(s);
+        
+        crearCreencias();
 
+        // Sacamos los datos de los objetivos del anexoII
         s = new Scanner (anexo2);
         nombreArchivo = anexo2.getName();
         comprobarFormatoAnexoII(s);
@@ -87,38 +94,41 @@ public class GestorArchivos {
         s.close();
     }
     
+    // Comprueba si el formato del anexoI es correcto, se el pasa el scaner del documento completo.
     private void comprobarFormatoAnexoI(Scanner s) throws GestorArchivosException
     {
         nLinea = 0;
         while (s.hasNextLine()) {
             ++nLinea;
             String linea = s.nextLine();
-            if(linea.charAt(0) == '<'){
+            if(linea.charAt(0) == '<' || nLinea==1){ //Comprueba si la linea es un encabezado o si es la primera del documento.
                 if (!linea.matches(regEncabezado))
                     throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
             }
-            else if (!linea.matches(regContenidoAnexoI)){
+            else if (!linea.matches(regContenidoAnexoI)){ // Si no es un encabezado se mira si el formato es de contenido.
             	throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
             }
         }
     }
 
+    // Comprueba si el formato del anexoII es correcto, se el pasa el scaner del documento completo.
     private void comprobarFormatoAnexoII(Scanner s) throws GestorArchivosException
     {
         nLinea = 0;
         while (s.hasNextLine()) {
             ++nLinea;
             String linea = s.nextLine();
-            if(linea.charAt(0) == '<'){
+            if(linea.charAt(0) == '<' || nLinea==1){ //Comprueba si la linea es un encabezado o si es la primera del documento.
                 if (!linea.matches(regEncabezado))
                 	throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
             }
-            else if (!linea.matches(regContenidoAnexoII)){
+            else if (!linea.matches(regContenidoAnexoII)){// Si no es un encabezado se mira si el formato es de contenido.
             	throw new GestorArchivosException(nLinea,nombreArchivo,"Formato");
             }
         }
     }
     
+    // Se lee todo el arvhico y asigna los tamaños a cada array.
     private void crearListasAnexoI(Scanner s) {
     	selector = -1;
     	int contadorSalas = 0;
@@ -155,6 +165,7 @@ public class GestorArchivos {
     	setListaObjetos(new Objeto[contadorObjetos]);
     }
     
+    // Lee el documento y comienza a guardar valores en las listas
     private void darValorListasAnexoI(Scanner s) throws GestorArchivosException
     {
     	nLinea = 0;
@@ -308,6 +319,7 @@ public class GestorArchivos {
         }
     }
     
+    //Se el pasa el scanner de una localizacion objetivo y se lo guarda a un personaje.
     private void guardarLocalizacionObjetivo(Scanner scanner) throws GestorArchivosException {
     	Personaje personaje = buscarPersonajeSeguro(scanner.next());
     	
@@ -315,6 +327,7 @@ public class GestorArchivos {
 			personaje.setObjetivo(new Ubicacion(scanner.next()));
     }
     
+  //Se el pasa el scanner de un objeto objetivo y se lo guarda al personaje.
     private void guardarObjetoObjetivo(Scanner scanner) throws GestorArchivosException {
     	String objeto = scanner.next();
     	Personaje personaje = null;
@@ -327,6 +340,21 @@ public class GestorArchivos {
     	}
     }
     
+    private void crearCreencias() {
+    	for(int i=0; i<listaPersonajes.length; ++i) {
+    		// Se crea la lista de creencias indicando el tamaño de las listas
+    		listaPersonajes[i].setCreencia(new Creencias(listaPersonajes.length, listaObjetos.length));
+    		// Se recorre el array de personajes y se va guardado el nombre sin el valor.
+    		for (int j=0; i<listaPersonajes.length; j++) {
+    			listaPersonajes[i].getCreencias().getUbPersonajes()[j].setNombre(listaPersonajes[j].getNombre());
+    		}
+    		for (int j=0; i<listaObjetos.length; j++) {
+    			listaPersonajes[i].getCreencias().getUbPersonajes()[j].setNombre(listaObjetos[j].getNombre());
+    		}
+    	}
+    }
+    
+    //Funciones Buscar
     private Localizacion buscarSala(String nombre) {
     	Localizacion localizacion = null;
     	for(int i = 0; i < listaSalas.length; i++) {

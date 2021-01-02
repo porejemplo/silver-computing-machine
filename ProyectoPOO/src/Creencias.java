@@ -7,6 +7,11 @@ public class Creencias {
 		ubicacionesPersonajes = personajes;
 		ubicacionesObjetos = objetos;
 	}
+	//Uso gestor de archivos
+	public Creencias(int nPersonajes, int nObjetos) {
+		ubicacionesPersonajes = new Ubicacion[nPersonajes];
+		ubicacionesObjetos = new Ubicacion[nObjetos];
+	}
 	
 	public Ubicacion[] getUbPersonajes() {
 		return ubicacionesPersonajes;
