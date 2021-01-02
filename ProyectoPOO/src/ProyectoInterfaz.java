@@ -11,6 +11,11 @@ public class ProyectoInterfaz implements ActionListener{
 	private JTextArea informacion;
 	private Boolean numero = true;
 	private String info = "Alvaro la txupa"; // esto tiene que ser la informacion de lo que ha pasado en el turno
+	private Personaje arrayPersonajes[];
+	
+	public void setArrayPersonajes(Personaje arrayPersonajes[]) {
+		this.arrayPersonajes = arrayPersonajes;
+	}
 	
 	//Constructor de la Interfaz
 	public ProyectoInterfaz() {
