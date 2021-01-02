@@ -11,7 +11,7 @@ public class ProyectoInterfaz implements ActionListener{
 	private JFrame frame;
 	private JScrollPane sbrText;
 	private JTextArea informacion;
-	private Boolean numero[] = {true,true,true,true,true,true};
+	private static Boolean accionPosible[];
 	private static Personaje arrayPersonajes[];
 	private static Localizacion arrayLocalizacion[];
 	private static Objeto arrayObjetoDisponible[];
@@ -20,6 +20,10 @@ public class ProyectoInterfaz implements ActionListener{
 	private JButton arrayBotonLocalizacion[] = new JButton[arrayLocalizacion.length];
 	private JButton arrayBotonObjetoDisponible[] = new JButton[arrayObjetoDisponible.length];
 	private String info = "alvaro es gordo\n"; // esto tiene que ser la informacion de lo que ha pasado en el turno
+	
+	public void setAccionPosible(Boolean accionPosible[]) {
+		ProyectoInterfaz.accionPosible = accionPosible;
+	}
 	
 	public void setArrayPersonajes(Personaje arrayPersonajes[]) {
 		ProyectoInterfaz.arrayPersonajes = arrayPersonajes;
@@ -52,17 +56,17 @@ public class ProyectoInterfaz implements ActionListener{
 		act5.addActionListener(this);
 		act6.addActionListener(this);
 		//si una accion no es posible Deshabilitamos el boton correspondiente
-		if(numero[0] == false) {
+		if(accionPosible[0] == false) {
 			act1.setEnabled(false);
-		}if(numero[1] == false) {
+		}if(accionPosible[1] == false) {
 			act2.setEnabled(false);
-		}if(numero[2] == false) {
+		}if(accionPosible[2] == false) {
 			act3.setEnabled(false);
-		}if(numero[3] == false) {
+		}if(accionPosible[3] == false) {
 			act4.setEnabled(false);
-		}if(numero[4] == false) {
+		}if(accionPosible[4] == false) {
 			act5.setEnabled(false);
-		}if(numero[5] == false) {
+		}if(accionPosible[5] == false) {
 			act6.setEnabled(false);
 		}
 		
