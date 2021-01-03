@@ -11,7 +11,7 @@ public class GestorJuego {
 	//Solicitudes es una matriz de adyacencia del grafo dirigido asociado a los personajes
 	//Dos nodos conectados representan una solicitud de objeto de un personaje a otro
 	private Objeto solicitudes[][];
-	//La historia será un string que se irá rellenando con las acciones de cada uno de los personajes.
+	//La historia serï¿½ un string que se irï¿½ rellenando con las acciones de cada uno de los personajes.
 	private String historia="";
 	private short acabado = 0;
 	
@@ -55,12 +55,12 @@ public class GestorJuego {
 		//1. Cambiar de sala.Un personaje siempre puede decidir cambiarse de sala cambiarse de sala
 		acciones[0]=true;
 		
-		//2. Pedir objeto. Si hay más personajes en la sala aparte del que realiza la accion, entoces puede pedir un objeto
+		//2. Pedir objeto. Si hay mï¿½s personajes en la sala aparte del que realiza la accion, entoces puede pedir un objeto
 		if(personaje.getLocalizacion().getPersonajes().size()>1) acciones[1] = true;
 		
 		//3. Dar objeto. Comprobar en la matriz de solicitudes si alguien le ha pedido un objeto a jugador
 		
-		//Coseguir el índice del personaje en la lista
+		//Coseguir el ï¿½ndice del personaje en la lista
 		for(i=0; i < listaPersonajes.length || personaje.getNombre()==listaPersonajes[i].getNombre() ; i++);
 		
 		//Comprobar si en su columna correspondiente de la matriz hay algun objeto (le han pedido un objeto)
@@ -176,7 +176,7 @@ public class GestorJuego {
 		for(int i = 0; i < origen.getPersonajes().size(); i++){
 		  		origen.getPersonajes().get(i).getCreencias().cambiarCreencia(personaje,destino);
 		 }
-		enseñarSala(personaje,destino);
+		ensenarSala(personaje,destino);
 		
 	}
 	public void cambiarObjeto(Personaje emisor, Personaje receptor) {
@@ -212,7 +212,7 @@ public class GestorJuego {
 		
 	}
 	
-	public void enseñarSala(Personaje personaje, Localizacion destino) {
+	public void ensenarSala(Personaje personaje, Localizacion destino) {
 		//Actualizar las ubicaciones de los objetos que se encuentren en esa sala
 		for(int i = 0; i < destino.getObjetos().size();i++) {
 			personaje.getCreencias().cambiarCreencia(destino.getObjetos().get(i),destino);
