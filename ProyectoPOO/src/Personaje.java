@@ -67,7 +67,6 @@ public abstract class Personaje{
 		String s = "Nombre: " + getNombre() + "\tLocalizacion: " + getLocalizacion().getNombre() + "\tObjeto: ";
 		if (getObjeto() != null && (getObjeto().getNombre() != null || getObjeto().getNombre().length() > 0))
 			s += getObjeto().getNombre();
-		s+="\n";
 		return s;
 	}
 	

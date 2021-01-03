@@ -25,8 +25,7 @@ public class GestorJuego {
 		solicitudes = new Objeto[personajes.length][personajes.length];
 	}
 	
-	public GestorJuego() {
-	}
+	public GestorJuego() {};
 
 	public Localizacion[] getListaSalas() {
 		return listaSalas;
@@ -61,7 +60,7 @@ public class GestorJuego {
 	        e.printStackTrace();
 	    } catch (GestorArchivosException e) {
 	        e.printStackTrace();
-	    }	    
+	    }
 	}
 	
 	public void siguienteRonda() {

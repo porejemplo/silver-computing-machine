@@ -65,8 +65,13 @@ public class Localizacion {
     // Funciones
     public String toString(){
         String s = "Localizacion: " + getNombre();
+        s += "\nPersonajes:";
         for (int i = 0; i < personajes.size(); i++) {
-            s += "\n\t" + String.valueOf(i) + "-" + personajes.get(i).getNombre();
+            s += "\t" + String.valueOf(i) + "-" + personajes.get(i).getNombre();
+        }
+        s += "\nLocalizaciones adyacentes:";
+        for (int i = 0; i < localizacionesAdyacentes.length; i++) {
+            s += "\t" + String.valueOf(i) + "-" + localizacionesAdyacentes[i].getNombre();
         }
         return s;
     }
