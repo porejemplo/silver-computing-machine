@@ -1,4 +1,4 @@
-
+import java.io.FileNotFoundException;
 
 
 public class GestorJuego {
@@ -24,6 +24,9 @@ public class GestorJuego {
 		certezas = estadoInicial;
 		solicitudes = new Objeto[personajes.length][personajes.length];
 	}
+	
+	public GestorJuego() {
+	}
 
 	public Localizacion[] getListaSalas() {
 		return listaSalas;
@@ -33,6 +36,32 @@ public class GestorJuego {
 	}
 	public Objeto[] getListaObjetos() {
 		return listaObjetos;
+	}
+	
+	public void setListaSalas(Localizacion[] listaSalas) {
+		this.listaSalas = listaSalas;
+	}
+	public void setListaPersonajes(Personaje[] listaPersonajes) {
+		this.listaPersonajes = listaPersonajes;
+	}
+	public void setListaObjetos(Objeto[] listaObjetos) {
+		this.listaObjetos = listaObjetos;
+	}
+	
+	public static void main(String[] args) {
+		GestorJuego gJuego = new GestorJuego();
+	    GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
+	    try{
+	    	ga.comprobarFormato();
+	    	gJuego.setListaSalas(new Localizacion[ga.tamanoLista(0)]);
+	    	gJuego.setListaPersonajes(new Personaje[ga.tamanoLista(1)]);
+	    	gJuego.setListaObjetos(new Objeto[ga.tamanoLista(2)]);
+	        ga.leerAnexos(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
+	    } catch (FileNotFoundException e){
+	        e.printStackTrace();
+	    } catch (GestorArchivosException e) {
+	        e.printStackTrace();
+	    }	    
 	}
 	
 	public void siguienteRonda() {
