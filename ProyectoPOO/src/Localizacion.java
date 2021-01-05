@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Localizacion {
+public class Localizacion implements Elemento{
     private String nombre;
     private ArrayList<Personaje> personajes = new ArrayList<Personaje>();
     private Localizacion[] localizacionesAdyacentes;

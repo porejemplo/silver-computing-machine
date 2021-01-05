@@ -2,21 +2,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GestorJuego implements ActionListener{
+	
+	private Jugador jugador = new Jugador("Jugador", null);
 	private Localizacion listaSalas[];
 	private Personaje listaPersonajes[];
 	private Objeto listaObjetos[];
+	String opciones[] = {"Cambiar sala", "Pedir Objeto", "Dar Objeto", "Coger Objeto", "Dejar Objeto", "No hacer nada"};
 	// La creencias del gestor del juego representan el estado actual del juego
 	private Creencias certezas;
 	private int ronda = 0;
-	// Solicitudes es una matriz de adyacencia del grafo dirigido asociado a los
-	// personajes
-	// Dos nodos conectados representan una solicitud de objeto de un personaje a
-	// otro
+	// Solicitudes es una matriz de adyacencia del grafo dirigido asociado a lospersonajes
+	// Dos nodos conectados representan una solicitud de objeto de un personaje a otro
 	private Objeto solicitudes[][];
-	// La historia ser� un string que se ir� rellenando con las acciones de cada uno
-	// de los personajes.
+	// La historia es un string que se va rellenando con las acciones de cada uno de los personajes.
 	private String historia = "";
 	private short acabado = 0;
+	private Ventana ventana = new Ventana(opciones,this);
 
 	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos) {
 		listaSalas = salas;
@@ -39,7 +40,11 @@ public class GestorJuego implements ActionListener{
 	public Objeto[] getListaObjetos() {
 		return listaObjetos;
 	}
-
+	
+	public String[] getOpciones() {
+		return opciones;
+	}
+	
 	public void setListaSalas(Localizacion[] listaSalas) {
 		this.listaSalas = listaSalas;
 	}
@@ -52,15 +57,17 @@ public class GestorJuego implements ActionListener{
 		this.listaObjetos = listaObjetos;
 	}
 	
+	
 	public void siguienteRonda() {
 		if(acabado == listaPersonajes.length) {
 			finalizar();
 		}else {
+			acabado = 0;
 			ronda++;
 			historia.concat("Comienza la ronda: " +ronda+".\n");
 			System.out.print("\nComienza la ronda "+ronda);
 			for(int i = 0; i < listaPersonajes.length; i++) {
-				ejecutarAccion(listaPersonajes[i], pedirAccion(listaPersonajes[i],accionesPermitidas(listaPersonajes[i])));
+				ejecutarAccion(listaPersonajes[i], listaPersonajes[i].elegirAccion(accionesPermitidas(listaPersonajes[i])));
 			}
 		}
 	}
@@ -95,21 +102,8 @@ public class GestorJuego implements ActionListener{
 		
 		//6. No hacer nada.Un personaje siempre puede decidir no hacer nada
 		acciones[5] = true;
-		
-		
-		/*for(int i = 0; i < 6; i++) {
-			if(acciones[i]==true) {
-				System.out.println("True");
-			}else if (acciones[i]==false) {
-				System.out.println("False");
-			}
-		}
-		System.out.println("\n");*/
+
 		return acciones;
-	}
-	
-	public int pedirAccion(Personaje personaje, boolean[] acciones) {
-		return personaje.elegirAccion(acciones);
 	}
 	
 	public void ejecutarAccion(Personaje personaje, int accion) {//NOMBRE.Hacer las acciones de cada personaje, falta completar
@@ -273,9 +267,74 @@ public class GestorJuego implements ActionListener{
 		return estado;
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) {
+		String s = e.getActionCommand();
+		int encontrado = 0;
+		int i;
+		for(i=0; i < opciones.length; i++) {
+			if(s.matches(opciones[i])) {
+				jugador.setAccionElegida(i);
+				encontrado = 1;
+			}
+		}
+		switch(i) {
+		case 0: //Cambiar de localizacion
+			ventana.cambiarBotones(jugador.getLocalizacion().getAdyacencias(), this);
+			break;
+		case 1: //Pedir un objeto a alguien
+			ventana.cambiarBotones(listaObjetos, this);
+			break;
+		case 2: //Dar objeto
+			int j = 0;
+			for(int k = 0; k < listaPersonajes.length; k++) { //Obtener el numero de solicitantes
+				if(solicitudes[k][jugador.getIndice()]!=null) {
+					j++;
+				}
+			}
+			Personaje solicitantes[] = new Personaje[j];
+			for(int k = 0; k < listaPersonajes.length; k++) {
+				if(solicitudes[k][jugador.getIndice()]!=null) {
+					solicitantes[k]=listaPersonajes[k];
+				}
+			}
+			ventana.cambiarBotones(solicitantes, this);
+			break;
+		case 3: //Coger objeto
+			ventana.cambiarBotones(jugador.getLocalizacion().getObjetos().toArray(listaObjetos), this);
+			break;
+		case 4: //Dejar objeto
+		case 5: //No hacer nada
+			siguienteRonda();
+			break;	
+		}
+		if(encontrado == 0) {
+			for(i=0; i < listaPersonajes.length; i++) {
+				if(s.matches(opciones[i])) {
+					jugador.setPElegido(listaPersonajes[i]);
+					encontrado = 1;
+				}
+			}
+		}
+		if(encontrado == 0) {
+			for(i=0; i < listaSalas.length; i++) {
+				if(s.matches(opciones[i])) {
+					jugador.setLElegida(listaSalas[i]);
+					encontrado = 1;
+				}
+			}
+		}
+		if(encontrado == 0) {
+			for(i=0; i < listaObjetos.length; i++) {
+				if(s.matches(opciones[i])) {
+					jugador.setOElegido(listaObjetos[i]);
+					if(jugador.getAccionElegida()==1) {
+						
+					}
+					
+				}
+			}
+		}
+		
 		
 	}
 }

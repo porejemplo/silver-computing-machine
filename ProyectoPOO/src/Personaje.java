@@ -1,5 +1,5 @@
 
-public abstract class Personaje{
+public abstract class Personaje implements Elemento{
     protected String nombre;
     protected Objeto objeto;
     protected Creencias creencias;

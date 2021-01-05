@@ -6,7 +6,7 @@ public class Main {
 		// Anetes de ejecutar el juego
 		GestorJuego gJuego;
 		GestorArchivos ga = new GestorArchivos("AnexoI.txt", "AnexoII.txt");
-		String palabras[] = {"Cambiar sala", "Pedir Objeto", "Dar Objeto", "Coger Objeto", "Dejar Objeto", "No hacer nada"};
+		
 		try {
 			ga.comprobarFormato();
 			gJuego = new GestorJuego(new Localizacion[ga.tamanoLista(0)],new Personaje[ga.tamanoLista(1)],new Objeto[ga.tamanoLista(2)]);
@@ -28,7 +28,7 @@ public class Main {
 		
 		//Guardado de datos
 		//ga.guardarEstadoJuego(gJuego.getListaSalas(), gJuego.getListaPersonajes(), gJuego.getListaObjetos());
-		Ventana ventana = new Ventana(palabras,gJuego);
+		
 	}
 
 }

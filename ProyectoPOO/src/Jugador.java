@@ -1,32 +1,55 @@
 
 
 public class Jugador extends Personaje{
-
+	private int accionElegida;
+	private Personaje PElegido;
+	private Localizacion LElegida;
+	private Objeto OElegido;
+	private int indice;
+	
+	
 	public Jugador(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
 	}
 
-	@Override
-	public int elegirAccion(boolean[] acciones) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void setAccionElegida(int accionElegida) {
+		this.accionElegida = accionElegida;
 	}
 
-	@Override
+	public void setPElegido(Personaje pElegido) {
+		PElegido = pElegido;
+	}
+
+	public void setLElegida(Localizacion lElegida) {
+		LElegida = lElegida;
+	}
+
+	public void setOElegido(Objeto oElegido) {
+		OElegido = oElegido;
+	}
+	
+	public int getIndice() {
+		return indice;
+	}
+	
+
+	public int elegirAccion(boolean[] acciones) {
+		return accionElegida;
+	}
+
+
 	public Personaje especificarPersonaje(Personaje[] disponibles) {
-		// TODO Auto-generated method stub
-		return null;
+		return PElegido;
 	}
 
 	@Override
 	public Localizacion especificarSala(Localizacion[] disponibles) {
-		// TODO Auto-generated method stub
-		return null;
+		return LElegida;
 	}
 
 	@Override
 	public Objeto especificarObjeto(Objeto[] disponibles) {
-		// TODO Auto-generated method stub
-		return null;
+		return OElegido;
 	}
+
 }

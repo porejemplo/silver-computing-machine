@@ -1,5 +1,5 @@
 
-public class Objeto {
+public class Objeto implements Elemento{
     private String nombre;
 
     //constructor con parametros
