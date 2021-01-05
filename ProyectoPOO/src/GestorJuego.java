@@ -1,7 +1,7 @@
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class GestorJuego {
+public class GestorJuego implements ActionListener{
 	private Localizacion listaSalas[];
 	private Personaje listaPersonajes[];
 	private Objeto listaObjetos[];
@@ -50,33 +50,6 @@ public class GestorJuego {
 
 	public void setListaObjetos(Objeto[] listaObjetos) {
 		this.listaObjetos = listaObjetos;
-	}
-
-	public static void main(String[] args) {
-		// Anetes de ejecutar el juego
-		GestorJuego gJuego;
-		GestorArchivos ga = new GestorArchivos("AnexoI.txt", "AnexoII.txt");
-		try {
-			ga.comprobarFormato();
-			gJuego = new GestorJuego(new Localizacion[ga.tamanoLista(0)],new Personaje[ga.tamanoLista(1)],new Objeto[ga.tamanoLista(2)]);
-			ga.leerAnexos(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			gJuego = new GestorJuego();
-		} catch (GestorArchivosException e) {
-			e.printStackTrace();
-			gJuego = new GestorJuego();
-		}
-		System.out.print(gJuego);
-		System.out.print(gJuego.listaPersonajes[0].getCreencias());
-		/*
-		 * 
-		 * Bucle de juego.
-		 * 
-		 */
-		
-		//Guardado de datos
-		ga.guardarEstadoJuego(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
 	}
 	
 	public void siguienteRonda() {
@@ -220,7 +193,7 @@ public class GestorJuego {
 		for(int i = 0; i < origen.getPersonajes().size(); i++){
 		  		origen.getPersonajes().get(i).getCreencias().cambiarCreencia(personaje,destino);
 		 }
-		ensenarSala(personaje,destino);
+		mostrarSala(personaje,destino);
 		
 	}
 	public void cambiarObjeto(Personaje emisor, Personaje receptor) {
@@ -256,7 +229,7 @@ public class GestorJuego {
 		
 	}
 	
-	public void ensenarSala(Personaje personaje, Localizacion destino) {
+	public void mostrarSala(Personaje personaje, Localizacion destino) {
 		//Actualizar las ubicaciones de los objetos que se encuentren en esa sala
 		for(int i = 0; i < destino.getObjetos().size();i++) {
 			personaje.getCreencias().cambiarCreencia(destino.getObjetos().get(i),destino);
@@ -298,6 +271,12 @@ public class GestorJuego {
 		estado += certezas;
 		
 		return estado;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
 
