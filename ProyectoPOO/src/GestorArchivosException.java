@@ -1,6 +1,7 @@
 
 public class GestorArchivosException extends Exception {
-	private int nLinea = 0;
+    private static final long serialVersionUID = 1L;
+    private int nLinea = 0;
 	private String archivo = "-";
 	private String mensajeError = "-";
 	
