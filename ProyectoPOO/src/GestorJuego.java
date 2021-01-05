@@ -18,11 +18,10 @@ public class GestorJuego {
 	private String historia = "";
 	private short acabado = 0;
 
-	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos, Creencias estadoInicial) {
+	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos) {
 		listaSalas = salas;
 		listaPersonajes = personajes;
 		listaObjetos = objetos;
-		certezas = estadoInicial;
 		solicitudes = new Objeto[personajes.length][personajes.length];
 	}
 
@@ -55,23 +54,21 @@ public class GestorJuego {
 
 	public static void main(String[] args) {
 		// Anetes de ejecutar el juego
-		GestorJuego gJuego = new GestorJuego();
+		GestorJuego gJuego;
 		GestorArchivos ga = new GestorArchivos("AnexoI.txt", "AnexoII.txt");
 		try {
 			ga.comprobarFormato();
-			gJuego.setListaSalas(new Localizacion[ga.tamanoLista(0)]);
-			gJuego.setListaPersonajes(new Personaje[ga.tamanoLista(1)]);
-			gJuego.setListaObjetos(new Objeto[ga.tamanoLista(2)]);
+			gJuego = new GestorJuego(new Localizacion[ga.tamanoLista(0)],new Personaje[ga.tamanoLista(1)],new Objeto[ga.tamanoLista(2)]);
 			ga.leerAnexos(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+			gJuego = new GestorJuego();
 		} catch (GestorArchivosException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			gJuego = new GestorJuego();
 		}
-		
+		System.out.print(gJuego);
+		System.out.print(gJuego.listaPersonajes[0].getCreencias());
 		/*
 		 * 
 		 * Bucle de juego.
@@ -286,13 +283,17 @@ public class GestorJuego {
 	
 	public String toString() {
 		String estado ="";
-		estado.concat("<Localizaciones>\n") ;
+		estado+=("<Localizaciones>\n") ;
 		for(int i = 0; i < listaSalas.length; i++) {
-			estado.concat(listaSalas[i].getNombre()+"(");
-			for(int j = 0; j < listaSalas[i].getAdyacencias().length-1; j++) {
-				estado.concat(listaSalas[i].getAdyacencias()[j].getNombre() + ",");
+			estado+=(listaSalas[i].getNombre()+"(");
+			for(int j = 0; j < listaSalas[i].getAdyacencias().length; j++) {
+				if(j!=listaSalas[i].getAdyacencias().length-1) {
+					estado+=(listaSalas[i].getAdyacencias()[j].getNombre() + ",");
+				}else {
+					estado+=(listaSalas[i].getAdyacencias()[j].getNombre() + ")\n");
+				}
+				
 			}
-			estado.concat(listaSalas[i].getAdyacencias()[listaSalas[i].getAdyacencias().length].getNombre() + ")\n");
 		}
 		estado += certezas;
 		
