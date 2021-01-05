@@ -27,25 +27,6 @@ public class GestorArchivos {
         this.anexo2 = new File(fAnexoII);
     }
     
-    //Test Main
-    /*public static void main(String[] args) {
-    	Localizacion[] listaSalas;
-        Personaje[] listaPersonajes;
-    	Objeto[] listaObjetos;
-        GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
-        try{
-        	ga.comprobarFormato();
-        	listaSalas = new Localizacion[ga.tamanoLista(0)];
-            listaPersonajes = new Personaje[ga.tamanoLista(1)];
-        	listaObjetos = new Objeto[ga.tamanoLista(2)];
-            ga.leerAnexos(listaSalas, listaPersonajes, listaObjetos);
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (GestorArchivosException e) {
-            e.printStackTrace();
-        }
-    }*/
-    
     // Funciones
     public void comprobarFormato() throws FileNotFoundException, GestorArchivosException
     {
