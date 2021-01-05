@@ -1,66 +1,85 @@
 import java.io.FileNotFoundException;
-
+import java.io.IOException;
 
 public class GestorJuego {
 	private Localizacion listaSalas[];
 	private Personaje listaPersonajes[];
 	private Objeto listaObjetos[];
-	//La creencias del gestor del juego representan el estado actual del juego
+	// La creencias del gestor del juego representan el estado actual del juego
 	private Creencias certezas;
 	private int ronda = 0;
-	//Solicitudes es una matriz de adyacencia del grafo dirigido asociado a los personajes
-	//Dos nodos conectados representan una solicitud de objeto de un personaje a otro
+	// Solicitudes es una matriz de adyacencia del grafo dirigido asociado a los
+	// personajes
+	// Dos nodos conectados representan una solicitud de objeto de un personaje a
+	// otro
 	private Objeto solicitudes[][];
-	//La historia ser� un string que se ir� rellenando con las acciones de cada uno de los personajes.
-	private String historia="";
+	// La historia ser� un string que se ir� rellenando con las acciones de cada uno
+	// de los personajes.
+	private String historia = "";
 	private short acabado = 0;
-	
-	
 
 	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos, Creencias estadoInicial) {
-		listaSalas= salas;
+		listaSalas = salas;
 		listaPersonajes = personajes;
 		listaObjetos = objetos;
 		certezas = estadoInicial;
 		solicitudes = new Objeto[personajes.length][personajes.length];
 	}
-	
-	public GestorJuego() {};
+
+	public GestorJuego() {
+	};
 
 	public Localizacion[] getListaSalas() {
 		return listaSalas;
 	}
+
 	public Personaje[] getListaPersonajes() {
 		return listaPersonajes;
 	}
+
 	public Objeto[] getListaObjetos() {
 		return listaObjetos;
 	}
-	
+
 	public void setListaSalas(Localizacion[] listaSalas) {
 		this.listaSalas = listaSalas;
 	}
+
 	public void setListaPersonajes(Personaje[] listaPersonajes) {
 		this.listaPersonajes = listaPersonajes;
 	}
+
 	public void setListaObjetos(Objeto[] listaObjetos) {
 		this.listaObjetos = listaObjetos;
 	}
-	
+
 	public static void main(String[] args) {
+		// Anetes de ejecutar el juego
 		GestorJuego gJuego = new GestorJuego();
-	    GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
-	    try{
-	    	ga.comprobarFormato();
-	    	gJuego.setListaSalas(new Localizacion[ga.tamanoLista(0)]);
-	    	gJuego.setListaPersonajes(new Personaje[ga.tamanoLista(1)]);
-	    	gJuego.setListaObjetos(new Objeto[ga.tamanoLista(2)]);
-	        ga.leerAnexos(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
-	    } catch (FileNotFoundException e){
-	        e.printStackTrace();
-	    } catch (GestorArchivosException e) {
-	        e.printStackTrace();
-	    }
+		GestorArchivos ga = new GestorArchivos("AnexoI.txt", "AnexoII.txt");
+		try {
+			ga.comprobarFormato();
+			gJuego.setListaSalas(new Localizacion[ga.tamanoLista(0)]);
+			gJuego.setListaPersonajes(new Personaje[ga.tamanoLista(1)]);
+			gJuego.setListaObjetos(new Objeto[ga.tamanoLista(2)]);
+			ga.leerAnexos(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (GestorArchivosException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
+		 * 
+		 * Bucle de juego.
+		 * 
+		 */
+		
+		//Guardado de datos
+		ga.guardarEstadoJuego(gJuego.listaSalas, gJuego.listaPersonajes, gJuego.listaObjetos);
 	}
 	
 	public void siguienteRonda() {
