@@ -1,9 +1,10 @@
 
 
 public class Jugador extends Personaje{
-	   public Jugador(String nombre, Objeto objeto, Creencias creencia,Localizacion localizacion, Ubicacion objetivo){
-	        super(nombre, objeto, creencia,localizacion,objetivo);
-	    }
+
+	public Jugador(String nombre, Localizacion localizacion) {
+		super(nombre, localizacion);
+	}
 
 	@Override
 	public int elegirAccion(boolean[] acciones) {

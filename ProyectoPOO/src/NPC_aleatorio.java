@@ -1,10 +1,6 @@
 
-public class NPC_aleatorio extends NPCs{
+public class NPC_aleatorio extends Personaje{
 
-	public NPC_aleatorio(String nombre, Objeto objeto, Creencias creencia, Localizacion localizacion, Ubicacion objetivo) {
-		super(nombre, objeto, creencia, localizacion, objetivo);
-		// TODO Auto-generated constructor stub
-	}
 	
 	public NPC_aleatorio(String nombre, Localizacion localizacion) {
 		super (nombre, localizacion);

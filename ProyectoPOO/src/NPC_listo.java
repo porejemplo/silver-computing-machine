@@ -1,12 +1,14 @@
-import java.math.*;
 
-public class NPC_listo extends NPCs{
+
+public class NPC_listo extends Personaje{
+
+	public NPC_listo(String nombre, Localizacion localizacion) {
+		super(nombre, localizacion);
+		// TODO Auto-generated constructor stub
+	}
 
 	private String proposito=""; //Accion que estará buscando
 	
-	public NPC_listo(String nombre, Objeto objeto, Creencias creencia, Localizacion localizacion, Ubicacion objetivo) {
-		super(nombre, objeto, creencia, localizacion, objetivo);
-	}
 
 	public int elegirAccion(boolean[] acciones) {
 		

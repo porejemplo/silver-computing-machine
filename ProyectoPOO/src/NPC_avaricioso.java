@@ -1,14 +1,13 @@
 
-public class NPC_avaricioso extends NPCs {
+public class NPC_avaricioso extends Personaje {
 
-	public NPC_avaricioso(String nombre, Objeto objeto, Creencias creencia, Localizacion localizacion, Ubicacion objetivo) {
-		super(nombre, objeto, creencia, localizacion, objetivo);
+
+	public NPC_avaricioso(String nombre, Localizacion localizacion) {
+		super(nombre, localizacion);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
 	public int elegirAccion(boolean[] acciones) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 

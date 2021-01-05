@@ -14,14 +14,14 @@ public abstract class Personaje{
         this.nombre = nombre;
     }
 
-    public Personaje (String nombre, Objeto objeto, Creencias creencias, Localizacion localizacion, Ubicacion objetivo){
+    /*public Personaje (String nombre, Objeto objeto, Creencias creencias, Localizacion localizacion, Ubicacion objetivo){
         setNombre(nombre);
         setObjeto(objeto);
         setCreencia(creencias);
         setLocalizacion(localizacion);
         setObjetivo(objetivo);
         localizacion.addPersonaje(this);
-    }
+    }*/
     
     public Personaje (String nombre, Localizacion localizacion) {
     	setNombre(nombre);
