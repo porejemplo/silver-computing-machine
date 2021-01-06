@@ -4,18 +4,18 @@ import java.awt.*;
 
 public class Ventana extends JFrame{
 	
-	private JLabel label;
+	private JTextArea creencias;
 	private JPanel panelOpciones, panelResumen, panelTitulo;
 	private JScrollPane sbrText;
-	private JTextArea informacion;
+	private JTextArea historia;// esto tiene que ser la informacion de lo que ha pasado en el turno
 	
 	private JButton botones[];
 	
-	private String info = "Historial de acciones"; // esto tiene que ser la informacion de lo que ha pasado en el turno
+
 	
 
 	//Constructor de la Interfaz
-	public Ventana(String cosas[], GestorJuego gestor) {
+	public Ventana(String cosas[], GestorJuego gestor, Creencias creenciasJugador) {
 		botones = new JButton[cosas.length];
 		
 		//Creamos el frame
@@ -54,16 +54,17 @@ public class Ventana extends JFrame{
 		panelResumen.setBackground(Color.white);
 		panelResumen.setLayout(new GridLayout(0,1));
 		
-		informacion = new JTextArea(info); //Esto será el historial de las acciones
-		informacion.setEditable(false);
-		informacion.setBackground(Color.LIGHT_GRAY);
+		historia = new JTextArea("Historial de acciones de los personajes:\n"); //Esto será el historial de las acciones
+		historia.setEditable(false);
+		historia.setBackground(Color.LIGHT_GRAY);
 		
-		sbrText = new JScrollPane(informacion, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		sbrText = new JScrollPane(historia, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		label = new JLabel("Creencias del jugador"); //Esto serán las creencias del jugador
+		creencias = new JTextArea("Informacion disponible:\n" + creenciasJugador); //Esto serán las creencias del jugador
+		creencias.setPreferredSize(new Dimension(100,100));
 		
 		panelResumen.add(sbrText);
-		panelResumen.add(label);
+		panelResumen.add(creencias);
 		
 		//Construimos la ventana
 		
@@ -75,26 +76,28 @@ public class Ventana extends JFrame{
 		pack();
 		setSize(500,500);
 	}
-		
-		
+	
+	public Ventana(String cosas[], GestorJuego gestor, Creencias creencias, boolean disponibles[]) {
+		this(cosas, gestor,creencias);
+		cambiarBotones(cosas, gestor, disponibles);
+	}
+	public JTextArea getHistoria() {
+		return historia;
+	}
 	public void cambiarBotones(Elemento cosas[], GestorJuego listener) {
 		for(int i = 0; i < botones.length; i++) {
 			panelOpciones.remove(botones[i]);
 		}
 		
-		for(int i = 0; i < cosas.length; i++) {
+		for(int i = 0; i<cosas.length; i++) {
+			//System.out.print("\n"+cosas.length+"\n"+i+ cosas[i].getNombre());
 			botones[i] = new JButton(cosas[i].getNombre());
 			botones[i].setPreferredSize(new Dimension(200,50));
-		}
-		
-		for(int i = 0; i < cosas.length; i++) {
 			botones[i].addActionListener(listener);
-		}
-		
-		for(int i = 0; i < cosas.length; i++) {
 			panelOpciones.add(botones[i]);
 		}
 		
+		validate();
 		repaint();
 	}
 	
@@ -116,6 +119,7 @@ public class Ventana extends JFrame{
 			panelOpciones.add(botones[i]);
 		}
 		
+		validate();
 		repaint();
 	}
 	public void cambiarBotones(String cosas[], GestorJuego gestor, boolean disponibles[]) {
@@ -126,7 +130,12 @@ public class Ventana extends JFrame{
 			}
 		}
 	}
-	public void addInfo(String s) {
-		info+=s;
+	public void actualizarVentana(Jugador jugador, String historia) {
+		panelResumen.remove(creencias);
+		creencias = new JTextArea("Informacion disponible: \n" +jugador.getCreencias());
+		panelResumen.add(creencias);
+		
+		validate();
+		repaint();
 	}
 }

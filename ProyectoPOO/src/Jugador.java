@@ -34,7 +34,9 @@ public class Jugador extends Personaje{
 	public int getAccionElegida() {
 		return accionElegida;
 	}
-	
+	public Localizacion getLElegida() {
+		return LElegida;
+	}
 
 	public int elegirAccion(boolean[] acciones) {
 		return accionElegida;

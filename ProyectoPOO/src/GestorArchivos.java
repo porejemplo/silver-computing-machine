@@ -184,7 +184,7 @@ public class GestorArchivos {
 				if(nombre.equals("Jugador")) {
 					lPersonaje[i]= new Jugador(nombre, localizacion);
 				}else {
-					lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
+					lPersonaje[i] = new NPC_prueba(nombre, localizacion);
 				}
 				
 				break;

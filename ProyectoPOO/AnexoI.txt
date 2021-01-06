@@ -6,7 +6,7 @@ Dormitorio(Comedor, Jardín)
 <Personajes>
 Jorge(Comedor)
 Esther(Dormitorio)
-María(Jardín)
+Jugador(Jardín)
 <Objetos>
 Cartera(Jardín)
 Ordenador(Comedor)

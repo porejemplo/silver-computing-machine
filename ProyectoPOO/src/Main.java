@@ -19,8 +19,13 @@ public class Main {
 			gJuego = new GestorJuego();
 		}
 		gJuego.empezarJuego();
-		System.out.print(gJuego);
-		System.out.print(gJuego.getListaPersonajes()[0].getCreencias());
+		/*String strings[] = new String[4];
+		for(int i = 0; i < 4; i++) {
+			strings[i] = "C"+i;
+		}
+		gJuego.ventana.cambiarBotones(strings, gJuego);*/
+		//System.out.print(gJuego);
+		//System.out.print(gJuego.getListaPersonajes()[0].getCreencias());
 		/*
 		 * 
 		 * Bucle de juego.
