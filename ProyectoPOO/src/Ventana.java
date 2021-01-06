@@ -130,7 +130,8 @@ public class Ventana extends JFrame{
 			}
 		}
 	}
-	public void actualizarVentana(Jugador jugador, String historia) {
+	public void actualizarVentana(Jugador jugador) {
+		
 		panelResumen.remove(creencias);
 		creencias = new JTextArea("Informacion disponible: \n" +jugador.getCreencias());
 		panelResumen.add(creencias);

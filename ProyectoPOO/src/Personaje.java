@@ -1,10 +1,11 @@
 
-public abstract class Personaje implements Elemento{
-    protected String nombre;
-    protected Objeto objeto;
-    protected Creencias creencias;
-    protected Localizacion localizacion;
-    protected Ubicacion objetivo;
+public abstract class Personaje implements Elemento, Accionable{
+    private String nombre;
+    private Objeto objeto;
+    private Creencias creencias;
+    private Localizacion localizacion;
+    private Ubicacion objetivo;
+    private static String historia ="";
     
     public String getNombre() {
         return nombre;
@@ -69,17 +70,7 @@ public abstract class Personaje implements Elemento{
 			s += getObjeto().getNombre();
 		return s;
 	}
-	
-
-	//Para los hijos, tiene que devolver que accion va a hacer en formato numerico
-	public abstract int elegirAccion(boolean[] acciones);
-
-	//Para los hijos, Cuando le pregunten a que personaje quiere dar o recibir objeto que lo especifique
-	public abstract Personaje especificarPersonaje(Personaje disponibles[]);
-
-	//Para los hijos, Cuando le pregunten a que sala se quiere mover que lo especifique
-	public abstract Localizacion especificarSala(Localizacion disponibles[]);
-
-	//Para los hijos, Cuando le pregunten que objeto quiere coger que lo especifique
-	public abstract Objeto especificarObjeto(Objeto disponibles[]);
+	public static void continuarHistoria(String accion) {
+		historia+=accion;
+	}
 }

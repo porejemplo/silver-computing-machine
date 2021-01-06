@@ -7,7 +7,7 @@ public class NPC_aleatorio extends Personaje{
 	}
 
 	@Override
-	public int elegirAccion(boolean[] acciones) {
+	public int dameAccion(boolean[] acciones) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

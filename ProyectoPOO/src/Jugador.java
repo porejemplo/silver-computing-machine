@@ -38,7 +38,7 @@ public class Jugador extends Personaje{
 		return LElegida;
 	}
 
-	public int elegirAccion(boolean[] acciones) {
+	public int dameAccion(boolean[] acciones) {
 		return accionElegida;
 	}
 

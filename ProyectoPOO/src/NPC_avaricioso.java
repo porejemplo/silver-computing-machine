@@ -1,5 +1,5 @@
 
-public class NPC_avaricioso extends Personaje {
+public class NPC_avaricioso extends Personaje{
 
 
 	public NPC_avaricioso(String nombre, Localizacion localizacion) {
@@ -7,7 +7,7 @@ public class NPC_avaricioso extends Personaje {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int elegirAccion(boolean[] acciones) {
+	public int dameAccion(boolean[] acciones) {
 		return 0;
 	}
 

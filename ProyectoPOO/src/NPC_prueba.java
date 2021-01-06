@@ -5,7 +5,7 @@ public class NPC_prueba extends Personaje{
 		super(nombre, localizacion);
 	}
 
-	public int elegirAccion(boolean[] acciones) {
+	public int dameAccion(boolean[] acciones) {
 		return 0;
 	}
 

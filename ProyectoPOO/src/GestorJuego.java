@@ -15,7 +15,6 @@ public class GestorJuego implements ActionListener{
 	// Dos nodos conectados representan una solicitud de objeto de un personaje a otro
 	private Objeto solicitudes[][];
 	// La historia es un string que se va rellenando con las acciones de cada uno de los personajes.
-	private String historia = "";
 	private short acabado = 0;
 	public Ventana ventana; 
 
@@ -67,13 +66,13 @@ public class GestorJuego implements ActionListener{
 		}else {
 			acabado = 0;
 			ronda++;
-			historia.concat("Comienza la ronda: " +ronda+".\n");
+			Personaje.continuarHistoria("Comienza la ronda: " +ronda+".\n");
 			System.out.print("\nComienza la ronda "+ronda);
 			//System.out.print(this);
 			for(int i = 0; i < listaPersonajes.length; i++) {
-				ejecutarAccion(listaPersonajes[i], listaPersonajes[i].elegirAccion(accionesPermitidas(listaPersonajes[i])));
+				ejecutarAccion(listaPersonajes[i], listaPersonajes[i].dameAccion(accionesPermitidas(listaPersonajes[i])));
 			}
-			ventana.actualizarVentana(jugador, historia);
+			ventana.actualizarVentana(jugador);
 			ventana.cambiarBotones(opciones, this, accionesPermitidas(jugador));
 		}
 	}
@@ -173,16 +172,16 @@ public class GestorJuego implements ActionListener{
 		int i=0,j=0; //iteradores
 		switch(accion) {
 		case 0: //Ir a localizacion
-			System.out.println("Cambiar de sala");
-			historia.concat("El personaje "+personaje.getNombre()+" decide cambiarse de sala.");
+			System.out.println("Cambiar de sala");	
+			Personaje.continuarHistoria(personaje.getNombre()+" decide cambiarse de sala.\n");
 			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala(personaje.getLocalizacion().getAdyacencias()));
-			historia.concat("Ahora se encuentra en la sala "+personaje.getLocalizacion().getNombre()+".\n");
+			Personaje.continuarHistoria("Ahora se encuentra en "+personaje.getLocalizacion().getNombre()+".\n\n");
 			break;
 		case 1: //Pedir objeto
 			objeto = personaje.especificarObjeto(listaObjetos);
 			otroPersonaje= personaje.especificarPersonaje(personaje.getLocalizacion().getPersonajes().toArray(listaPersonajes));
 			System.out.println("Pedir Objeto");
-			historia.concat("El personaje "+personaje.getNombre()+"decide perdirle a "+otroPersonaje.getNombre()+" el objeto: "+ objeto+".\n");
+			Personaje.continuarHistoria(personaje.getNombre()+"decide perdirle a "+otroPersonaje.getNombre()+" el objeto: "+ objeto+".\n\n");
 			
 			
 			//Obtener el indice del personaje que pide, en a lista de personajes
@@ -214,22 +213,22 @@ public class GestorJuego implements ActionListener{
 			
 			System.out.println("Dar Objeto");
 			otroPersonaje = personaje.especificarPersonaje(solicitantes);
-			historia.concat("El personaje "+personaje.getNombre()+" decide darle a "+otroPersonaje.getNombre()+" su objeto.\n");
+			Personaje.continuarHistoria(personaje.getNombre()+" decide darle a "+otroPersonaje.getNombre()+" su objeto.\n\n");
 			cambiarObjeto(personaje, otroPersonaje);
 			break;
 		case 3: //Coger objeto
 			System.out.println("Coger Objeto");
 			objeto = personaje.especificarObjeto(personaje.getLocalizacion().getObjetos().toArray(listaObjetos));
-			historia.concat("El personaje "+personaje.getNombre()+" decide coger el objeto: "+objeto+" del suelo de la sala " + personaje.getLocalizacion()+".\n");
+			Personaje.continuarHistoria(personaje.getNombre()+" decide coger el objeto: "+objeto+" del suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
 			cambiarObjeto(objeto, personaje.getLocalizacion(), personaje);
 			break;
 		case 4: //Dejar objeto
 			System.out.println("Dejar Objeto");
-			historia.concat("El personaje "+personaje.getNombre()+" decide dejar su objeto en el suelo de la sala " + personaje.getLocalizacion()+".\n");
+			Personaje.continuarHistoria(personaje.getNombre()+" decide dejar su objeto en el suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
 			cambiarObjeto(personaje, personaje.getLocalizacion());
 			break;
 		default:
-			historia.concat("El personaje "+personaje.getNombre()+" decide no hacer nada.\n");
+			Personaje.continuarHistoria(personaje.getNombre()+" decide no hacer nada.\n\n");
 			acabado++;
 			System.out.println("Nada");
 			break;
@@ -244,10 +243,21 @@ public class GestorJuego implements ActionListener{
 		destino.addPersonaje(personaje);
 		
 		
-		//Informar a la sala del cambio
+		//Informar a la sala origen del cambio
 		for(int i = 0; i < origen.getPersonajes().size(); i++){
 		  		origen.getPersonajes().get(i).getCreencias().cambiarCreencia(personaje,destino);
+		  		if(origen.getPersonajes().get(i) instanceof Jugador) {
+		  			ventana.getHistoria().append(personaje.getNombre()+" se cambia a la sala " + destino.getNombre()+"\n");
+		  		}
 		 }
+		
+		//Informar a la sala destino del cambio
+				for(int i = 0; i < destino.getPersonajes().size(); i++){
+				  		destino.getPersonajes().get(i).getCreencias().cambiarCreencia(personaje,destino);
+				  		if(destino.getPersonajes().get(i) instanceof Jugador) {
+				  			ventana.getHistoria().append(personaje.getNombre()+" ha llegado a " + destino.getNombre()+"\n");
+				  		}
+				 }
 		mostrarSala(personaje,destino);
 		
 	}
@@ -259,6 +269,9 @@ public class GestorJuego implements ActionListener{
 		//Informar a la sala del cambio
 		for(int i = 0; i < emisor.getLocalizacion().getPersonajes().size(); i++){
 		  	emisor.getLocalizacion().getPersonajes().get(i).getCreencias().cambiarCreencia(receptor.getObjeto(), receptor);
+		  	if(emisor.getLocalizacion().getPersonajes().get(i) instanceof Jugador) {
+	  			ventana.getHistoria().append(emisor.getNombre()+" le da a " + receptor.getNombre() + " su " + receptor.getObjeto().getNombre()+"\n");
+	  		}
 		}
 	}
 	public void cambiarObjeto(Personaje emisor, Localizacion destino) {
@@ -268,6 +281,9 @@ public class GestorJuego implements ActionListener{
 		//Informar a la sala del cambio
 		for(int i = 0; i < destino.getPersonajes().size(); i++){
 		  	destino.getPersonajes().get(i).getCreencias().cambiarCreencia(emisor.getObjeto(), destino);
+		  	if(emisor.getLocalizacion().getPersonajes().get(i) instanceof Jugador) {
+	  			ventana.getHistoria().append(emisor.getNombre()+" deja en  " + destino.getNombre() + " su " + emisor.getObjeto().getNombre()+"\n");
+	  		}
 		}
 		emisor.setObjeto(null);
 		 
@@ -280,6 +296,9 @@ public class GestorJuego implements ActionListener{
 		//Informar a la sala del cambio
 		for(int i = 0; i < origen.getPersonajes().size(); i++){
 		  	origen.getPersonajes().get(i).getCreencias().cambiarCreencia(objeto, receptor);
+		  	if(origen.getPersonajes().get(i) instanceof Jugador) {
+	  			ventana.getHistoria().append(receptor.getNombre()+" coge  " + receptor.getObjeto().getNombre() + " de " + origen.getNombre());
+	  		}
 		}
 		
 	}
