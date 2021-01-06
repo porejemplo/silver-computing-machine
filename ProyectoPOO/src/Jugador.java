@@ -31,6 +31,9 @@ public class Jugador extends Personaje{
 	public int getIndice() {
 		return indice;
 	}
+	public int getAccionElegida() {
+		return accionElegida;
+	}
 	
 
 	public int elegirAccion(boolean[] acciones) {

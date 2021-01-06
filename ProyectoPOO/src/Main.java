@@ -18,6 +18,7 @@ public class Main {
 			e.printStackTrace();
 			gJuego = new GestorJuego();
 		}
+		gJuego.empezarJuego();
 		System.out.print(gJuego);
 		System.out.print(gJuego.getListaPersonajes()[0].getCreencias());
 		/*

@@ -73,7 +73,6 @@ public class Ventana extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Decision Jugador");
 		pack();
-		setVisible(true);
 		setSize(500,500);
 	}
 		

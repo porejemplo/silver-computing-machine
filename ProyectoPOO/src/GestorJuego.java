@@ -3,13 +3,13 @@ import java.awt.event.ActionListener;
 
 public class GestorJuego implements ActionListener{
 	
-	private Jugador jugador = new Jugador("Jugador", null);
+	private Jugador jugador;
 	private Localizacion listaSalas[];
 	private Personaje listaPersonajes[];
 	private Objeto listaObjetos[];
 	String opciones[] = {"Cambiar sala", "Pedir Objeto", "Dar Objeto", "Coger Objeto", "Dejar Objeto", "No hacer nada"};
 	// La creencias del gestor del juego representan el estado actual del juego
-	private Creencias certezas;
+	private Creencias estadoJuego;
 	private int ronda = 0;
 	// Solicitudes es una matriz de adyacencia del grafo dirigido asociado a lospersonajes
 	// Dos nodos conectados representan una solicitud de objeto de un personaje a otro
@@ -56,6 +56,9 @@ public class GestorJuego implements ActionListener{
 	public void setListaObjetos(Objeto[] listaObjetos) {
 		this.listaObjetos = listaObjetos;
 	}
+	public void setEstado(Creencias certezas) {
+		estadoJuego = certezas;
+	}
 	
 	
 	public void siguienteRonda() {
@@ -66,10 +69,34 @@ public class GestorJuego implements ActionListener{
 			ronda++;
 			historia.concat("Comienza la ronda: " +ronda+".\n");
 			System.out.print("\nComienza la ronda "+ronda);
+			System.out.print(this);
 			for(int i = 0; i < listaPersonajes.length; i++) {
 				ejecutarAccion(listaPersonajes[i], listaPersonajes[i].elegirAccion(accionesPermitidas(listaPersonajes[i])));
 			}
 		}
+	}
+	
+	public void empezarJuego() {
+		Ubicacion aux[]= new Ubicacion[listaPersonajes.length];
+		Ubicacion aux2[]= new Ubicacion[listaObjetos.length];
+		for(int i = 0; i < listaPersonajes.length; i++) {
+			aux[i]= new Ubicacion(listaPersonajes[i].getNombre(), listaPersonajes[i].getLocalizacion().getNombre());
+		}
+		for(int i = 0; i < listaObjetos.length; i++) {
+			aux2[i]= new Ubicacion(listaObjetos[i].getNombre());
+		}
+		for(int i = 0; i < listaSalas.length; i++) {
+			for(int j = 0; j < listaObjetos.length; j++) {
+				for(int k = 0; k < listaSalas[i].getObjetos().size();k++) {
+					if(listaObjetos[j].equals(listaSalas[i].getObjetos().toArray()[k])) {
+						aux2[j].setLugar(listaSalas[i].getNombre());
+					}
+				}
+			}
+		}
+		setEstado(new Creencias(aux, aux2));
+		ventana.setVisible(true);
+		
 	}
 	
 	public boolean[] accionesPermitidas(Personaje personaje) { //NOMBRE.Filtrar que acciones puede y no puede hacer un personaje
@@ -178,7 +205,7 @@ public class GestorJuego implements ActionListener{
 	
 	public void cambiarSala(Personaje personaje, Localizacion origen, Localizacion destino) {
 		personaje.setLocalizacion(destino);
-		certezas.cambiarCreencia(personaje, destino);
+		estadoJuego.cambiarCreencia(personaje, destino);
 		origen.removePersonaje(personaje);
 		destino.addPersonaje(personaje);
 		
@@ -193,7 +220,7 @@ public class GestorJuego implements ActionListener{
 	public void cambiarObjeto(Personaje emisor, Personaje receptor) {
 		receptor.setObjeto(emisor.getObjeto());
 		emisor.setObjeto(null);
-		certezas.cambiarCreencia(receptor.getObjeto(), receptor);
+		estadoJuego.cambiarCreencia(receptor.getObjeto(), receptor);
 		
 		//Informar a la sala del cambio
 		for(int i = 0; i < emisor.getLocalizacion().getPersonajes().size(); i++){
@@ -201,7 +228,7 @@ public class GestorJuego implements ActionListener{
 		}
 	}
 	public void cambiarObjeto(Personaje emisor, Localizacion destino) {
-		certezas.cambiarCreencia(emisor.getObjeto(), destino);
+		estadoJuego.cambiarCreencia(emisor.getObjeto(), destino);
 		destino.addObjeto(emisor.getObjeto());
 
 		//Informar a la sala del cambio
@@ -213,7 +240,7 @@ public class GestorJuego implements ActionListener{
 	}
 	public void cambiarObjeto(Objeto objeto, Localizacion origen, Personaje receptor) {
 		receptor.setObjeto(objeto);
-		certezas.cambiarCreencia(objeto, receptor);
+		estadoJuego.cambiarCreencia(objeto, receptor);
 		origen.removeObjeto(objeto);
 		
 		//Informar a la sala del cambio
@@ -262,7 +289,7 @@ public class GestorJuego implements ActionListener{
 				
 			}
 		}
-		estado += certezas;
+		estado += estadoJuego;
 		
 		return estado;
 	}
@@ -311,7 +338,11 @@ public class GestorJuego implements ActionListener{
 			for(i=0; i < listaPersonajes.length; i++) {
 				if(s.matches(opciones[i])) {
 					jugador.setPElegido(listaPersonajes[i]);
-					encontrado = 1;
+					if(jugador.getAccionElegida()==1) {
+						ventana.cambiarBotones(listaObjetos, this);
+					}else {
+						encontrado = 2;
+					}
 				}
 			}
 		}
@@ -319,20 +350,19 @@ public class GestorJuego implements ActionListener{
 			for(i=0; i < listaSalas.length; i++) {
 				if(s.matches(opciones[i])) {
 					jugador.setLElegida(listaSalas[i]);
-					encontrado = 1;
+					encontrado = 2;
 				}
 			}
 		}
 		if(encontrado == 0) {
 			for(i=0; i < listaObjetos.length; i++) {
 				if(s.matches(opciones[i])) {
-					jugador.setOElegido(listaObjetos[i]);
-					if(jugador.getAccionElegida()==1) {
-						
-					}
-					
+					jugador.setOElegido(listaObjetos[i]);					
 				}
 			}
+		}
+		if(encontrado == 2) {
+			siguienteRonda();
 		}
 		
 		

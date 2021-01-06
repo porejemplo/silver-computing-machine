@@ -3,15 +3,18 @@ public class Ubicacion {
 	private String nombre;
 	//private String tipo; //Esto por si m�s adelante a�adimos los tipos de personajes
 	private String lugar;
-	//Uso gestor de archivos
-	public Ubicacion() {
-		this.lugar = "-";
-		this.nombre = "-";
+	
+	public Ubicacion(String nombre, String lugar) {
+		this.nombre= nombre;
+		this.lugar = lugar;
 	}
 	//Uso gestor de archivos
-	public Ubicacion(String lugar) {
-		this.lugar = lugar;
-		this.nombre = "-";
+	public Ubicacion() {
+		this("-","-");
+	}
+	//Uso gestor de archivos
+	public Ubicacion(String nombre) {
+		this(nombre,"-");
 	}
 	
 	public String getNombre() {

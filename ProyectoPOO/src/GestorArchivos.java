@@ -181,7 +181,12 @@ public class GestorArchivos {
 			// Si hay una poscion vacia creamos un nuevo jugador y lo guardamos.
 			if (lPersonaje[i] == null) {
 				Localizacion localizacion = buscarSalaSeguro(scanner.next(), lLocalizacion);
-				lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
+				if(nombre.equals("Jugador")) {
+					lPersonaje[i]= new Jugador(nombre, localizacion);
+				}else {
+					lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
+				}
+				
 				break;
 			}
 			// Si encontramos el nombre del personaje que queremos guardar lanzmaos una excepcion para informar de que el personaje esta repetido.
