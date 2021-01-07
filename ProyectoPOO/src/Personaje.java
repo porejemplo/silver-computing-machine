@@ -14,15 +14,6 @@ public abstract class Personaje implements Elemento, Accionable{
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    /*public Personaje (String nombre, Objeto objeto, Creencias creencias, Localizacion localizacion, Ubicacion objetivo){
-        setNombre(nombre);
-        setObjeto(objeto);
-        setCreencia(creencias);
-        setLocalizacion(localizacion);
-        setObjetivo(objetivo);
-        localizacion.addPersonaje(this);
-    }*/
     
     public Personaje (String nombre, Localizacion localizacion) {
     	setNombre(nombre);
@@ -73,4 +64,22 @@ public abstract class Personaje implements Elemento, Accionable{
 	public static void continuarHistoria(String accion) {
 		historia+=accion;
 	}
+	public boolean haPedido(Solicitud solicitudes[]) {
+		for(int i = 0; i < solicitudes.length || solicitudes[i]!=null; i++) {
+			if(solicitudes[i].getSolicitante().equals(this)) {
+				return true;
+			}
+		}
+		return false;
+	} 
+	public boolean leHanPedido(Solicitud solicitudes[]) {
+		if(solicitudes[0]==null) return false;
+		for(int i = 0; i < solicitudes.length; ++i) {
+			if(solicitudes[i].getSolicitado().equals(this)) {
+				return true;
+			}
+		}
+		return false;
+	} 
+
 }

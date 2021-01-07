@@ -47,12 +47,10 @@ public class Jugador extends Personaje{
 		return PElegido;
 	}
 
-	@Override
 	public Localizacion especificarSala(Localizacion[] disponibles) {
 		return LElegida;
 	}
 
-	@Override
 	public Objeto especificarObjeto(Objeto[] disponibles) {
 		return OElegido;
 	}
