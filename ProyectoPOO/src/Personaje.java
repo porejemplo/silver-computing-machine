@@ -72,10 +72,9 @@ public abstract class Personaje implements Elemento, Accionable{
 		}
 		return false;
 	} 
-	public boolean leHanPedido(Solicitud solicitudes[]) {
-		if(solicitudes[0]==null) return false;
+	public boolean leHanPedido(Solicitud solicitudes[]) {;
 		for(int i = 0; i < solicitudes.length; ++i) {
-			if(solicitudes[i].getSolicitado().equals(this)) {
+			if(solicitudes[i] != null && solicitudes[i].getSolicitado().equals(this)) {
 				return true;
 			}
 		}

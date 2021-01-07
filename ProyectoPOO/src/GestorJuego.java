@@ -136,8 +136,8 @@ public class GestorJuego implements ActionListener{
 		//1. Cambiar de sala.Un personaje siempre puede decidir cambiarse de sala cambiarse de sala
 		acciones[0]=true;
 		
-		//2. Pedir objeto. Si hay mas personajes en la sala aparte del que realiza la accion, entoces puede pedir un objeto
-		if(personaje.getLocalizacion().getPersonajes().size()>1) acciones[1] = true;
+		//2. Pedir objeto. Si hay mas personajes en la sala aparte del que realiza la accion y no tiene ningun objeto, entoces puede pedir un objeto
+		if(personaje.getLocalizacion().getPersonajes().size()>1 && personaje.getObjeto() == null) acciones[1] = true;
 		//System.out.print(personaje.getLocalizacion().getPersonajes().size());
 		
 		//3. Dar objeto. Comprobar  si alguien le ha pedido un objeto a un personaje
@@ -148,8 +148,8 @@ public class GestorJuego implements ActionListener{
 				}
 			}
 		}
-		//4. Coger objeto. Si hay objetos sueltos en la sala, entonces puede coger uno de ellos
-		if(personaje.getLocalizacion().getObjetos().size()!=0) acciones[3] = true;
+		//4. Coger objeto. Si hay objetos sueltos en la sala y no lleva ninguno, entonces puede coger uno de ellos
+		if(personaje.getLocalizacion().getObjetos().size()!=0 && personaje.getObjeto()==null) acciones[3] = true;
 		
 		//5. Dejar objeto. Si el personaje lleva un objeto, puede decidir soltarlo
 		if(personaje.getObjeto()!=null) acciones[4] = true;

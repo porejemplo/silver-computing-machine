@@ -205,11 +205,12 @@ public class GestorArchivos {
 			// Si hay una poscion vacia creamos un nuevo jugador y lo guardamos.
 			if (lPersonaje[i] == null) {
 				Localizacion localizacion = buscarSalaSeguro(scanner.next(), lLocalizacion);
-				if(i == 0) {
+				if(nombre.equals("Jugador")) {
 					lPersonaje[i]= new Jugador(nombre, localizacion);
 				}
 				else {
-					int ii = random.nextInt(12);
+					lPersonaje[i] = new NPC_prueba(nombre, localizacion);
+					/*int ii = random.nextInt(12);
 					if (ii<pNpcAleatorio) {
 						System.out.println("Personaje Aleatorio");
 						lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
@@ -230,7 +231,7 @@ public class GestorArchivos {
 						pNpcAleatorio++;
 						pNpcAvaricioso++;
 						pNpcListo -= 2;
-					}
+					}*/
 				}
 				
 				break;
