@@ -58,7 +58,7 @@ public class NPC_listo extends Personaje{
 				return disponibles[i];
 			}
 		}
-		return null;
+		return disponibles[(int)(Math.random()*disponibles.length)];
 	}
 
 	public Localizacion especificarSala(Localizacion[] disponibles) {
@@ -78,7 +78,7 @@ public class NPC_listo extends Personaje{
 				return disponibles[i];
 			}
 		}
-		return null;
+		return disponibles[(int)(Math.random()*disponibles.length)];
 	}
 
 }

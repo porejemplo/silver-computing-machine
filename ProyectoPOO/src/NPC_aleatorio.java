@@ -9,6 +9,9 @@ public class NPC_aleatorio extends Personaje{
 
 	public int dameAccion(boolean[] acciones) {
 		int num;
+		if(super.getObjeto().getNombre().equals(super.getObjetivo().getNombre())&& super.getLocalizacion().getNombre().equals(super.getObjetivo().getLugar())) {
+			return 5; //Si esta en su sala y tiene su objeto, no hace nada
+		}
 		while(true) {
 			num = (int) Math.random()*6;
 			if(acciones[num]==true) return num;
