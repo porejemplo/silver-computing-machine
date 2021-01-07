@@ -132,7 +132,7 @@ public class GestorJuego implements ActionListener{
 		//3. Dar objeto. Comprobar  si alguien le ha pedido un objeto a un personaje
 		 if(personaje.leHanPedido(solicitudes)) {
 			for(i = 0; i< solicitudes.length; i++) {
-				if(personaje.equals(solicitudes[i].getSolicitado())&& personaje.getObjeto().equals(solicitudes[i].getObjetoPed())) {
+				if(solicitudes[i]!= null && personaje.equals(solicitudes[i].getSolicitado())&& personaje.getObjeto().equals(solicitudes[i].getObjetoPed())) {
 					acciones[2]=true;
 				}
 			}
