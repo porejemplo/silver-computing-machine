@@ -17,10 +17,12 @@ public class GestorArchivos {
 	private String nombreArchivo; // Se utiliza para guardar el nombre del archivo que se esta utilizando para referenciarlo en los errores.
 	private int nLinea = 0; // Se va a utilizar para guardar la linea que se esta utilizando e indicarlo en caso de error.
 	private int selector = 0;
-	private int pNpcAleatorio = 4;
-	private int pNpcAvaricioso = 4;
-	private int pNpcListo = 4;
+	private int pNpcAleatorio = 3;
+	private int pNpcAvaricioso = 3;
+	private int pNpcListo = 3;
+	private int pNpcVago = 3;
 	private Random random;
+	private Boolean hayJugador;
 
 	// Constructores.
 	public GestorArchivos() {
@@ -127,6 +129,7 @@ public class GestorArchivos {
 		nLinea = 0;
 		selector = 0;
 		random = new Random();
+		hayJugador=false;
 		while (s.hasNextLine()) {
 			nLinea++;
 			String linea = s.nextLine();
@@ -151,6 +154,8 @@ public class GestorArchivos {
 			}
 		}
 		random=null;
+		if (!hayJugador)
+			throw new GestorArchivosException(nLinea, nombreArchivo, "No hay un personaje Jugador definido.");
 	}
 
 	// Guarda el valor de la localizacion enun espacio vacio de la lista
@@ -189,33 +194,40 @@ public class GestorArchivos {
 				Localizacion localizacion = buscarSalaSeguro(scanner.next(), lLocalizacion);
 				if(nombre.equals("Jugador")) {
 					lPersonaje[i]= new Jugador(nombre, localizacion);
+					hayJugador = true;
 				}
 				else {
 					//lPersonaje[i] = new NPC_prueba(nombre, localizacion);
 					int ii = random.nextInt(12);
 					if (ii<pNpcAleatorio) {
-						System.out.println("Personaje Aleatorio");
 						lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
-						pNpcAleatorio -= 2;
+						pNpcAleatorio -= 3;
 						pNpcAvaricioso++;
 						pNpcListo++;
+						pNpcVago++;
 					}
 					else if (ii<(pNpcAleatorio+pNpcAvaricioso)) {
-						System.out.println("Personaje Avaricioso");
 						lPersonaje[i] = new NPC_avaricioso(nombre, localizacion);
 						pNpcAleatorio++;
-						pNpcAvaricioso -= 2;
+						pNpcAvaricioso -= 3;
 						pNpcListo++;
+						pNpcVago++;
 					}
-					else {
-						System.out.println("Personaje Listo");
+					else if (ii<(pNpcAleatorio+pNpcAvaricioso+pNpcListo)){
 						lPersonaje[i] = new NPC_listo(nombre, localizacion);
 						pNpcAleatorio++;
 						pNpcAvaricioso++;
-						pNpcListo -= 2;
+						pNpcListo -= 3;
+						pNpcVago++;
+					}
+					else {
+						lPersonaje[i] = new NPC_vago(nombre, localizacion);
+						pNpcAleatorio++;
+						pNpcAvaricioso++;
+						pNpcListo++;
+						pNpcVago -= 3;
 					}
 				}
-				
 				break;
 			}
 			// Si encontramos el nombre del personaje que queremos guardar lanzmaos una excepcion para informar de que el personaje esta repetido.

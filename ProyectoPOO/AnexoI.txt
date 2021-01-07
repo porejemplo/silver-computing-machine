@@ -5,10 +5,10 @@ Cocina(Comedor)
 Dormitorio(Comedor,Jardín)
 <Personajes>
 Jorge(Jardín)
-Esther(Comedor)
+Esther(Dormitorio)
 Jugador(Comedor)
 <Objetos>
 Cartera(Dormitorio)
-Ordenador(Comedor)
-Llave(Esther)
+Ordenador(Jugador)
+Llave(Dormitorio)
 Pan(Jorge)
