@@ -1,8 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.*;
 
 public class GestorArchivos {
 	private File anexo1;
@@ -17,6 +17,10 @@ public class GestorArchivos {
 	private String nombreArchivo; // Se utiliza para guardar el nombre del archivo que se esta utilizando para referenciarlo en los errores.
 	private int nLinea = 0; // Se va a utilizar para guardar la linea que se esta utilizando e indicarlo en caso de error.
 	private int selector = 0;
+	private int pNpcAleatorio = 4;
+	private int pNpcAvaricioso = 4;
+	private int pNpcListo = 4;
+	private Random random;
 
 	// Constructores.
 	public GestorArchivos() {
@@ -30,6 +34,24 @@ public class GestorArchivos {
 		this.anexo2 = new File(fAnexoII);
 	}
 
+	//Test Main
+    /*public static void main(String[] args) {
+    	Localizacion[] listaSalas;
+        Personaje[] listaPersonajes;
+    	Objeto[] listaObjetos;
+        GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
+        try{
+        	ga.comprobarFormato();
+        	listaSalas = new Localizacion[ga.tamanoLista(0)];
+            listaPersonajes = new Personaje[ga.tamanoLista(1)];
+        	listaObjetos = new Objeto[ga.tamanoLista(2)];
+            ga.leerAnexos(listaSalas, listaPersonajes, listaObjetos);
+        } catch (FileNotFoundException e){
+            e.printStackTrace();
+        } catch (GestorArchivosException e) {
+            e.printStackTrace();
+        }
+    }*/
 	// Funciones
 	public void comprobarFormato() throws FileNotFoundException, GestorArchivosException {
 		Scanner s = new Scanner(anexo1); // Primero leemos el anexo 1
@@ -122,6 +144,7 @@ public class GestorArchivos {
 	private void darValorListasAnexoI(Scanner s, Localizacion lLocalizacion[], Personaje lPersonaje[], Objeto lObjeto[]) throws GestorArchivosException {
 		nLinea = 0;
 		selector = 0;
+		random = new Random();
 		while (s.hasNextLine()) {
 			nLinea++;
 			String linea = s.nextLine();
@@ -145,6 +168,7 @@ public class GestorArchivos {
 				sl.close();
 			}
 		}
+		random=null;
 	}
 
 	// Guarda el valor de la localizacion enun espacio vacio de la lista
@@ -181,10 +205,32 @@ public class GestorArchivos {
 			// Si hay una poscion vacia creamos un nuevo jugador y lo guardamos.
 			if (lPersonaje[i] == null) {
 				Localizacion localizacion = buscarSalaSeguro(scanner.next(), lLocalizacion);
-				if(nombre.equals("Jugador")) {
+				if(i == 0) {
 					lPersonaje[i]= new Jugador(nombre, localizacion);
-				}else {
-					lPersonaje[i] = new NPC_prueba(nombre, localizacion);
+				}
+				else {
+					int ii = random.nextInt(12);
+					if (ii<pNpcAleatorio) {
+						System.out.println("Personaje Aleatorio");
+						lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
+						pNpcAleatorio -= 2;
+						pNpcAvaricioso++;
+						pNpcListo++;
+					}
+					else if (ii<(pNpcAleatorio+pNpcAvaricioso)) {
+						System.out.println("Personaje Avaricioso");
+						lPersonaje[i] = new NPC_avaricioso(nombre, localizacion);
+						pNpcAleatorio++;
+						pNpcAvaricioso -= 2;
+						pNpcListo++;
+					}
+					else {
+						System.out.println("Personaje Listo");
+						lPersonaje[i] = new NPC_listo(nombre, localizacion);
+						pNpcAleatorio++;
+						pNpcAvaricioso++;
+						pNpcListo -= 2;
+					}
 				}
 				
 				break;
@@ -366,7 +412,6 @@ public class GestorArchivos {
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
