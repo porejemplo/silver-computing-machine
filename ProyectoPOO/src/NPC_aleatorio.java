@@ -6,28 +6,28 @@ public class NPC_aleatorio extends Personaje{
 		super (nombre, localizacion);
 	}
 
-	@Override
+
 	public int dameAccion(boolean[] acciones) {
-		// TODO Auto-generated method stub
-		return 0;
+		int num;
+		while(true) {
+			num = (int) Math.random()*6;
+			if(acciones[num]==true) return num;
+		}
 	}
 
-	@Override
+
 	public Personaje especificarPersonaje(Personaje[] disponibles) {
-		// TODO Auto-generated method stub
-		return null;
+		return disponibles[(int)Math.random()*disponibles.length];
 	}
 
-	@Override
+
 	public Localizacion especificarSala(Localizacion[] disponibles) {
-		// TODO Auto-generated method stub
-		return null;
+		return disponibles[(int)Math.random()*disponibles.length];
 	}
 
-	@Override
+
 	public Objeto especificarObjeto(Objeto[] disponibles) {
-		// TODO Auto-generated method stub
-		return null;
+		return disponibles[(int)Math.random()*disponibles.length];
 	}
 
 }

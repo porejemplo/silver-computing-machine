@@ -9,8 +9,9 @@ public class Main {
 		
 		try {
 			ga.comprobarFormato();
-			gJuego = new GestorJuego(new Localizacion[ga.tamanoLista(0)],new Personaje[ga.tamanoLista(1)],new Objeto[ga.tamanoLista(2)]);
+			gJuego = new GestorJuego(new Localizacion[ga.tamanoLista(0)],new Personaje[ga.tamanoLista(1)],new Objeto[ga.tamanoLista(2)], ga);
 			ga.leerAnexos(gJuego.getListaSalas(), gJuego.getListaPersonajes(), gJuego.getListaObjetos());
+			gJuego.empezarJuego();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			gJuego = new GestorJuego();
@@ -18,7 +19,7 @@ public class Main {
 			e.printStackTrace();
 			gJuego = new GestorJuego();
 		}
-		gJuego.empezarJuego();
+		
 		/*String strings[] = new String[4];
 		for(int i = 0; i < 4; i++) {
 			strings[i] = "C"+i;

@@ -4,9 +4,7 @@ public class Jugador extends Personaje{
 	private int accionElegida;
 	private Personaje PElegido;
 	private Localizacion LElegida;
-	private Objeto OElegido;
-	private int indice;
-	
+	private Objeto OElegido;	
 	
 	public Jugador(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
@@ -26,10 +24,6 @@ public class Jugador extends Personaje{
 
 	public void setOElegido(Objeto oElegido) {
 		OElegido = oElegido;
-	}
-	
-	public int getIndice() {
-		return indice;
 	}
 	public int getAccionElegida() {
 		return accionElegida;

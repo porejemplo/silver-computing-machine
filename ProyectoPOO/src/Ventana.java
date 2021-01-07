@@ -8,18 +8,15 @@ public class Ventana extends JFrame{
 	private JPanel panelOpciones, panelResumen, panelTitulo;
 	private JScrollPane sbrText;
 	private JTextArea historia;// esto tiene que ser la informacion de lo que ha pasado en el turno
-	
+	private JLabel estado;
 	private JButton botones[];
 	
 
 	
 
 	//Constructor de la Interfaz
-	public Ventana(String cosas[], GestorJuego gestor, Creencias creenciasJugador) {
+	public Ventana(String cosas[], GestorJuego gestor, Jugador jugador) {
 		botones = new JButton[cosas.length];
-		
-		//Creamos el frame
-		//frame = new JFrame();
 		
 		//Creamos los paneles
 		panelOpciones = new JPanel();
@@ -27,8 +24,14 @@ public class Ventana extends JFrame{
 		panelTitulo = new JPanel();
 		
 		//Diseñamos panelTitulo
-		
-		panelTitulo.add(new Label("Nombre del juego"));
+		panelTitulo.setLayout(new FlowLayout());
+		panelTitulo.add(new Label("Debes acabar en "+jugador.getObjetivo().getLugar()+" y tener "+ jugador.getObjetivo().getNombre()));
+		if(jugador.getObjeto()==null) {
+			estado= new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y tienes: -");
+		}else {
+			estado = new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y tienes: "+ jugador.getObjeto().getNombre());
+		}
+		panelTitulo.add(estado);
 		
 		//Diseñamos panelOpciones
 		
@@ -36,18 +39,14 @@ public class Ventana extends JFrame{
 		panelOpciones.setBorder(BorderFactory.createEmptyBorder(30,30,10,30));
 		panelOpciones.setLayout(new GridLayout(0,1));
 		
+		
 		for(int i = 0; i < cosas.length; i++) {
 			botones[i] = new JButton(cosas[i]);
 			botones[i].setPreferredSize(new Dimension(200,50));
-		}
-		
-		for(int i = 0; i < cosas.length; i++) {
 			botones[i].addActionListener(gestor);
-		}
-		
-		for(int i = 0; i < cosas.length; i++) {
 			panelOpciones.add(botones[i]);
 		}
+		
 		
 		
 		//Diseñamos panelResumen
@@ -60,7 +59,7 @@ public class Ventana extends JFrame{
 		
 		sbrText = new JScrollPane(historia, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		
-		creencias = new JTextArea("Informacion disponible:\n" + creenciasJugador); //Esto serán las creencias del jugador
+		creencias = new JTextArea("Informacion disponible:\n" + jugador.getCreencias()); //Esto serán las creencias del jugador
 		creencias.setPreferredSize(new Dimension(100,100));
 		
 		panelResumen.add(sbrText);
@@ -77,8 +76,8 @@ public class Ventana extends JFrame{
 		setSize(500,500);
 	}
 	
-	public Ventana(String cosas[], GestorJuego gestor, Creencias creencias, boolean disponibles[]) {
-		this(cosas, gestor,creencias);
+	public Ventana(String cosas[], GestorJuego gestor, Jugador jugador, boolean disponibles[]) {
+		this(cosas, gestor,jugador);
 		cambiarBotones(cosas, gestor, disponibles);
 	}
 	public JTextArea getHistoria() {
@@ -90,11 +89,13 @@ public class Ventana extends JFrame{
 		}
 		
 		for(int i = 0; i<cosas.length; i++) {
-			//System.out.print("\n"+cosas.length+"\n"+i+ cosas[i].getNombre());
-			botones[i] = new JButton(cosas[i].getNombre());
-			botones[i].setPreferredSize(new Dimension(200,50));
-			botones[i].addActionListener(listener);
-			panelOpciones.add(botones[i]);
+			if(cosas[i]!=listener.getJugador()) {
+				botones[i] = new JButton(cosas[i].getNombre());
+				botones[i].setPreferredSize(new Dimension(200,50));
+				botones[i].addActionListener(listener);
+				panelOpciones.add(botones[i]);
+			}
+			
 		}
 		
 		validate();
@@ -107,18 +108,13 @@ public class Ventana extends JFrame{
 		}
 		
 		for(int i = 0; i < cosas.length; i++) {
-			botones[i] = new JButton(cosas[i]);
-			botones[i].setPreferredSize(new Dimension(200,50));
+				botones[i] = new JButton(cosas[i]);
+				botones[i].setPreferredSize(new Dimension(200,50));
+				botones[i].addActionListener(listener);
+				panelOpciones.add(botones[i]);
+			
 		}
-		
-		for(int i = 0; i < cosas.length; i++) {
-			botones[i].addActionListener(listener);
-		}
-		
-		for(int i = 0; i < cosas.length; i++) {
-			panelOpciones.add(botones[i]);
-		}
-		
+	
 		validate();
 		repaint();
 	}
@@ -135,6 +131,14 @@ public class Ventana extends JFrame{
 		panelResumen.remove(creencias);
 		creencias = new JTextArea("Informacion disponible: \n" +jugador.getCreencias());
 		panelResumen.add(creencias);
+		
+		panelTitulo.remove(estado);
+		if(jugador.getObjeto()==null) {
+			estado= new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y tienes: -");
+		}else {
+			estado = new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y tienes: "+ jugador.getObjeto().getNombre());
+		}
+		panelTitulo.add(estado);
 		
 		validate();
 		repaint();

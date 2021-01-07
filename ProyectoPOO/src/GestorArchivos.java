@@ -33,25 +33,7 @@ public class GestorArchivos {
 		this.anexo1 = new File(fAnexoI);
 		this.anexo2 = new File(fAnexoII);
 	}
-
-	//Test Main
-    /*public static void main(String[] args) {
-    	Localizacion[] listaSalas;
-        Personaje[] listaPersonajes;
-    	Objeto[] listaObjetos;
-        GestorArchivos ga = new GestorArchivos("Anexo1.txt", "AnexoII.txt");
-        try{
-        	ga.comprobarFormato();
-        	listaSalas = new Localizacion[ga.tamanoLista(0)];
-            listaPersonajes = new Personaje[ga.tamanoLista(1)];
-        	listaObjetos = new Objeto[ga.tamanoLista(2)];
-            ga.leerAnexos(listaSalas, listaPersonajes, listaObjetos);
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        } catch (GestorArchivosException e) {
-            e.printStackTrace();
-        }
-    }*/
+	
 	// Funciones
 	public void comprobarFormato() throws FileNotFoundException, GestorArchivosException {
 		Scanner s = new Scanner(anexo1); // Primero leemos el anexo 1
@@ -209,8 +191,8 @@ public class GestorArchivos {
 					lPersonaje[i]= new Jugador(nombre, localizacion);
 				}
 				else {
-					lPersonaje[i] = new NPC_prueba(nombre, localizacion);
-					/*int ii = random.nextInt(12);
+					//lPersonaje[i] = new NPC_prueba(nombre, localizacion);
+					int ii = random.nextInt(12);
 					if (ii<pNpcAleatorio) {
 						System.out.println("Personaje Aleatorio");
 						lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
@@ -231,7 +213,7 @@ public class GestorArchivos {
 						pNpcAleatorio++;
 						pNpcAvaricioso++;
 						pNpcListo -= 2;
-					}*/
+					}
 				}
 				
 				break;
@@ -329,7 +311,7 @@ public class GestorArchivos {
 		Personaje personaje = buscarPersonajeSeguro(scanner.next(), lPersonaje);
 
 		if (personaje != null)
-			personaje.setObjetivo(new Ubicacion(scanner.next()));
+			personaje.setObjetivo(new Ubicacion(null,scanner.next()));
 	}
 
 	// Se el pasa el scanner de un objeto objetivo y se lo guarda al personaje.

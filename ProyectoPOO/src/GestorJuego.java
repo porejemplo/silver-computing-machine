@@ -1,29 +1,29 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GestorJuego implements ActionListener{
-	
+	private Ventana ventana;
+	private int ronda = 0;
+	private short acabado = 0;
 	private Jugador jugador;
 	private Localizacion listaSalas[];
 	private Personaje listaPersonajes[];
 	private Objeto listaObjetos[];
-	String opciones[] = {"Cambiar sala", "Pedir Objeto", "Dar Objeto", "Coger Objeto", "Dejar Objeto", "No hacer nada"};
-	// La creencias del gestor del juego representan el estado actual del juego
+	private String opciones[] = {"Cambiar sala", "Pedir Objeto", "Dar Objeto", "Coger Objeto", "Dejar Objeto", "No hacer nada"};
+	// La creencias del gestor del juego representan el estado actual del juego.
 	private Creencias estadoJuego;
-	private int ronda = 0;
-	// Solicitudes es una matriz de adyacencia del grafo dirigido asociado a lospersonajes
-	// Dos nodos conectados representan una solicitud de objeto de un personaje a otro
+	//solicitudes almacena las peticiones de objetos de unos personajes a otros, caduca tras una ronda.
 	private Solicitud solicitudes[];
-	// La historia es un string que se va rellenando con las acciones de cada uno de los personajes.
-	private short acabado = 0;
-	public Ventana ventana; 
+	//Necesario para escribir en ficheros cuando acabe el juego.
+	private GestorArchivos gArchivos;
 
-	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos) {
+	public GestorJuego(Localizacion[] salas, Personaje[] personajes, Objeto[] objetos, GestorArchivos gestor) {
 		listaSalas = salas;
 		listaPersonajes = personajes;
 		listaObjetos = objetos;
-		//solicitudes = new Objeto[personajes.length][personajes.length];
 		solicitudes = new Solicitud[personajes.length];
+		gArchivos = gestor;
 	}
 
 	public GestorJuego() {
@@ -40,29 +40,12 @@ public class GestorJuego implements ActionListener{
 	public Objeto[] getListaObjetos() {
 		return listaObjetos;
 	}
-	
-	public String[] getOpciones() {
-		return opciones;
+	public Jugador getJugador() {
+		return jugador;
 	}
 	
-	public void setListaSalas(Localizacion[] listaSalas) {
-		this.listaSalas = listaSalas;
-	}
-
-	public void setListaPersonajes(Personaje[] listaPersonajes) {
-		this.listaPersonajes = listaPersonajes;
-	}
-
-	public void setListaObjetos(Objeto[] listaObjetos) {
-		this.listaObjetos = listaObjetos;
-	}
-	public void setEstado(Creencias certezas) {
-		estadoJuego = certezas;
-	}
-	
-	
-	public void siguienteRonda() {
-		if(acabado == listaPersonajes.length) {
+	private void siguienteRonda() {
+		if(acabado == listaPersonajes.length || ronda>10) {
 			finalizar();
 		}else {
 			acabado = 0;
@@ -111,7 +94,7 @@ public class GestorJuego implements ActionListener{
 			}
 		}
 		
-		setEstado(new Creencias(aux, aux2)); //Establecer las creencias
+		estadoJuego = new Creencias(aux, aux2); //Establecer las creencias
 		
 		//Encontrar al jugador
 		for(int i = 0; i < listaPersonajes.length; i++) {	
@@ -124,12 +107,18 @@ public class GestorJuego implements ActionListener{
 		for(int i = 0; i < listaPersonajes.length; i++) {
 			mostrarSala(listaPersonajes[i], listaPersonajes[i].getLocalizacion());
 		}
-		ventana = new Ventana(opciones,this, jugador.getCreencias(), accionesPermitidas(jugador));
+		ventana = new Ventana(opciones,this, jugador, accionesPermitidas(jugador));
 		ventana.setVisible(true);
 		
 	}
 	
-	public boolean[] accionesPermitidas(Personaje personaje) { //NOMBRE.Filtrar que acciones puede y no puede hacer un personaje
+	private void finalizar() {
+		gArchivos.guardarEstadoJuego(this.toString());
+		gArchivos.guardarHistoria(Personaje.getHistoria());
+		ventana.dispose();
+	}
+	
+	private boolean[] accionesPermitidas(Personaje personaje) { //NOMBRE.Filtrar que acciones puede y no puede hacer un personaje
 		boolean acciones[] = new boolean[6];
 		int i; //iterador
 		
@@ -160,7 +149,7 @@ public class GestorJuego implements ActionListener{
 		return acciones;
 	}
 	
-	public void ejecutarAccion(Personaje personaje, int accion) {
+	private void ejecutarAccion(Personaje personaje, int accion) {
 		Objeto objeto;
 		Personaje otroPersonaje;
 		int i=0,j=0; //iteradores
@@ -204,7 +193,7 @@ public class GestorJuego implements ActionListener{
 		
 	}
 	
-	public void cambiarSala(Personaje personaje, Localizacion origen, Localizacion destino) {
+	private void cambiarSala(Personaje personaje, Localizacion origen, Localizacion destino) {
 		personaje.setLocalizacion(destino);
 		estadoJuego.cambiarCreencia(personaje, destino);
 		origen.removePersonaje(personaje);
@@ -229,7 +218,7 @@ public class GestorJuego implements ActionListener{
 		mostrarSala(personaje,destino);
 		
 	}
-	public void cambiarObjeto(Personaje emisor, Personaje receptor) {
+	private void cambiarObjeto(Personaje emisor, Personaje receptor) {
 		receptor.setObjeto(emisor.getObjeto());
 		emisor.setObjeto(null);
 		estadoJuego.cambiarCreencia(receptor.getObjeto(), receptor);
@@ -242,7 +231,7 @@ public class GestorJuego implements ActionListener{
 	  		}
 		}
 	}
-	public void cambiarObjeto(Personaje emisor, Localizacion destino) {
+	private void cambiarObjeto(Personaje emisor, Localizacion destino) {
 		estadoJuego.cambiarCreencia(emisor.getObjeto(), destino);
 		destino.addObjeto(emisor.getObjeto());
 
@@ -256,7 +245,7 @@ public class GestorJuego implements ActionListener{
 		emisor.setObjeto(null);
 		 
 	}
-	public void cambiarObjeto(Objeto objeto, Localizacion origen, Personaje receptor) {
+	private void cambiarObjeto(Objeto objeto, Localizacion origen, Personaje receptor) {
 		receptor.setObjeto(objeto);
 		estadoJuego.cambiarCreencia(objeto, receptor);
 		origen.removeObjeto(objeto);
@@ -271,7 +260,7 @@ public class GestorJuego implements ActionListener{
 		
 	}
 	
-	public void mostrarSala(Personaje personaje, Localizacion destino) {
+	private void mostrarSala(Personaje personaje, Localizacion destino) {
 		//Actualizar las ubicaciones de los objetos que se encuentren en esa sala
 		for(int i = 0; i < destino.getObjetos().size();i++) {
 			personaje.getCreencias().cambiarCreencia(destino.getObjetos().get(i),destino);
@@ -280,10 +269,6 @@ public class GestorJuego implements ActionListener{
 		for(int i = 0; i < destino.getPersonajes().size();i++) {
 			personaje.getCreencias().cambiarCreencia(destino.getPersonajes().get(i),destino);
 		}
-	}
-	
-	public void finalizar() {
-		//Terminar el juego, escribir en fichero, mostrar historia
 	}
 	
 	public String toString() {
@@ -319,29 +304,15 @@ public class GestorJuego implements ActionListener{
 		}
 		switch(i) {
 		case 0: //Cambiar de localizacion
-			//System.out.print("Se va a cambiar a "+opciones[i]+"\n");
 			ventana.cambiarBotones(jugador.getLocalizacion().getAdyacencias(), this);
 			break;
-		case 1: //Pedir un objeto a alguien
+		case 1: //Pedir un objeto a alguien 
 			ventana.cambiarBotones(jugador.getLocalizacion().getPersonajes().toArray(new Personaje[jugador.getLocalizacion().getPersonajes().size()]), this);
 			break;
 		case 2: //Dar objeto
-			/*int j = 0;
-			for(int k = 0; k < listaPersonajes.length; k++) { //Obtener el numero de solicitantes
-				if(solicitudes[k][jugador.getIndice()]!=null) {
-					j++;
-				}
-			}
-			Personaje solicitantes[] = new Personaje[j];
-			for(int k = 0; k < listaPersonajes.length; k++) {
-				if(solicitudes[k][jugador.getIndice()]!=null) {
-					solicitantes[k]=listaPersonajes[k];
-				}
-			}*/
-			//ventana.cambiarBotones(solicitantes, this);
+			ventana.cambiarBotones(Solicitud.elaborarListaSolicitantes(jugador, solicitudes, listaPersonajes), this);
 			break;
 		case 3: //Coger objeto
-			//System.out.print(jugador.getLocalizacion().getObjetos().size());
 			ventana.cambiarBotones(jugador.getLocalizacion().getObjetos().toArray(new Objeto[jugador.getLocalizacion().getObjetos().size()]), this);
 			break;
 		case 4: //Dejar objeto

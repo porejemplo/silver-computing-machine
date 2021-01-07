@@ -23,16 +23,13 @@ public class Ubicacion {
 	public String getLugar() {
 		return lugar;
 	}
-	/*public String getTipo(){
-	 	return tipo;*/
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 	public void setLugar(String lugar) {
 		this.lugar = lugar;
 	}
-	
-	
 	public String toString() {
 		return (nombre + "(" + lugar + ")\n");
 	}

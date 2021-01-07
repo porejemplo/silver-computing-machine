@@ -64,6 +64,9 @@ public abstract class Personaje implements Elemento, Accionable{
 	public static void continuarHistoria(String accion) {
 		historia+=accion;
 	}
+	public static String getHistoria() {
+		return historia;
+	}
 	public boolean haPedido(Solicitud solicitudes[]) {
 		for(int i = 0; i < solicitudes.length || solicitudes[i]!=null; i++) {
 			if(solicitudes[i].getSolicitante().equals(this)) {

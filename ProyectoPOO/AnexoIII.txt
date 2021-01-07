@@ -1,0 +1,103 @@
+Comienza la ronda: 1.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Jugador decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Comienza la ronda: 2.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jugador decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Comienza la ronda: 3.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Jugador decide dejar su objeto en el suelo de la sala Jardín.
+
+Comienza la ronda: 4.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jugador decide cambiarse de sala.
+Ahora se encuentra en Dormitorio.
+
+Comienza la ronda: 5.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Jugador decide coger el objeto: Objeto@4ef45fb4 del suelo de la sala Dormitorio.
+
+Comienza la ronda: 6.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jugador decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Comienza la ronda: 7.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Jugador decide dejar su objeto en el suelo de la sala Comedor.
+
+Comienza la ronda: 8.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jugador decide pedir el objeto: Objeto@4ef45fb4 a Jorge.
+
+Comienza la ronda: 9.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Jugador decide no hacer nada.
+
+Comienza la ronda: 10.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jugador decide no hacer nada.
+
+Comienza la ronda: 11.
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Jugador decide no hacer nada.
+

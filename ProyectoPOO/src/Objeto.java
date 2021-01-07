@@ -15,5 +15,5 @@ public class Objeto implements Elemento{
     public Boolean equals(Objeto objeto){
         return this.nombre == objeto.getNombre();
     }
-
+    
 }
