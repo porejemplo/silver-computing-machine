@@ -406,15 +406,24 @@ public class GestorArchivos {
 	}
 
 	//Guarda el estado del juego en el archivo anexo1
-	public void guardarEstadoJuego(String string){
+	public void escribirArchivos(String string, File file){
 		try {
-			FileWriter writer = new FileWriter(anexo1, false);
+			FileWriter writer = new FileWriter(file, false);
 			writer.write(string);
 			writer.flush();
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void guardarHistoria(String string) {
+		File file = new File ("AnexoIII.txt");
+		escribirArchivos(string, file);
+	}
+	
+	public void guardarEstadoJuego(String string){
+		escribirArchivos(string, anexo1);
 	}
 
 	// Da formato de string a los array de datos del juego.
