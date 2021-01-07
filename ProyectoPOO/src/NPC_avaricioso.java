@@ -8,7 +8,7 @@ public class NPC_avaricioso extends Personaje{
 
 	public int dameAccion(boolean[] acciones) {
 		
-		if(super.getObjeto().getNombre().equals(super.getObjetivo().getNombre())&& super.getLocalizacion().getNombre().equals(super.getObjetivo().getLugar())) {
+		if(super.getObjeto()!=null && super.getObjeto().getNombre().equals(super.getObjetivo().getNombre())&& super.getLocalizacion().getNombre().equals(super.getObjetivo().getLugar())) {
 			return 5; //Si esta en su sala y tiene su objeto, no hace nada
 		}else if(acciones[4]==true&& super.getLocalizacion().getPersonajes().size()==1&&super.getObjeto().getNombre()!=super.getObjetivo().getNombre()) {
 			return 4; //Esconde objetos, si puede dejar un objeto, no hay nadie en la sala y ademas, no es el objeto que el mismo esta buscando, lo deja

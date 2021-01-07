@@ -13,7 +13,7 @@ public class NPC_listo extends Personaje{
 	public int dameAccion(boolean[] acciones) {
 		
 		//Si aun no tiene su objeto, lo primero que hará sera buscarlo
-		if(!super.getObjeto().getNombre().equals(super.getObjetivo().getNombre())) {
+		if(super.getObjeto()!=null && !super.getObjeto().getNombre().equals(super.getObjetivo().getNombre())) {
 			if(acciones[4]) { //Si puede dejar un objeto significa que tiene uno y querrá dejarlo
 				return 4;
 			}else {

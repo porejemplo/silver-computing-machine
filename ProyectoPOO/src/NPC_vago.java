@@ -25,7 +25,6 @@ public class NPC_vago extends Personaje{
 		return disponibles[(int) Math.random()*disponibles.length];
 	}
 
-	@Override
 	public Localizacion especificarSala(Localizacion[] disponibles) {
 		//Si puede moverse a su localizacion objetivo lo hace
 		for(int i = 0; i < disponibles.length; i++) {
@@ -37,7 +36,6 @@ public class NPC_vago extends Personaje{
 		return disponibles[(int)Math.random()*disponibles.length];
 	}
 
-	@Override
 	public Objeto especificarObjeto(Objeto[] disponibles) {
 		//Busca su objeto
 		for(int i = 0; i < disponibles.length; i++) {
