@@ -45,7 +45,7 @@ public class GestorJuego implements ActionListener{
 	}
 	
 	private void siguienteRonda() {
-		if(acabado == listaPersonajes.length || ronda>10) {
+		if(acabado == listaPersonajes.length /*|| ronda>10*/) { //Descomentar para hacer una partida rapida y ver el final del juego
 			finalizar();
 		}else {
 			acabado = 0;
@@ -110,14 +110,17 @@ public class GestorJuego implements ActionListener{
 		for(int i = 0; i < listaPersonajes.length; i++) {
 			mostrarSala(listaPersonajes[i], listaPersonajes[i].getLocalizacion());
 		}
+		//Crear y mostrar la ventana
 		ventana = new Ventana(opciones,this, jugador, accionesPermitidas(jugador));
 		ventana.setVisible(true);
 		
 	}
 	
 	private void finalizar() {
+		//Guardar el estado del juego
 		gArchivos.guardarEstadoJuego(this.toString());
 		gArchivos.guardarHistoria(Personaje.getHistoria());
+		//Cerrar la ventana
 		ventana.dispose();
 	}
 	

@@ -1,7 +1,7 @@
 
 
 public class NPC_listo extends Personaje{
-
+//Tratara de alcanzar sus objetivos de forma optimizada
 	public NPC_listo(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
 	}

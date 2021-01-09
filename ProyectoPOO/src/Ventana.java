@@ -114,7 +114,7 @@ public class Ventana extends JFrame{
 		validate();
 		repaint();
 	}
-	public void cambiarBotones(String cosas[], GestorJuego gestor, boolean disponibles[]) {
+	public void cambiarBotones(String cosas[], GestorJuego gestor, boolean disponibles[]) { //Habilitar solo algunos de los botones
 		cambiarBotones(cosas, gestor);
 		for(int i = 0; i < disponibles.length || i < cosas.length; i++) {
 			if(disponibles[i]==false) {
@@ -122,7 +122,7 @@ public class Ventana extends JFrame{
 			}
 		}
 	}
-	public void actualizarVentana(Jugador jugador) {
+	public void actualizarVentana(Jugador jugador) { //Añadir la nueva informacion de cada turno
 		
 		panelResumen.remove(creencias);
 		creencias = new JTextArea("Informacion disponible: \n" +jugador.getCreencias());
