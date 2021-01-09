@@ -62,26 +62,6 @@ public class Localizacion implements Elemento{
         objetos.remove(indice);
     }
 
-    // Funciones
-    public String toString(){
-        String s = "Localizacion: " + getNombre();
-        s += "\nPersonajes:";
-        for (int i = 0; i < personajes.size(); i++) {
-            s += "\t" + String.valueOf(i) + "-" + personajes.get(i).getNombre();
-        }
-        s += "\nLocalizaciones adyacentes:";
-        for (int i = 0; i < localizacionesAdyacentes.length; i++) {
-            s += "\t" + String.valueOf(i) + "-" + localizacionesAdyacentes[i].getNombre();
-        }
-        return s;
-    }
-
-    public void InformarSala(){
-        for (int i = 0; i < personajes.size(); i++) {
-            System.out.println("Se ha informado a " + personajes.get(i).getNombre());
-        }
-    }
-
     public Boolean equals(Localizacion localizacion){
         return this.nombre == localizacion.nombre;
     }

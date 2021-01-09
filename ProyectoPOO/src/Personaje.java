@@ -61,27 +61,23 @@ public abstract class Personaje implements Elemento, Accionable{
 			s += getObjeto().getNombre();
 		return s;
 	}
+	public boolean leHanPedido(Solicitud solicitudes[]) {;
+	for(int i = 0; i < solicitudes.length; ++i) {
+		if(solicitudes[i] != null && solicitudes[i].getSolicitado().equals(this)) {
+			return true;
+		}
+	}
+	return false;
+} 
+	//Metodos de clase para elaborar la historia
 	public static void continuarHistoria(String accion) {
 		historia+=accion;
 	}
 	public static String getHistoria() {
 		return historia;
 	}
-	public boolean haPedido(Solicitud solicitudes[]) {
-		for(int i = 0; i < solicitudes.length || solicitudes[i]!=null; i++) {
-			if(solicitudes[i].getSolicitante().equals(this)) {
-				return true;
-			}
-		}
-		return false;
-	} 
-	public boolean leHanPedido(Solicitud solicitudes[]) {;
-		for(int i = 0; i < solicitudes.length; ++i) {
-			if(solicitudes[i] != null && solicitudes[i].getSolicitado().equals(this)) {
-				return true;
-			}
-		}
-		return false;
-	} 
+	
+	
+	
 
 }

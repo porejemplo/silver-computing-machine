@@ -4,17 +4,18 @@ public class NPC_listo extends Personaje{
 
 	public NPC_listo(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
-		// TODO Auto-generated constructor stub
 	}
 
-	private String proposito=""; //Accion que estará buscando
+	private String proposito=""; //Accion que estará buscando realizar
 	
 
 	public int dameAccion(boolean[] acciones) {
 		
 		//Si aun no tiene su objeto, lo primero que hará sera buscarlo
 		if(super.getObjeto()!=null && !super.getObjeto().getNombre().equals(super.getObjetivo().getNombre())) {
-			if(acciones[4]) { //Si puede dejar un objeto significa que tiene uno y querrá dejarlo
+			if(acciones[2]) {
+				return 2; //Si tiene un objeto que no quiere y alguien se lo pide, se lo da
+			}else if(acciones[4]) { //Si puede dejar un objeto significa que tiene uno y querrá dejarlo
 				return 4;
 			}else {
 				//Su proposito sera buscar su objeto

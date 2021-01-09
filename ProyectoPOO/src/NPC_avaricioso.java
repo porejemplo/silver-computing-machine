@@ -1,5 +1,6 @@
 
 public class NPC_avaricioso extends Personaje{
+	//Intenta evitar que los demas personajes encuentren sus objetos
 
 
 	public NPC_avaricioso(String nombre, Localizacion localizacion) {

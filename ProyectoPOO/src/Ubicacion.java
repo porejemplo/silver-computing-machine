@@ -1,7 +1,6 @@
 
 public class Ubicacion {
 	private String nombre;
-	//private String tipo; //Esto por si m�s adelante a�adimos los tipos de personajes
 	private String lugar;
 	
 	public Ubicacion(String nombre, String lugar) {

@@ -4,16 +4,12 @@ import java.awt.*;
 
 public class Ventana extends JFrame{
 	
-	private JTextArea creencias;
+	private JTextArea creencias, historia;
 	private JPanel panelOpciones, panelResumen, panelTitulo;
 	private JScrollPane sbrText;
-	private JTextArea historia;// esto tiene que ser la informacion de lo que ha pasado en el turno
 	private JLabel estado;
 	private JButton botones[];
 	
-
-	
-
 	//Constructor de la Interfaz
 	public Ventana(String cosas[], GestorJuego gestor, Jugador jugador) {
 		botones = new JButton[cosas.length];

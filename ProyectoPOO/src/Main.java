@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 public class Main {
 
 	public static void main(String[] args) {
-		// Anetes de ejecutar el juego
 		GestorJuego gJuego;
 		GestorArchivos ga = new GestorArchivos("AnexoI.txt", "AnexoII.txt");
 		
@@ -19,22 +18,6 @@ public class Main {
 			e.printStackTrace();
 			gJuego = new GestorJuego();
 		}
-		
-		/*String strings[] = new String[4];
-		for(int i = 0; i < 4; i++) {
-			strings[i] = "C"+i;
-		}
-		gJuego.ventana.cambiarBotones(strings, gJuego);*/
-		//System.out.print(gJuego);
-		//System.out.print(gJuego.getListaPersonajes()[0].getCreencias());
-		/*
-		 * 
-		 * Bucle de juego.
-		 * 
-		 */
-		
-		//Guardado de datos
-		//ga.guardarEstadoJuego(gJuego.getListaSalas(), gJuego.getListaPersonajes(), gJuego.getListaObjetos());
 		
 	}
 

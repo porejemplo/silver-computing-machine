@@ -1,6 +1,6 @@
 
 public class NPC_aleatorio extends Personaje{
-
+//Realiza todas sus acciones de forma aleatoria, salvo si ha cumplido sus objetivos
 	
 	public NPC_aleatorio(String nombre, Localizacion localizacion) {
 		super (nombre, localizacion);

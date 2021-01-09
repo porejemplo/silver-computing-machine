@@ -1,6 +1,8 @@
 
 
 public class Jugador extends Personaje{
+	
+	//Atributos en los que guardar las decisiones del jugador
 	private int accionElegida;
 	private Personaje PElegido;
 	private Localizacion LElegida;
@@ -32,20 +34,20 @@ public class Jugador extends Personaje{
 		return LElegida;
 	}
 
-	public int dameAccion(boolean[] acciones) {
+	public int dameAccion(boolean[] acciones) { //Devuelve el valor especificado por el jugador a traves de la interfaz grafica
 		return accionElegida;
 	}
 
 
-	public Personaje especificarPersonaje(Personaje[] disponibles) {
+	public Personaje especificarPersonaje(Personaje[] disponibles) { //Devuelve el personaje especificado a traves de la interfaz grafica
 		return PElegido;
 	}
 
-	public Localizacion especificarSala(Localizacion[] disponibles) {
+	public Localizacion especificarSala(Localizacion[] disponibles) {//Devuelve la localizacion especificada a traves de la interfaz grafica
 		return LElegida;
 	}
 
-	public Objeto especificarObjeto(Objeto[] disponibles) {
+	public Objeto especificarObjeto(Objeto[] disponibles) {//Devuelve el objeto especificado a traves de la interfaz grafica
 		return OElegido;
 	}
 

@@ -9,9 +9,13 @@ public class NPC_vago extends Personaje{
 		//Si no esta en su objetivo, se mueve hasta encontrarla
 		if(super.getObjetivo().getLugar()!=super.getLocalizacion().getNombre()) { 
 			return 0;
-		}else if(acciones[1]==true) {//Si puede pedir un objeto lo pide
+		}else if(acciones[2]) {//Si alguien le ha pedido el objeto que lleva se lo da
+			return 2; 
+		}else if(acciones[4]&&super.getObjeto()!=null&&super.getObjeto().getNombre()!=super.getObjetivo().getNombre()) { 
+			return 4;//Si puede dejar un objeto que lleve y que no quiera, lo deja
+		}else if(acciones[1]) {//Si puede pedir un objeto lo pide
 			return 1;
-		}else if(acciones[3]==true) {//Si su objeto esta en el suelo de su sala lo coge
+		}else if(acciones[3]) {//Si su objeto esta en el suelo de su sala lo coge
 			for(int i = 0; i < super.getLocalizacion().getObjetos().size();i++) {
 				if(super.getLocalizacion().getObjetos().get(i).getNombre().equals(super.getObjetivo().getNombre())) {
 					return 3;

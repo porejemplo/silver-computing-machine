@@ -1,8 +1,8 @@
 
 public class Solicitud {
-	private Personaje solicitante;
-	private Personaje solicitado;
-	private Objeto objetoPed;
+	private Personaje solicitante; //Personaje que pide
+	private Personaje solicitado; //Personaje al que le piden
+	private Objeto objetoPed; //Objeto pedido
 	
 	public Solicitud(Personaje solicitante, Personaje solicitado, Objeto objetoPed) {
 		this.solicitante = solicitante;

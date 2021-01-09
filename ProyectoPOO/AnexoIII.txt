@@ -1,99 +1,92 @@
 Comienza la ronda: 1.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Jardín.
-
-Esther decide dejar su objeto en el suelo de la sala Dormitorio.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Jardín.
-
-Comienza la ronda: 2.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Comedor.
-
-Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Dormitorio.
-
-Comienza la ronda: 3.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Jardín.
-
-Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Comedor.
-
-Comienza la ronda: 4.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Comedor.
-
-Esther decide no hacer nada.
-
 Jugador decide cambiarse de sala.
 Ahora se encuentra en Cocina.
 
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide no hacer nada.
+
+Comienza la ronda: 2.
+Jugador decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide no hacer nada.
+
+Comienza la ronda: 3.
+Jugador decide dejar su objeto en el suelo de la sala Comedor.
+
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide no hacer nada.
+
+Comienza la ronda: 4.
+Jugador decide pedir el objeto: Cartera a Jorge.
+
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide no hacer nada.
+
 Comienza la ronda: 5.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Jardín.
-
-Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Comedor.
-
-Comienza la ronda: 6.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Comedor.
-
-Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Jardín.
-
-Comienza la ronda: 7.
-Jorge decide cambiarse de sala.
-Ahora se encuentra en Jardín.
-
-Esther decide no hacer nada.
-
 Jugador decide cambiarse de sala.
 Ahora se encuentra en Dormitorio.
 
-Comienza la ronda: 8.
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.
 
 Esther decide no hacer nada.
 
-Jugador decide cambiarse de sala.
+Comienza la ronda: 6.
+Jugador decide coger el objeto: Llave del suelo de la sala Dormitorio.
+
+Jorge decide cambiarse de sala.
 Ahora se encuentra en Jardín.
+
+Esther decide no hacer nada.
+
+Comienza la ronda: 7.
+Jugador decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Comedor.
+
+Esther decide no hacer nada.
+
+Comienza la ronda: 8.
+Jugador decide no hacer nada.
+
+Jorge decide cambiarse de sala.
+Ahora se encuentra en Jardín.
+
+Esther decide no hacer nada.
 
 Comienza la ronda: 9.
+Jugador decide dejar su objeto en el suelo de la sala Comedor.
+
 Jorge decide cambiarse de sala.
-Ahora se encuentra en Jardín.
+Ahora se encuentra en Comedor.
 
 Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Comedor.
 
 Comienza la ronda: 10.
+Jugador decide coger el objeto: Llave del suelo de la sala Comedor.
+
 Jorge decide cambiarse de sala.
-Ahora se encuentra en Comedor.
+Ahora se encuentra en Jardín.
 
 Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Jardín.
 
 Comienza la ronda: 11.
+Jugador decide dejar su objeto en el suelo de la sala Comedor.
+
 Jorge decide cambiarse de sala.
-Ahora se encuentra en Jardín.
+Ahora se encuentra en Comedor.
 
 Esther decide no hacer nada.
-
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Comedor.
 

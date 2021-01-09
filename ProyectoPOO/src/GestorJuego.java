@@ -53,9 +53,12 @@ public class GestorJuego implements ActionListener{
 			solicitudes= new Solicitud[listaPersonajes.length]; //Borrar todas las solicitudes de la lista que no se hayan resuelto
 			Personaje.continuarHistoria("Comienza la ronda: " +ronda+".\n");
 			System.out.print("\nComienza la ronda "+ronda);
-			//System.out.print(this);
+			//El jugador debe ejecutar su accion primero para evitar que cambie el estado del mundo entre su eleccion y su accion
+			ejecutarAccion(jugador, jugador.dameAccion(accionesPermitidas(jugador))); 
 			for(int i = 0; i < listaPersonajes.length; i++) {
-				ejecutarAccion(listaPersonajes[i], listaPersonajes[i].dameAccion(accionesPermitidas(listaPersonajes[i])));
+				if(!listaPersonajes[i].equals(jugador)) {
+					ejecutarAccion(listaPersonajes[i], listaPersonajes[i].dameAccion(accionesPermitidas(listaPersonajes[i])));					
+				}
 			}
 			ventana.actualizarVentana(jugador);
 			ventana.cambiarBotones(opciones, this, accionesPermitidas(jugador));
@@ -118,7 +121,7 @@ public class GestorJuego implements ActionListener{
 		ventana.dispose();
 	}
 	
-	private boolean[] accionesPermitidas(Personaje personaje) { //NOMBRE.Filtrar que acciones puede y no puede hacer un personaje
+	private boolean[] accionesPermitidas(Personaje personaje) {
 		boolean acciones[] = new boolean[6];
 		int i; //iterador
 		
@@ -127,7 +130,6 @@ public class GestorJuego implements ActionListener{
 		
 		//2. Pedir objeto. Si hay mas personajes en la sala aparte del que realiza la accion y no tiene ningun objeto, entoces puede pedir un objeto
 		if(personaje.getLocalizacion().getPersonajes().size()>1 && personaje.getObjeto() == null) acciones[1] = true;
-		//System.out.print(personaje.getLocalizacion().getPersonajes().size());
 		
 		//3. Dar objeto. Comprobar  si alguien le ha pedido un objeto a un personaje
 		 if(personaje.leHanPedido(solicitudes)) {
@@ -166,7 +168,7 @@ public class GestorJuego implements ActionListener{
 			otroPersonaje = personaje.especificarPersonaje(personaje.getLocalizacion().getPersonajes().toArray(new Personaje[personaje.getLocalizacion().getPersonajes().size()]));
 			objeto = personaje.especificarObjeto(listaObjetos);
 			solicitudes[i]=new Solicitud(personaje, otroPersonaje ,objeto );
-			Personaje.continuarHistoria(personaje.getNombre()+" decide pedir el objeto: "+objeto+" a "+otroPersonaje.getNombre()+".\n\n");
+			Personaje.continuarHistoria(personaje.getNombre()+" decide pedir el objeto: "+objeto.getNombre()+" a "+otroPersonaje.getNombre()+".\n\n");
 			break;
 		case 2: //Dar objeto
 			otroPersonaje=personaje.especificarPersonaje(Solicitud.elaborarListaSolicitantes(personaje, solicitudes, listaPersonajes));
@@ -176,7 +178,7 @@ public class GestorJuego implements ActionListener{
 		case 3: //Coger objeto
 			System.out.println("Coger Objeto"+ personaje.getNombre() + "\n");
 			objeto = personaje.especificarObjeto(personaje.getLocalizacion().getObjetos().toArray(new Objeto[personaje.getLocalizacion().getObjetos().size()]));
-			Personaje.continuarHistoria(personaje.getNombre()+" decide coger el objeto: "+objeto+" del suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
+			Personaje.continuarHistoria(personaje.getNombre()+" decide coger el objeto: "+objeto.getNombre()+" del suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
 			cambiarObjeto(objeto, personaje.getLocalizacion(), personaje);
 			break;
 		case 4: //Dejar objeto
@@ -184,7 +186,7 @@ public class GestorJuego implements ActionListener{
 			Personaje.continuarHistoria(personaje.getNombre()+" decide dejar su objeto en el suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
 			cambiarObjeto(personaje, personaje.getLocalizacion());
 			break;
-		default:
+		default: //No hacer nada
 			Personaje.continuarHistoria(personaje.getNombre()+" decide no hacer nada.\n\n");
 			acabado++;
 			System.out.println("Nada"+ personaje.getNombre() + "\n");
@@ -215,6 +217,7 @@ public class GestorJuego implements ActionListener{
 				  			ventana.getHistoria().append(personaje.getNombre()+" ha llegado a " + destino.getNombre()+"\n");
 				  		}
 				 }
+		//Actualizar las creencias del personaje sobre la sala a la que llega
 		mostrarSala(personaje,destino);
 		
 	}
@@ -273,6 +276,7 @@ public class GestorJuego implements ActionListener{
 	
 	public String toString() {
 		String estado ="";
+		//Añadir la lista de localizaciones junto con sus adyacencias
 		estado+=("<Localizaciones>\n") ;
 		for(int i = 0; i < listaSalas.length; i++) {
 			estado+=(listaSalas[i].getNombre()+"(");
@@ -285,6 +289,7 @@ public class GestorJuego implements ActionListener{
 				
 			}
 		}
+		//Añadimos tambien la lista de personajes y objetos con sus ubicaciones
 		estado += estadoJuego;
 		
 		return estado;
@@ -294,6 +299,7 @@ public class GestorJuego implements ActionListener{
 		String s = e.getActionCommand();
 		int encontrado = 0;
 		int i;
+		//Comprobar si el boton pulsado es del menu de acciones
 		for(i=0; i < opciones.length; i++) {
 			if(s.matches(opciones[i])) {
 				jugador.setAccionElegida(i);
@@ -302,7 +308,7 @@ public class GestorJuego implements ActionListener{
 				break;
 			}
 		}
-		switch(i) {
+		switch(i) { //Cambiar la ventana en funcion del boton pulsado
 		case 0: //Cambiar de localizacion
 			ventana.cambiarBotones(jugador.getLocalizacion().getAdyacencias(), this);
 			break;
@@ -323,12 +329,13 @@ public class GestorJuego implements ActionListener{
 			}
 		break;
 		}
+		//Comprobar si el boton pulsado es de alguna de las ventanas de especificacion
 		if(encontrado == 0) {
 			for(i=0; i < listaPersonajes.length; i++) {
 				if(s.matches(listaPersonajes[i].getNombre())) {
 					jugador.setPElegido(listaPersonajes[i]);
 					System.out.print("\nElijo a " + listaPersonajes[i].getNombre());
-					if(jugador.getAccionElegida()==1) {
+					if(jugador.getAccionElegida()==1) { //Si pide un objeto, ademas de especificar personaje tendra que especificar dicho objeto
 						ventana.cambiarBotones(listaObjetos, this);
 					}else {
 						encontrado = 2;
@@ -339,7 +346,6 @@ public class GestorJuego implements ActionListener{
 		if(encontrado == 0) {
 			for(i=0; i < listaSalas.length; i++) {
 				if(s.matches(listaSalas[i].getNombre())) {
-					
 					jugador.setLElegida(listaSalas[i]);
 					System.out.print("\nElijo a " + jugador.getLElegida().getNombre());
 					encontrado = 2;
@@ -348,7 +354,6 @@ public class GestorJuego implements ActionListener{
 		}
 		if(encontrado == 0) {
 			for(i=0; i < listaObjetos.length; i++) {
-				//System.out.print("\n"+listaObjetos.length);
 				if(s.matches(listaObjetos[i].getNombre())) {
 					System.out.print("\nElijo a " + listaObjetos[i].getNombre());
 					jugador.setOElegido(listaObjetos[i]);
@@ -356,7 +361,7 @@ public class GestorJuego implements ActionListener{
 				}
 			}
 		}
-		if(encontrado == 2) {
+		if(encontrado == 2) { //Si el boton pertenecia a la ventana de especificaciones, avanzar de ronda
 			System.out.print("\nVa a empezar la siguiente ronda");
 			siguienteRonda();
 		}
