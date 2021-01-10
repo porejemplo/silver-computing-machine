@@ -5,6 +5,8 @@ public class NPC_avaricioso extends Personaje{
 
 	public NPC_avaricioso(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
+		System.out.println("Me llamo " +nombre+", y mi personalidad es avaricioso\n");
+		Personaje.continuarHistoria("Me llamo "+nombre+", y mi personalidad es avaricioso\n");
 	}
 
 	public int dameAccion(boolean[] acciones) {

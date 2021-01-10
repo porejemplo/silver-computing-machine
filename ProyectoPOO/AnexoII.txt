@@ -5,5 +5,5 @@ Jugador(Comedor)
 <Posesión Objetos>
 Llave(Jorge)
 Ordenador(Esther)
-Cartera
-Pan(Jugador)
+Cartera(Jugador)
+Pan

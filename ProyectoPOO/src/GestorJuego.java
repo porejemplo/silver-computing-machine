@@ -114,6 +114,7 @@ public class GestorJuego implements ActionListener{
 		ventana = new Ventana(opciones,this, jugador, accionesPermitidas(jugador));
 		ventana.setVisible(true);
 		
+		
 	}
 	
 	private void finalizar() {
@@ -137,7 +138,7 @@ public class GestorJuego implements ActionListener{
 		//3. Dar objeto. Comprobar  si alguien le ha pedido un objeto a un personaje
 		 if(personaje.leHanPedido(solicitudes)) {
 			for(i = 0; i< solicitudes.length; i++) {
-				if(solicitudes[i]!= null && personaje.equals(solicitudes[i].getSolicitado())&& personaje.getObjeto().equals(solicitudes[i].getObjetoPed())) {
+				if(personaje.getObjeto()!=null && solicitudes[i]!= null && personaje.equals(solicitudes[i].getSolicitado())&& personaje.getObjeto().equals(solicitudes[i].getObjetoPed())) {
 					acciones[2]=true;
 				}
 			}
@@ -157,7 +158,7 @@ public class GestorJuego implements ActionListener{
 	private void ejecutarAccion(Personaje personaje, int accion) {
 		Objeto objeto;
 		Personaje otroPersonaje;
-		int i=0,j=0; //iteradores
+		int i=0; //iteradores
 		switch(accion) {
 		case 0: //Ir a localizacion
 			System.out.println("Cambiar de sala" + personaje.getNombre() + "\n");	
@@ -260,7 +261,7 @@ public class GestorJuego implements ActionListener{
 		for(int i = 0; i < origen.getPersonajes().size(); i++){
 		  	origen.getPersonajes().get(i).getCreencias().cambiarCreencia(objeto, receptor);
 		  	if(origen.getPersonajes().get(i) instanceof Jugador) {
-	  			ventana.getHistoria().append(receptor.getNombre()+" coge  " + receptor.getObjeto().getNombre() + " de " + origen.getNombre());
+	  			ventana.getHistoria().append(receptor.getNombre()+" coge  " + receptor.getObjeto().getNombre() + " de " + origen.getNombre()+"\n");
 	  		}
 		}
 		

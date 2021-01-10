@@ -3,6 +3,8 @@ public class NPC_vago extends Personaje{
 //Llegará a su sala destino y esperará hasta que el objeto que esta buscando le llegue a el
 	public NPC_vago(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
+		if(super.getObjetivo()!=null)System.out.println("Me llamo " +nombre+", y mi personalidad es vago\n");
+		Personaje.continuarHistoria("Me llamo "+nombre+", y mi personalidad es vago\n");
 	}
 
 	public int dameAccion(boolean[] acciones) {

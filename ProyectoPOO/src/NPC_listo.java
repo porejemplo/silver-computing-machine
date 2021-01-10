@@ -4,6 +4,8 @@ public class NPC_listo extends Personaje{
 //Tratara de alcanzar sus objetivos de forma optimizada
 	public NPC_listo(String nombre, Localizacion localizacion) {
 		super(nombre, localizacion);
+		if(super.getObjetivo()!=null)System.out.println("Me llamo " +nombre+", y mi personalidad es listo\n");
+		Personaje.continuarHistoria("Me llamo "+nombre+", y mi personalidad es listo\n");
 	}
 
 	private String proposito=""; //Accion que estará buscando realizar

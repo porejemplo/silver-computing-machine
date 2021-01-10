@@ -4,6 +4,8 @@ public class NPC_aleatorio extends Personaje{
 	
 	public NPC_aleatorio(String nombre, Localizacion localizacion) {
 		super (nombre, localizacion);
+		System.out.println("Me llamo " +nombre+", y mi personalidad es aleatoria\n");
+		Personaje.continuarHistoria("Me llamo "+nombre+", y mi personalidad es aleatoria\n");
 	}
 
 
@@ -32,5 +34,6 @@ public class NPC_aleatorio extends Personaje{
 	public Objeto especificarObjeto(Objeto[] disponibles) {
 		return disponibles[(int)Math.random()*disponibles.length];
 	}
+
 
 }
