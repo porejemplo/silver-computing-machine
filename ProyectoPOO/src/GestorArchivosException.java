@@ -1,4 +1,9 @@
 
+//Mas de un jugador
+//Mas de un personaje
+//Mas de una sala
+//Personaje sin objetivos
+
 public class GestorArchivosException extends Exception {
     private static final long serialVersionUID = 1L;
     private int nLinea = 0;

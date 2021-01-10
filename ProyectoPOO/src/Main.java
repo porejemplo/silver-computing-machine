@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import javax.swing.*;
 
 public class Main {
 
@@ -14,8 +15,10 @@ public class Main {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			gJuego = new GestorJuego();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		} catch (GestorArchivosException e) {
 			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, e.getMessage());
 			gJuego = new GestorJuego();
 		}
 		

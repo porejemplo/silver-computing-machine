@@ -199,6 +199,8 @@ public class Ventana extends JFrame{
 		for(int i = 0; i <personajes.length; i++) {
 			items.remove(personajes[i]);
 		}
+		personajes = new JLabel[jugador.getLocalizacion().getPersonajes().size()];
+		
 		for(int i = 0; i <jugador.getLocalizacion().getPersonajes().size(); i++) {
 			personajes[i] = new JLabel(jugador.getLocalizacion().getPersonajes().get(i).getNombre(),new ImageIcon("personaje.jpg"), JLabel.CENTER);
 			personajes[i].setVerticalTextPosition(JLabel.BOTTOM);
@@ -208,6 +210,7 @@ public class Ventana extends JFrame{
 		for(int i = 0; i <objetos.length; i++) {
 			items.remove(objetos[i]);
 		}
+		objetos = new JLabel[jugador.getLocalizacion().getObjetos().size()];
 		for(int i = 0; i <jugador.getLocalizacion().getObjetos().size(); i++) {
 			objetos[i] = new JLabel(jugador.getLocalizacion().getObjetos().get(i).getNombre(),new ImageIcon("objeto.png"), SwingConstants.CENTER);
 			objetos[i].setVerticalTextPosition(JLabel.BOTTOM);
@@ -222,9 +225,8 @@ public class Ventana extends JFrame{
 		for(int i = 0; i <adyacencias.length; i++) {
 			puertas.remove(adyacencias[i]);
 		}
-		
+		adyacencias = new JLabel[jugador.getLocalizacion().getAdyacencias().length];
 		for(int i = 0; i <jugador.getLocalizacion().getAdyacencias().length; i++) {
-			puertas.remove(adyacencias[i]);
 			adyacencias[i] = new JLabel(jugador.getLocalizacion().getAdyacencias()[i].getNombre(),new ImageIcon("puerta.png"), JLabel.LEFT);
 			puertas.add(adyacencias[i]);
 		}
