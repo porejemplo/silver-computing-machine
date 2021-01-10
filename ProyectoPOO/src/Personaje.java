@@ -19,6 +19,7 @@ public abstract class Personaje implements Elemento, Accionable{
     	setNombre(nombre);
         setLocalizacion(localizacion);
         localizacion.addPersonaje(this);
+        objetivo = new Ubicacion();
     }
 
     public Boolean equals(Personaje personaje){

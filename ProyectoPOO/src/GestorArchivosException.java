@@ -1,13 +1,8 @@
-
-//Mas de un jugador
-//Mas de un personaje
-//Mas de una sala
-//Mas de un objeto
 //Personaje sin objetivos
 
 public class GestorArchivosException extends Exception {
     private static final long serialVersionUID = 1L;
-    private int nLinea = 0;
+    private int nLinea = -1;
 	private String archivo = "-";
 	private String mensajeError = "-";
 	
@@ -26,7 +21,16 @@ public class GestorArchivosException extends Exception {
     	this.mensajeError = mensajeError;
     }
     
+    public GestorArchivosException(String archivo, String mensajeError){
+    	super();
+    	this.archivo = archivo;
+    	this.mensajeError = mensajeError;
+    }
+    
     public String getMessage() {
-    	return "ERROR: " + mensajeError + "\nArchivo: " + archivo + "\tLinea: " + Integer.toString(nLinea);
+    	if (nLinea==-1)
+    		return "ERROR: " + mensajeError + "\nArchivo: " + archivo;
+    	else
+    		return "ERROR: " + mensajeError + "\nArchivo: " + archivo + "\tLinea: " + Integer.toString(nLinea);
     }
 }

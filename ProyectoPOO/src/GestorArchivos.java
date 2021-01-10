@@ -20,7 +20,6 @@ public class GestorArchivos {
 	private int pNpcAleatorio = 3;
 	private int pNpcAvaricioso = 3;
 	private int pNpcListo = 3;
-	private int pNpcVago = 3;
 	private Random random;
 	private Boolean hayJugador;
 
@@ -180,7 +179,7 @@ public class GestorArchivos {
 				break;
 			}
 			// Si encontramos el nombre de la sala una segunda vez lanzamo una excepcion para informar de que la sala esta repetida.
-			else if (lLocalizacion[i].getNombre() == nombreDeSala) {
+			else if (lLocalizacion[i].getNombre().equals(nombreDeSala)) {
 				throw new GestorArchivosException(nLinea, nombreArchivo, "sala repetida");
 			}
 		}
@@ -207,34 +206,30 @@ public class GestorArchivos {
 						pNpcAleatorio -= 3;
 						pNpcAvaricioso++;
 						pNpcListo++;
-						pNpcVago++;
 					}
 					else if (ii<(pNpcAleatorio+pNpcAvaricioso)) {
 						lPersonaje[i] = new NPC_avaricioso(nombre, localizacion);
 						pNpcAleatorio++;
 						pNpcAvaricioso -= 3;
 						pNpcListo++;
-						pNpcVago++;
 					}
 					else if (ii<(pNpcAleatorio+pNpcAvaricioso+pNpcListo)){
 						lPersonaje[i] = new NPC_listo(nombre, localizacion);
 						pNpcAleatorio++;
 						pNpcAvaricioso++;
 						pNpcListo -= 3;
-						pNpcVago++;
 					}
 					else {
 						lPersonaje[i] = new NPC_vago(nombre, localizacion);
 						pNpcAleatorio++;
 						pNpcAvaricioso++;
 						pNpcListo++;
-						pNpcVago -= 3;
 					}
 				}
 				break;
 			}
 			// Si encontramos el nombre del personaje que queremos guardar lanzmaos una excepcion para informar de que el personaje esta repetido.
-			else if (lPersonaje[i].getNombre() == nombre)
+			else if (lPersonaje[i].getNombre().equals(nombre))
 				throw new GestorArchivosException(nLinea, nombreArchivo, "personaje repetido");
 		}
 	}
@@ -262,7 +257,7 @@ public class GestorArchivos {
 				break;
 			}
 			// Si se encuntra el nombre del objeto que estamos buscando se lanza una excepcion para informar de que el objeto esta repetido.
-			else if (lObjeto[i].getNombre() == nombre)
+			else if (lObjeto[i].getNombre().equals(nombre))
 				throw new GestorArchivosException(nLinea, nombreArchivo, "objeto repetido");
 		}
 	}
@@ -319,6 +314,11 @@ public class GestorArchivos {
 				sl.close();
 			}
 		}
+		for (int i=0; i<lPersonaje.length; ++i) {
+			if(lPersonaje[i].getObjetivo().getNombre().equals("-") || lPersonaje[i].getObjetivo().getLugar().equals("-")) {
+				throw new GestorArchivosException(nombreArchivo, "No hay objetivo para " + lPersonaje[i].getNombre());
+			}
+		}
 	}
 
 	// Se el pasa el scanner de una localizacion objetivo y se lo guarda a un personaje.
@@ -326,7 +326,7 @@ public class GestorArchivos {
 		Personaje personaje = buscarPersonajeSeguro(scanner.next(), lPersonaje);
 
 		if (personaje != null)
-			personaje.setObjetivo(new Ubicacion(null,scanner.next()));
+			personaje.getObjetivo().setLugar(scanner.next());
 	}
 
 	// Se el pasa el scanner de un objeto objetivo y se lo guarda al personaje.
