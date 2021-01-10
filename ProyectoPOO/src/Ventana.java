@@ -30,9 +30,9 @@ public class Ventana extends JFrame{
 		titulo.setFont(new Font("Sans-Serif", Font.BOLD, 25));
 		panelTitulo.add(titulo);
 		if(jugador.getObjeto()==null) {
-			estado= new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y no tienes nada");
+			estado= new JLabel("Estas en " + jugador.getLocalizacion().getNombre()+" y no tienes nada");
 		}else {
-			estado = new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y tienes: "+ jugador.getObjeto().getNombre());
+			estado = new JLabel("Estas en " + jugador.getLocalizacion().getNombre()+" y tienes "+ jugador.getObjeto().getNombre());
 			
 		}
 		estado.setFont(new Font("Sans-Serif", Font.BOLD, 25));
@@ -183,9 +183,9 @@ public class Ventana extends JFrame{
 		
 		panelTitulo.remove(estado);
 		if(jugador.getObjeto()==null) {
-			estado= new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y no tienes nada");
+			estado= new JLabel("Estas en " + jugador.getLocalizacion().getNombre()+" y no tienes nada");
 		}else {
-			estado = new JLabel("Estas en: " + jugador.getLocalizacion().getNombre()+" y tienes: "+ jugador.getObjeto().getNombre());
+			estado = new JLabel("Estas en " + jugador.getLocalizacion().getNombre()+" y tienes "+ jugador.getObjeto().getNombre());
 		}
 		estado.setFont(new Font("Sans-Serif", Font.BOLD, 25));
 		panelTitulo.add(estado);
