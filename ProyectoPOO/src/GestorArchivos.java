@@ -201,7 +201,7 @@ public class GestorArchivos {
 				else {
 					//Saca un numero aleatorio entre 0-12
 					int ii = random.nextInt(12);
-					// Cada condicion guarda un tipo de NPC y reduce la posivilidad de que vuelv a salir el mismo
+					// Cada condicion guarda un tipo de NPC y reduce la posibilidad de que vuelva salir el mismo
 					if (ii<pNpcAleatorio) {
 						lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
 						pNpcAleatorio -= 3;
@@ -425,33 +425,4 @@ public class GestorArchivos {
 		escribirArchivos(string, anexo1);
 	}
 
-	// Da formato de string a los array de datos del juego.
-	public void guardarEstadoJuego (Localizacion lLocalizacion[], Personaje lPersonaje[], Objeto lObjeto[]){
-		String sObjetos = "\n<Objetos>";
-		String s = "<Localizaciones>";
-		for(int i = 0; i<lLocalizacion.length; ++i)
-		{
-			s += "\n" + lLocalizacion[i].getNombre() + "(";
-			for(int ii=0; ii<lLocalizacion[i].getAdyacencias().length; ++ii)
-			{
-				if(ii>0)
-					s += ", ";
-				s += lLocalizacion[i].getAdyacencias()[ii].getNombre();
-			}
-			for(int ii=0; ii<lLocalizacion[i].getObjetos().size(); ++ii)
-			{
-				sObjetos += "\n" + lLocalizacion[i].getObjetos().get(ii).getNombre() + "(" + lLocalizacion[i].getNombre() + ")";
-			}
-			s += ")";
-		}
-		s += "\n<Personajes>";
-		for(int i = 0; i<lPersonaje.length; ++i)
-		{
-			s += "\n" + lPersonaje[i].getNombre() + "(" + lPersonaje[i].getLocalizacion().getNombre() + ")";
-			if(lPersonaje[i].getObjeto() != null)
-				sObjetos += "\n" + lPersonaje[i].getObjeto().getNombre() + "(" + lPersonaje[i].getNombre() + ")";
-		}
-		s += sObjetos;
-		guardarEstadoJuego(s);
-	}
 }
