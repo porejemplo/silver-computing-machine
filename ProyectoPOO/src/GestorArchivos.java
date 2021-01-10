@@ -156,7 +156,7 @@ public class GestorArchivos {
 		}
 		random=null;
 		if (!hayJugador)
-			throw new GestorArchivosException(nLinea, nombreArchivo, "No hay un personaje Jugador definido.");
+			throw new GestorArchivosException(nombreArchivo, "No hay un personaje Jugador definido.");
 	}
 
 	// Guarda el valor de la localizacion enun espacio vacio de la lista
