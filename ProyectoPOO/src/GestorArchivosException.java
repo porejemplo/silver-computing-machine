@@ -2,6 +2,7 @@
 //Mas de un jugador
 //Mas de un personaje
 //Mas de una sala
+//Mas de un objeto
 //Personaje sin objetivos
 
 public class GestorArchivosException extends Exception {
