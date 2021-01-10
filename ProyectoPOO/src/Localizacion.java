@@ -8,7 +8,7 @@ public class Localizacion implements Elemento{
 
     // Constructor
     public Localizacion(String nombre) {
-        setNombre(nombre);
+        this.nombre = nombre;
     }
 
     // Get Set

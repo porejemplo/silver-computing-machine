@@ -133,6 +133,7 @@ public class GestorArchivos {
 		while (s.hasNextLine()) {
 			nLinea++;
 			String linea = s.nextLine();
+			// Si empieza con < se entiende que es una cabecera y se seleciona la opcion.
 			if (linea.charAt(0) == '<') {
 				if (linea.equals("<Localizaciones>"))
 					selector = 0;
@@ -140,7 +141,8 @@ public class GestorArchivos {
 					selector = 1;
 				else
 					selector = 2;
-			} else {
+			} // en el resto de los casos se guardan los datos acorde con la opcion seleccionada.
+			else {
 				Scanner sl = new Scanner(linea);
 				sl.useDelimiter("\\s*(\\(|,|\\))\\s*");
 				if (selector == 0) {
@@ -197,8 +199,9 @@ public class GestorArchivos {
 					hayJugador = true;
 				}
 				else {
-					//lPersonaje[i] = new NPC_prueba(nombre, localizacion);
+					//Saca un numero aleatorio entre 0-12
 					int ii = random.nextInt(12);
+					// Cada condicion guarda un tipo de NPC y reduce la posivilidad de que vuelv a salir el mismo
 					if (ii<pNpcAleatorio) {
 						lPersonaje[i] = new NPC_aleatorio(nombre, localizacion);
 						pNpcAleatorio -= 3;
@@ -399,7 +402,7 @@ public class GestorArchivos {
 		return personaje;
 	}
 
-	//Guarda el estado del juego en el archivo anexo1
+	//Guarda un string en un archivo
 	public void escribirArchivos(String string, File file){
 		try {
 			FileWriter writer = new FileWriter(file, false);
@@ -411,11 +414,13 @@ public class GestorArchivos {
 		}
 	}
 	
+	// escribe la string en el anexoIII
 	public void guardarHistoria(String string) {
 		File file = new File ("AnexoIII.txt");
 		escribirArchivos(string, file);
 	}
 	
+	// Guarda el estado actual del juego
 	public void guardarEstadoJuego(String string){
 		escribirArchivos(string, anexo1);
 	}
