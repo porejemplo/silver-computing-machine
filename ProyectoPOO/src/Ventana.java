@@ -4,6 +4,8 @@ import java.awt.*;
 
 public class Ventana extends JFrame{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private JTextArea creencias, historia;
 	private JPanel panelLateral, panelOpciones, panelResumen, panelTitulo, panelSala, items, puertas;
 	private JScrollPane sbrText;

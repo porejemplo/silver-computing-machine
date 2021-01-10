@@ -26,7 +26,7 @@ public class GestorArchivosException extends Exception {
     	this.mensajeError = mensajeError;
     }
     
-    public String toString() {
+    public String getMessage() {
     	return "ERROR: " + mensajeError + "\nArchivo: " + archivo + "\tLinea: " + Integer.toString(nLinea);
     }
 }
