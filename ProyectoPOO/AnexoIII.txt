@@ -1,15 +1,16 @@
+Me llamo Jorge, y mi personalidad es aleatoria
+Me llamo Esther, y mi personalidad es listo
 Comienza la ronda: 1.
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Cocina.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.
 
-Esther decide no hacer nada.
+Esther decide cambiarse de sala.
+Ahora se encuentra en Dormitorio.
 
 Comienza la ronda: 2.
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Comedor.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Jardín.
@@ -17,7 +18,7 @@ Ahora se encuentra en Jardín.
 Esther decide no hacer nada.
 
 Comienza la ronda: 3.
-Jugador decide dejar su objeto en el suelo de la sala Comedor.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.
@@ -25,7 +26,7 @@ Ahora se encuentra en Comedor.
 Esther decide no hacer nada.
 
 Comienza la ronda: 4.
-Jugador decide pedir el objeto: Cartera a Jorge.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Jardín.
@@ -33,8 +34,7 @@ Ahora se encuentra en Jardín.
 Esther decide no hacer nada.
 
 Comienza la ronda: 5.
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Dormitorio.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.
@@ -42,7 +42,7 @@ Ahora se encuentra en Comedor.
 Esther decide no hacer nada.
 
 Comienza la ronda: 6.
-Jugador decide coger el objeto: Llave del suelo de la sala Dormitorio.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Jardín.
@@ -50,8 +50,7 @@ Ahora se encuentra en Jardín.
 Esther decide no hacer nada.
 
 Comienza la ronda: 7.
-Jugador decide cambiarse de sala.
-Ahora se encuentra en Comedor.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.
@@ -67,7 +66,7 @@ Ahora se encuentra en Jardín.
 Esther decide no hacer nada.
 
 Comienza la ronda: 9.
-Jugador decide dejar su objeto en el suelo de la sala Comedor.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.
@@ -75,7 +74,7 @@ Ahora se encuentra en Comedor.
 Esther decide no hacer nada.
 
 Comienza la ronda: 10.
-Jugador decide coger el objeto: Llave del suelo de la sala Comedor.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Jardín.
@@ -83,7 +82,7 @@ Ahora se encuentra en Jardín.
 Esther decide no hacer nada.
 
 Comienza la ronda: 11.
-Jugador decide dejar su objeto en el suelo de la sala Comedor.
+Jugador decide no hacer nada.
 
 Jorge decide cambiarse de sala.
 Ahora se encuentra en Comedor.

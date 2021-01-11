@@ -44,14 +44,13 @@ public class GestorJuego implements ActionListener{
 	}
 	
 	private void siguienteRonda() {
-		if(acabado == listaPersonajes.length /*|| ronda>10*/) { //Descomentar para hacer una partida rapida y ver el final del juego
+		if(acabado == listaPersonajes.length || ronda>10) { //Descomentar para hacer una partida rapida y ver el final del juego
 			finalizar();
 		}else {
 			acabado = 0;
 			ronda++;
 			solicitudes= new Solicitud[listaPersonajes.length]; //Borrar todas las solicitudes de la lista que no se hayan resuelto
 			Personaje.continuarHistoria("Comienza la ronda: " +ronda+".\n");
-			System.out.print("\nComienza la ronda "+ronda);
 			//El jugador debe ejecutar su accion primero para evitar que cambie el estado del mundo entre su eleccion y su accion
 			ejecutarAccion(jugador, jugador.dameAccion(accionesPermitidas(jugador))); 
 			for(int i = 0; i < listaPersonajes.length; i++) {
@@ -101,7 +100,6 @@ public class GestorJuego implements ActionListener{
 		//Encontrar al jugador
 		for(int i = 0; i < listaPersonajes.length; i++) {	
 			if(listaPersonajes[i] instanceof Jugador ) {
-				System.out.print("Hay jugador " + i +"\n");
 				jugador = (Jugador) listaPersonajes[i];
 			}
 		}
@@ -112,8 +110,6 @@ public class GestorJuego implements ActionListener{
 		//Crear y mostrar la ventana
 		ventana = new Ventana(opciones,this, jugador, accionesPermitidas(jugador));
 		ventana.setVisible(true);
-		
-		
 	}
 	
 	private void finalizar() {
@@ -159,14 +155,13 @@ public class GestorJuego implements ActionListener{
 		Personaje otroPersonaje;
 		int i=0; //iteradores
 		switch(accion) {
-		case 0: //Ir a localizacion
-			System.out.println("Cambiar de sala" + personaje.getNombre() + "\n");	
+		case 0: //Ir a localizacion	
 			Personaje.continuarHistoria(personaje.getNombre()+" decide cambiarse de sala.\n");
 			cambiarSala(personaje, personaje.getLocalizacion(), personaje.especificarSala(personaje.getLocalizacion().getAdyacencias()));
 			Personaje.continuarHistoria("Ahora se encuentra en "+personaje.getLocalizacion().getNombre()+".\n\n");
 			break;
 		case 1: //Pedir objeto
-			System.out.println("Pedir objeto"+ personaje.getNombre() + "\n");
+			
 			for(i=0; solicitudes[i]!=null;i++);
 			otroPersonaje = personaje.especificarPersonaje(personaje.getLocalizacion().getPersonajes().toArray(new Personaje[personaje.getLocalizacion().getPersonajes().size()]));
 			objeto = personaje.especificarObjeto(listaObjetos);
@@ -179,20 +174,17 @@ public class GestorJuego implements ActionListener{
 			cambiarObjeto(personaje, otroPersonaje);
 			break;
 		case 3: //Coger objeto
-			System.out.println("Coger Objeto"+ personaje.getNombre() + "\n");
 			objeto = personaje.especificarObjeto(personaje.getLocalizacion().getObjetos().toArray(new Objeto[personaje.getLocalizacion().getObjetos().size()]));
 			Personaje.continuarHistoria(personaje.getNombre()+" decide coger el objeto: "+objeto.getNombre()+" del suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
 			cambiarObjeto(objeto, personaje.getLocalizacion(), personaje);
 			break;
 		case 4: //Dejar objeto
-			System.out.println("Dejar Objeto"+ personaje.getNombre() + "\n");
 			Personaje.continuarHistoria(personaje.getNombre()+" decide dejar su objeto en el suelo de la sala " + personaje.getLocalizacion().getNombre()+".\n\n");
 			cambiarObjeto(personaje, personaje.getLocalizacion());
 			break;
 		default: //No hacer nada
 			Personaje.continuarHistoria(personaje.getNombre()+" decide no hacer nada.\n\n");
 			acabado++;
-			System.out.println("Nada"+ personaje.getNombre() + "\n");
 			break;
 		}
 		
@@ -307,7 +299,6 @@ public class GestorJuego implements ActionListener{
 			if(s.matches(opciones[i])) {
 				jugador.setAccionElegida(i);
 				encontrado = 1;
-				System.out.print("El jugador elige "+opciones[i]+"\n");
 				break;
 			}
 		}
@@ -327,7 +318,6 @@ public class GestorJuego implements ActionListener{
 		case 4: //Dejar objeto
 		case 5: //No hacer nada
 			if(encontrado==1) {
-				System.out.print("\nVa a empezar la siguiente ronda\n");
 				siguienteRonda();
 			}
 		break;
@@ -337,7 +327,6 @@ public class GestorJuego implements ActionListener{
 			for(i=0; i < listaPersonajes.length; i++) {
 				if(s.matches(listaPersonajes[i].getNombre())) {
 					jugador.setPElegido(listaPersonajes[i]);
-					System.out.print("\nElijo a " + listaPersonajes[i].getNombre());
 					if(jugador.getAccionElegida()==1) { //Si pide un objeto, ademas de especificar personaje tendra que especificar dicho objeto
 						ventana.cambiarBotones(listaObjetos, this);
 					}else {
@@ -350,7 +339,6 @@ public class GestorJuego implements ActionListener{
 			for(i=0; i < listaSalas.length; i++) {
 				if(s.matches(listaSalas[i].getNombre())) {
 					jugador.setLElegida(listaSalas[i]);
-					System.out.print("\nElijo a " + jugador.getLElegida().getNombre());
 					encontrado = 2;
 				}
 			}
@@ -358,14 +346,12 @@ public class GestorJuego implements ActionListener{
 		if(encontrado == 0) {
 			for(i=0; i < listaObjetos.length; i++) {
 				if(s.matches(listaObjetos[i].getNombre())) {
-					System.out.print("\nElijo a " + listaObjetos[i].getNombre());
 					jugador.setOElegido(listaObjetos[i]);
 					encontrado = 2;
 				}
 			}
 		}
 		if(encontrado == 2) { //Si el boton pertenecia a la ventana de especificaciones, avanzar de ronda
-			System.out.print("\nVa a empezar la siguiente ronda");
 			siguienteRonda();
 		}
 		

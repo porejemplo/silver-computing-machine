@@ -1,9 +1,9 @@
 <Localización Personajes>
-Jorge(Jardín)
-Esther(Dormitorio)
+Jorge(Jardin)
+Esther(Comedor)
 Jugador(Comedor)
 <Posesión Objetos>
-Llave(Jorge)
-Ordenador(Esther)
-Cartera(Jugador)
-Pan
+Llave(Esther)
+Ordenador
+Cartera(Jorge)
+Pan(Jugador)

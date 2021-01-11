@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class NPC_vago extends Personaje{
 //Llegará a su sala destino y esperará hasta que el objeto que esta buscando le llegue a el
@@ -9,11 +10,11 @@ public class NPC_vago extends Personaje{
 
 	public int dameAccion(boolean[] acciones) {
 		//Si no esta en su objetivo, se mueve hasta encontrarla
-		if(super.getObjetivo().getLugar()!=super.getLocalizacion().getNombre()) { 
+		if(!super.getObjetivo().getLugar().equals(super.getLocalizacion().getNombre())) { 
 			return 0;
 		}else if(acciones[2]) {//Si alguien le ha pedido el objeto que lleva se lo da
 			return 2; 
-		}else if(acciones[4]&&super.getObjeto()!=null&&super.getObjeto().getNombre()!=super.getObjetivo().getNombre()) { 
+		}else if(acciones[4]&&super.getObjeto()!=null&& !super.getObjeto().getNombre().equals( super.getObjetivo().getNombre())) { 
 			return 4;//Si puede dejar un objeto que lleve y que no quiera, lo deja
 		}else if(acciones[1]) {//Si puede pedir un objeto lo pide
 			return 1;
@@ -28,7 +29,8 @@ public class NPC_vago extends Personaje{
 	}
 	public Personaje especificarPersonaje(Personaje[] disponibles) {
 		//Le da igual a quien pedirle el objeto
-		return disponibles[(int) Math.random()*disponibles.length];
+		Random random = new Random();
+		return disponibles[random.nextInt(disponibles.length)];
 	}
 
 	public Localizacion especificarSala(Localizacion[] disponibles) {
