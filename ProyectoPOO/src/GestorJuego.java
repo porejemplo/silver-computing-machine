@@ -44,7 +44,7 @@ public class GestorJuego implements ActionListener{
 	}
 	
 	private void siguienteRonda() {
-		if(acabado == listaPersonajes.length || ronda>10) { //Descomentar para hacer una partida rapida y ver el final del juego
+		if(acabado == listaPersonajes.length /*|| ronda>10*/) { //Descomentar para hacer una partida rapida y ver el final del juego
 			finalizar();
 		}else {
 			acabado = 0;
